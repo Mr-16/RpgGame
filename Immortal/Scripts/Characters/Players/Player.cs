@@ -1,3 +1,4 @@
+using Godot;
 using RpgGame.Scripts.Characters.Players.StateMachines;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,14 @@ namespace RpgGame.Scripts.Characters.Players
         public StateMachine moveStateMachine;
         public StateMachine attackStateMachine;
 
+        [Export]
+        private float moveSpeed = 300f;
+        private float rollSpeed = 300f;
+
+        [Export]
+        public AnimatedSprite2D anim;
+        public Vector2 curDir = Vector2.Right;
+
         public override void _Ready()
         {
             moveStateMachine = new StateMachine(this);
@@ -20,14 +29,35 @@ namespace RpgGame.Scripts.Characters.Players
 
         public override void _Process(double delta)
         {
-            moveStateMachine.curState.Update();
-            attackStateMachine.curState.Update();
+            moveStateMachine.curState.Update(delta);
+            attackStateMachine.curState.Update(delta);
         }
         public override void _PhysicsProcess(double delta)
         {
-            moveStateMachine.curState.FixedUpdate();
-            attackStateMachine.curState.FixedUpdate();
+            moveStateMachine.curState.FixedUpdate(delta);
+            attackStateMachine.curState.FixedUpdate(delta);
         }
 
+        public void Walk(Vector2 moveDir)
+        {
+            curDir = moveDir;
+            if (curDir.X < 0) anim.FlipH = true;
+            else anim.FlipH = false;
+            Velocity = moveSpeed * moveDir;
+            MoveAndSlide();
+        }
+        public void Run(Vector2 moveDir)
+        {
+            curDir = moveDir;
+            if (curDir.X < 0) anim.FlipH = true;
+            else anim.FlipH = false;
+            Velocity = 2 * moveSpeed * moveDir;
+            MoveAndSlide();
+        }
+        public void Roll()
+        {
+            Velocity = rollSpeed * curDir;
+            MoveAndSlide();
+        }
     }
 }

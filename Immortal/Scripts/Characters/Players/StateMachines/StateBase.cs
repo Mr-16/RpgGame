@@ -12,8 +12,8 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines
         public Player player;
 
         public abstract void Enter();
-        public abstract void Update();
-        public abstract void FixedUpdate();
+        public abstract void Update(double delta);
+        public abstract void FixedUpdate(double delta);
         public abstract void Exit();
     }
 }

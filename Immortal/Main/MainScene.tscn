@@ -1,3 +1,189 @@
-[gd_scene format=3 uid="uid://dtkh8030dvaay"]
+[gd_scene load_steps=3 format=3 uid="uid://dtkh8030dvaay"]
+
+[ext_resource type="PackedScene" uid="uid://do7ba1r70tslw" path="res://Scenes/Charaters/Players/Player.tscn" id="1_acn4n"]
+[ext_resource type="Texture2D" uid="uid://d120xglayjjgp" path="res://icon.svg" id="1_b5tta"]
 
 [node name="MainScene" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(-843, -321.75)
+scale = Vector2(1.78125, 1.8320311)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon2" type="Sprite2D" parent="Icon"]
+position = Vector2(257.1228, 2.319809)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon3" type="Sprite2D" parent="Icon"]
+position = Vector2(129.1228, 0.6822815)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon4" type="Sprite2D" parent="Icon"]
+position = Vector2(770.807, 0.8187256)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon5" type="Sprite2D" parent="Icon"]
+position = Vector2(1030.1754, 3.957306)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon6" type="Sprite2D" parent="Icon"]
+position = Vector2(899.9298, 1.5010223)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon7" type="Sprite2D" parent="Icon"]
+position = Vector2(386.2456, 0.8187256)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon8" type="Sprite2D" parent="Icon"]
+position = Vector2(643.3684, 3.1385498)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon9" type="Sprite2D" parent="Icon"]
+position = Vector2(515.3684, 1.5010223)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon10" type="Sprite2D" parent="Icon"]
+position = Vector2(6.1754456, 131.00217)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon11" type="Sprite2D" parent="Icon"]
+position = Vector2(263.29822, 133.32198)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon12" type="Sprite2D" parent="Icon"]
+position = Vector2(135.29825, 131.68445)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon13" type="Sprite2D" parent="Icon"]
+position = Vector2(776.9824, 131.82089)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon14" type="Sprite2D" parent="Icon"]
+position = Vector2(1036.3508, 134.95947)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon15" type="Sprite2D" parent="Icon"]
+position = Vector2(906.1052, 132.50317)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon16" type="Sprite2D" parent="Icon"]
+position = Vector2(392.42105, 131.82089)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon17" type="Sprite2D" parent="Icon"]
+position = Vector2(649.5438, 134.14072)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon18" type="Sprite2D" parent="Icon"]
+position = Vector2(521.5438, 132.50317)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon19" type="Sprite2D" parent="Icon"]
+position = Vector2(9.543848, 258.0469)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon20" type="Sprite2D" parent="Icon"]
+position = Vector2(266.66666, 260.23032)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon21" type="Sprite2D" parent="Icon"]
+position = Vector2(136.98244, 260.23032)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon22" type="Sprite2D" parent="Icon"]
+position = Vector2(782.0351, 265.55225)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon23" type="Sprite2D" parent="Icon"]
+position = Vector2(1041.4036, 268.69083)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon24" type="Sprite2D" parent="Icon"]
+position = Vector2(911.1579, 266.23456)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon25" type="Sprite2D" parent="Icon"]
+position = Vector2(397.4737, 256.95526)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon26" type="Sprite2D" parent="Icon"]
+position = Vector2(654.5965, 267.87207)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon27" type="Sprite2D" parent="Icon"]
+position = Vector2(526.5965, 266.23456)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon28" type="Sprite2D" parent="Icon"]
+position = Vector2(14.596497, 390.8231)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon29" type="Sprite2D" parent="Icon"]
+position = Vector2(271.7193, 393.1429)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon30" type="Sprite2D" parent="Icon"]
+position = Vector2(143.7193, 391.50537)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon31" type="Sprite2D" parent="Icon"]
+position = Vector2(785.4035, 391.64185)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon32" type="Sprite2D" parent="Icon"]
+position = Vector2(1044.772, 394.7804)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon33" type="Sprite2D" parent="Icon"]
+position = Vector2(914.5263, 392.3241)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon34" type="Sprite2D" parent="Icon"]
+position = Vector2(400.8421, 391.64185)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon35" type="Sprite2D" parent="Icon"]
+position = Vector2(657.9649, 393.96164)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Icon36" type="Sprite2D" parent="Icon"]
+position = Vector2(529.9649, 392.3241)
+scale = Vector2(1, 1.0000001)
+texture = ExtResource("1_b5tta")
+
+[node name="Player" parent="." instance=ExtResource("1_acn4n")]
+position = Vector2(57, 56)
