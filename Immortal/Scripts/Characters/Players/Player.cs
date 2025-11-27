@@ -18,8 +18,9 @@ namespace RpgGame.Scripts.Characters.Players
 
         public float maxStamina = 100;
         public float curStamina = 100;
-        public float staminaRecoverPerSec = 10;//每秒恢复量
+        public float staminaRecoverPerSec = 50;//每秒恢复量
         public float rollStamina = 20f;
+        [Export] public ProgressBar staminaProgressBar;
 
         [Export]
         public AnimatedSprite2D anim;
@@ -33,6 +34,8 @@ namespace RpgGame.Scripts.Characters.Players
         public override void _Process(double delta)
         {
             moveStateMachine.curState.Update((float)delta);
+            staminaProgressBar.MaxValue = maxStamina;
+            staminaProgressBar.Value = curStamina;
             //attackStateMachine.curState.Update(delta);
             //GD.Print("moveStateMachine.curState" + moveStateMachine.curState);
         }

@@ -214,8 +214,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("staminaProgressBar", "anim")]
 script = ExtResource("1_uq38h")
+staminaProgressBar = NodePath("StaminaProgressBar")
 anim = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -227,3 +228,13 @@ animation = &"Walk"
 frame_progress = 0.5709733
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="StaminaProgressBar" type="ProgressBar" parent="."]
+self_modulate = Color(1, 1, 0.007843138, 1)
+offset_left = 52.0
+offset_top = -64.0
+offset_right = 59.0
+offset_bottom = 63.0
+value = 29.87
+fill_mode = 3
+show_percentage = false
