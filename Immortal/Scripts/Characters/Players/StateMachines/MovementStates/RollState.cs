@@ -16,12 +16,16 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
         {
             this.player = player;
         }
+
+
         public override void Enter()
         {
             timer = 0;
+            player.curStamina -= player.rollStamina;
             player.anim.Play("Roll");
         }
-        public override void Update(double delta)
+
+        public override void Update(float delta)
         {
             timer += delta;
             if(timer > duration)
@@ -39,10 +43,12 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
             }
             player.Roll();
         }
-        public override void FixedUpdate(double delta)
+
+        public override void FixedUpdate(float delta)
         {
             
         }
+
         public override void Exit()
         {
             

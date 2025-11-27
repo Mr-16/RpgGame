@@ -18,8 +18,14 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
         {
             player.anim.Play("Run");
         }
-        public override void Update(double delta)
+        public override void Update(float delta)
         {
+            player.curStamina -= 0.1f;
+            if(player.curStamina <= 0)
+            {
+                player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
+                return;
+            }
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir == Vector2.Zero)
             {
@@ -33,7 +39,7 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
             }
             player.Run(moveDir);
         }
-        public override void FixedUpdate(double delta)
+        public override void FixedUpdate(float delta)
         {
         }
         public override void Exit()

@@ -15,7 +15,11 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         private float moveSpeed = 300f;
         private float rollSpeed = 1000f;
-        //private float 
+
+        public float maxStamina = 100;
+        public float curStamina = 100;
+        public float staminaRecoverPerSec = 10;//每秒恢复量
+        public float rollStamina = 20f;
 
         [Export]
         public AnimatedSprite2D anim;
@@ -28,14 +32,15 @@ namespace RpgGame.Scripts.Characters.Players
 
         public override void _Process(double delta)
         {
-            moveStateMachine.curState.Update(delta);
+            moveStateMachine.curState.Update((float)delta);
             //attackStateMachine.curState.Update(delta);
-            GD.Print("moveStateMachine.curState" + moveStateMachine.curState);
+            //GD.Print("moveStateMachine.curState" + moveStateMachine.curState);
         }
         public override void _PhysicsProcess(double delta)
         {
-            moveStateMachine.curState.FixedUpdate(delta);
+            moveStateMachine.curState.FixedUpdate((float)delta);
             //attackStateMachine.curState.FixedUpdate(delta);
+            GD.Print("Stamina" + curStamina);
         }
 
         public void Walk(Vector2 moveDir)
@@ -58,6 +63,18 @@ namespace RpgGame.Scripts.Characters.Players
         {
             Velocity = rollSpeed * curDir;
             MoveAndSlide();
+        }
+
+        public void RecoverStamina(float delta)
+        {
+            if (curStamina < maxStamina)
+            {
+                curStamina += staminaRecoverPerSec * delta;
+            }
+            else
+            {
+                curStamina = maxStamina;
+            }
         }
     }
 }

@@ -18,21 +18,22 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
         {
             player.anim.Play("Idle");
         }
-        public override void Update(double delta)
+        public override void Update(float delta)
         {
+            player.RecoverStamina(delta);
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if(moveDir != Vector2.Zero)
             {
                 player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
                 return;
             }
-            if (Input.IsActionJustPressed("Roll"))
+            if (Input.IsActionJustPressed("Roll") && player.curStamina >= player.rollStamina)
             {
                 player.moveStateMachine.ChangeState(player.moveStateMachine.rollState);
                 return;
             }
         }
-        public override void FixedUpdate(double delta)
+        public override void FixedUpdate(float delta)
         {
         }
         public override void Exit()
