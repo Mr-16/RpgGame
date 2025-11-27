@@ -10,14 +10,21 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
 {
     public class RollState : StateBase
     {
+        double timer = 0;
+        double duration = 0.3;
         public RollState(Player player)
         {
             this.player = player;
         }
         public override void Enter()
         {
+            timer = 0;
             player.anim.Play("Roll");
-            player.GetTree().CreateTimer(0.5).Timeout += () =>
+        }
+        public override void Update(double delta)
+        {
+            timer += delta;
+            if(timer > duration)
             {
                 if (Input.IsActionPressed("Roll"))
                 {
@@ -29,10 +36,7 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
                     player.moveStateMachine.ChangeState(player.moveStateMachine.idleState);
                     return;
                 }
-            };
-        }
-        public override void Update(double delta)
-        {
+            }
             player.Roll();
         }
         public override void FixedUpdate(double delta)
@@ -41,6 +45,7 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
         }
         public override void Exit()
         {
+            
         }
     }
 }

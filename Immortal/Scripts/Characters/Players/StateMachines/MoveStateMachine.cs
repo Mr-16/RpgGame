@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RpgGame.Scripts.Characters.Players.StateMachines
 {
-    public class StateMachine
+    public class MoveStateMachine
     {
         public StateBase curState;
         public IdleState idleState;
@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines
         public RunState runState;
         public RollState rollState;
 
-        public StateMachine(Player player)
+        public MoveStateMachine(Player player)
         {
             idleState = new IdleState(player);
             walkState = new WalkState(player);

@@ -10,12 +10,12 @@ namespace RpgGame.Scripts.Characters.Players
 {
     public partial class Player : CharacterBase
     {
-        public StateMachine moveStateMachine;
-        public StateMachine attackStateMachine;
+        public MoveStateMachine moveStateMachine;
 
         [Export]
         private float moveSpeed = 300f;
-        private float rollSpeed = 300f;
+        private float rollSpeed = 1000f;
+        //private float 
 
         [Export]
         public AnimatedSprite2D anim;
@@ -23,19 +23,19 @@ namespace RpgGame.Scripts.Characters.Players
 
         public override void _Ready()
         {
-            moveStateMachine = new StateMachine(this);
-            attackStateMachine = new StateMachine(this);
+            moveStateMachine = new MoveStateMachine(this);
         }
 
         public override void _Process(double delta)
         {
             moveStateMachine.curState.Update(delta);
-            attackStateMachine.curState.Update(delta);
+            //attackStateMachine.curState.Update(delta);
+            GD.Print("moveStateMachine.curState" + moveStateMachine.curState);
         }
         public override void _PhysicsProcess(double delta)
         {
             moveStateMachine.curState.FixedUpdate(delta);
-            attackStateMachine.curState.FixedUpdate(delta);
+            //attackStateMachine.curState.FixedUpdate(delta);
         }
 
         public void Walk(Vector2 moveDir)
