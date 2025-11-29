@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Godot;
 using RpgGame.Scripts.Characters.Players.StateMachines;
 
-namespace RpgGame.Scripts.Characters.Players.States.MovementStates
+namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
 {
     public class RollState : StateBase
     {

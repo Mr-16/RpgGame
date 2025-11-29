@@ -1,13 +1,63 @@
-[gd_scene load_steps=33 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=47 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
+[ext_resource type="Texture2D" uid="uid://c3aavsxepq1xu" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack1.png" id="2_obb2g"]
 [ext_resource type="Texture2D" uid="uid://berck4kasqmn3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Guard.png" id="3_b7en5"]
+[ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="3_oivwb"]
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7en5"]
 radius = 35.0
 height = 104.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_beamy"]
+atlas = ExtResource("2_obb2g")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_py71i"]
+atlas = ExtResource("2_obb2g")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0jxq"]
+atlas = ExtResource("2_obb2g")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67hf1"]
+atlas = ExtResource("2_obb2g")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqw4c"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(0, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukx0q"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(192, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf2va"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(384, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5kah"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(576, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt81i"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(768, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdghp"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(960, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwsl5"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(1152, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cn8tp"]
+atlas = ExtResource("3_oivwb")
+region = Rect2(1344, 0, 192, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_onnvg"]
 atlas = ExtResource("2_cq5ir")
@@ -117,6 +167,52 @@ region = Rect2(960, 0, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_beamy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_py71i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0jxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67hf1")
+}],
+"loop": false,
+"name": &"Atk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqw4c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukx0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kf2va")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5kah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pt81i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdghp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwsl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cn8tp")
+}],
+"loop": false,
+"name": &"Dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_onnvg")
 }, {
 "duration": 1.0,
@@ -224,8 +320,9 @@ shape = SubResource("CapsuleShape2D_b7en5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tp737")
-animation = &"Walk"
-frame_progress = 0.5709733
+animation = &"Atk"
+frame = 3
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

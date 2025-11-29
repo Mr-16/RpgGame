@@ -1,43 +1,37 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Godot;
-using RpgGame.Scripts.Characters.Players.StateMachines;
 
 namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
 {
-    public class RunState : StateBase
+    public class DeadState : StateBase
     {
-        public RunState(Player player)
+        public DeadState(Player player)
         {
             this.player = player;
         }
+
         public override void Enter()
         {
-            player.anim.Play("Run");
+            player.anim.Play("Dead");
         }
         public override void Update(float delta)
         {
-            player.curStamina -= 0.1f;
-            if(player.curStamina <= 0)
-            {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
-                return;
-            }
+            player.RecoverStamina(delta);
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-            if (moveDir == Vector2.Zero)
-            {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.idleState);
-                return;
-            }
-            if (!Input.IsActionPressed("Roll"))
+            if (moveDir != Vector2.Zero)
             {
                 player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
                 return;
             }
-            player.Run(moveDir);
+            if (Input.IsActionJustPressed("Roll") && player.curStamina >= player.rollStamina)
+            {
+                player.moveStateMachine.ChangeState(player.moveStateMachine.rollState);
+                return;
+            }
         }
         public override void FixedUpdate(float delta)
         {

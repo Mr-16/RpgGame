@@ -1,4 +1,4 @@
-using RpgGame.Scripts.Characters.Players.States.MovementStates;
+using RpgGame.Scripts.Characters.Players.StateMachines.MovementStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,6 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines
             walkState = new WalkState(player);
             runState = new RunState(player);
             rollState = new RollState(player);
-            ChangeState(idleState);
         }
         
         public void ChangeState(StateBase newState)

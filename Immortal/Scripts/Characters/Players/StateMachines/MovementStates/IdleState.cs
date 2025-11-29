@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Godot;
 using RpgGame.Scripts.Characters.Players.StateMachines;
 
-namespace RpgGame.Scripts.Characters.Players.States.MovementStates
+namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
 {
     public class IdleState : StateBase
     {
@@ -16,7 +16,11 @@ namespace RpgGame.Scripts.Characters.Players.States.MovementStates
         }
         public override void Enter()
         {
-            player.anim.Play("Idle");
+            if (player.combatStateMachine.curState != player.combatStateMachine.atkState)
+            {
+                player.anim.Play("Idle");
+
+            }
         }
         public override void Update(float delta)
         {
