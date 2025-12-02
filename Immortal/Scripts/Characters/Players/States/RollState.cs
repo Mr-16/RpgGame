@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Godot;
-using RpgGame.Scripts.Characters.Players.StateMachines;
 
-namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
+namespace RpgGame.Scripts.Characters.Players.States
 {
     public class RollState : StateBase
     {
@@ -23,25 +22,25 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
             timer = 0;
             player.curStamina -= player.rollStamina;
             player.anim.Play("Roll");
-            if(player.combatStateMachine.curState == player.combatStateMachine.atkState)
+            if (player.stateMachine.curState == player.stateMachine.atkState)
             {
-                player.combatStateMachine.ChangeState(player.combatStateMachine.idleAtkState);
+                player.stateMachine.ChangeState(player.stateMachine.idleState);
             }
         }
 
         public override void Update(float delta)
         {
             timer += delta;
-            if(timer > duration)
+            if (timer > duration)
             {
                 if (Input.IsActionPressed("Roll"))
                 {
-                    player.moveStateMachine.ChangeState(player.moveStateMachine.runState);
+                    player.stateMachine.ChangeState(player.stateMachine.runState);
                     return;
                 }
                 else
                 {
-                    player.moveStateMachine.ChangeState(player.moveStateMachine.idleState);
+                    player.stateMachine.ChangeState(player.stateMachine.idleState);
                     return;
                 }
             }
@@ -50,12 +49,12 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
 
         public override void FixedUpdate(float delta)
         {
-            
+
         }
 
         public override void Exit()
         {
-            
+
         }
     }
 }

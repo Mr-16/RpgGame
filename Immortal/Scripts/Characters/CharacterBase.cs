@@ -1,5 +1,4 @@
 using Godot;
-using RpgGame.Scripts.Characters.Players.StateMachines;
 using System;
 
 public partial class CharacterBase : CharacterBody2D

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Godot;
-using RpgGame.Scripts.Characters.Players.StateMachines;
 
-namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
+namespace RpgGame.Scripts.Characters.Players.States
 {
     public class RunState : StateBase
     {
@@ -21,20 +20,25 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
         public override void Update(float delta)
         {
             player.curStamina -= 0.1f;
-            if(player.curStamina <= 0)
+            if (player.curStamina <= 0)//没力了, 回去走路
             {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
+                player.stateMachine.ChangeState(player.stateMachine.walkState);
                 return;
             }
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-            if (moveDir == Vector2.Zero)
+            if (moveDir == Vector2.Zero)//不再输入, 回idle
             {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.idleState);
+                player.stateMachine.ChangeState(player.stateMachine.idleState);
                 return;
             }
-            if (!Input.IsActionPressed("Roll"))
+            if (!Input.IsActionPressed("Roll"))//不再按着k, 回去走路
             {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
+                player.stateMachine.ChangeState(player.stateMachine.walkState);
+                return;
+            }
+            if (Input.IsActionJustPressed("Atk"))
+            {
+                player.stateMachine.ChangeState(player.stateMachine.atkState);
                 return;
             }
             player.Run(moveDir);

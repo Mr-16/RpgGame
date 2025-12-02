@@ -1,22 +1,21 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 
-namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
+namespace RpgGame.Scripts.Characters.Players.States
 {
-    public class DeadState : StateBase
+    public class IdleState : StateBase
     {
-        public DeadState(Player player)
+        public IdleState(Player player)
         {
             this.player = player;
         }
-
         public override void Enter()
         {
-            player.anim.Play("Dead");
+            player.anim.Play("Idle");
         }
         public override void Update(float delta)
         {
@@ -24,12 +23,17 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir != Vector2.Zero)
             {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.walkState);
+                player.stateMachine.ChangeState(player.stateMachine.walkState);
                 return;
             }
             if (Input.IsActionJustPressed("Roll") && player.curStamina >= player.rollStamina)
             {
-                player.moveStateMachine.ChangeState(player.moveStateMachine.rollState);
+                player.stateMachine.ChangeState(player.stateMachine.rollState);
+                return;
+            }
+            if (Input.IsActionJustPressed("Atk"))
+            {
+                player.stateMachine.ChangeState(player.stateMachine.atkState);
                 return;
             }
         }

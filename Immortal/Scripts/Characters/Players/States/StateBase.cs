@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RpgGame.Scripts.Characters.Players;
 
-namespace RpgGame.Scripts.Characters.Players.StateMachines
+namespace RpgGame.Scripts.Characters.Players.States
 {
     public abstract class StateBase
     {

@@ -1,10 +1,11 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
+namespace RpgGame.Scripts.Characters.Players.States
 {
     public class AtkState : StateBase
     {
@@ -22,12 +23,17 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
 
         private void Anim_AnimationFinished()
         {
-            player.combatStateMachine.ChangeState(player.combatStateMachine.idleAtkState);
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
         }
 
         public override void Update(float delta)
         {
-
+            if (player.isMoveAtkEnable)//可以跑打
+            {
+                Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
+                player.Walk(moveDir);
+            }
+            
         }
 
         public override void FixedUpdate(float delta)
@@ -38,17 +44,17 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
         {
             player.anim.AnimationFinished -= Anim_AnimationFinished;
 
-            if (player.moveStateMachine.curState == player.moveStateMachine.idleState)
+            if (player.stateMachine.curState == player.stateMachine.idleState)
             {
                 player.anim.Play("Idle");
                 return;
             }
-            if (player.moveStateMachine.curState == player.moveStateMachine.walkState)
+            if (player.stateMachine.curState == player.stateMachine.walkState)
             {
                 player.anim.Play("Walk");
                 return;
             }
-            if (player.moveStateMachine.curState == player.moveStateMachine.runState)
+            if (player.stateMachine.curState == player.stateMachine.runState)
             {
                 player.anim.Play("Run");
                 return;
