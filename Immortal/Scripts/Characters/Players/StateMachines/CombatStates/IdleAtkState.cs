@@ -23,24 +23,24 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
 
         public override void Update(float delta)
         {
-            if (Input.IsActionJustPressed("Atk"))
+            if (Input.IsActionJustPressed("Atk") && player.moveStateMachine.curState != player.moveStateMachine.rollState)
             {
                 player.combatStateMachine.ChangeState(player.combatStateMachine.atkState);
                 return;
             }
-            if (Input.IsActionJustPressed("Skill_1"))
+            if (Input.IsActionJustPressed("Skill_1") && player.moveStateMachine.curState != player.moveStateMachine.rollState)
             {
                 player.curSkillIndex = 0;
                 player.combatStateMachine.ChangeState(player.combatStateMachine.skillState);
                 return;
             }
-            if (Input.IsActionJustPressed("Skill_2"))
+            if (Input.IsActionJustPressed("Skill_2") && player.moveStateMachine.curState != player.moveStateMachine.rollState)
             {
                 player.curSkillIndex = 1;
                 player.combatStateMachine.ChangeState(player.combatStateMachine.skillState);
                 return;
             }
-            if (Input.IsActionJustPressed("Skill_3"))
+            if (Input.IsActionJustPressed("Skill_3") && player.moveStateMachine.curState != player.moveStateMachine.rollState)
             {
                 player.curSkillIndex = 2;
                 player.combatStateMachine.ChangeState(player.combatStateMachine.skillState);

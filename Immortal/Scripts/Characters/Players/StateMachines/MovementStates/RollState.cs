@@ -23,6 +23,10 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.MovementStates
             timer = 0;
             player.curStamina -= player.rollStamina;
             player.anim.Play("Roll");
+            if(player.combatStateMachine.curState == player.combatStateMachine.atkState)
+            {
+                player.combatStateMachine.ChangeState(player.combatStateMachine.idleAtkState);
+            }
         }
 
         public override void Update(float delta)

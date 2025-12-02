@@ -9,8 +9,6 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
     public class AtkState : StateBase
     {
 
-
-
         public AtkState(Player player)
         {
             this.player = player;
@@ -24,13 +22,12 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
 
         private void Anim_AnimationFinished()
         {
-            player.anim.AnimationFinished -= Anim_AnimationFinished;
-
             player.combatStateMachine.ChangeState(player.combatStateMachine.idleAtkState);
         }
 
         public override void Update(float delta)
         {
+
         }
 
         public override void FixedUpdate(float delta)
@@ -39,7 +36,9 @@ namespace RpgGame.Scripts.Characters.Players.StateMachines.CombatStates
 
         public override void Exit()
         {
-            if(player.moveStateMachine.curState == player.moveStateMachine.idleState)
+            player.anim.AnimationFinished -= Anim_AnimationFinished;
+
+            if (player.moveStateMachine.curState == player.moveStateMachine.idleState)
             {
                 player.anim.Play("Idle");
                 return;
