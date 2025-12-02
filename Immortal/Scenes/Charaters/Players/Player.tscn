@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=49 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -310,6 +310,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obb2g"]
+bg_color = Color(0.2763919, 0.23732501, 6.256998e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oivwb"]
+bg_color = Color(0.8854759, 0.74905115, 0, 1)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("staminaProgressBar", "anim")]
 script = ExtResource("1_uq38h")
 staminaProgressBar = NodePath("StaminaProgressBar")
@@ -327,11 +333,12 @@ frame_progress = 1.0
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="StaminaProgressBar" type="ProgressBar" parent="."]
-self_modulate = Color(1, 1, 0.007843138, 1)
-offset_left = 52.0
-offset_top = -64.0
-offset_right = 59.0
-offset_bottom = 63.0
+offset_left = 49.0
+offset_top = -79.0
+offset_right = 61.0
+offset_bottom = 60.0
+theme_override_styles/background = SubResource("StyleBoxFlat_obb2g")
+theme_override_styles/fill = SubResource("StyleBoxFlat_oivwb")
 value = 29.87
 fill_mode = 3
 show_percentage = false

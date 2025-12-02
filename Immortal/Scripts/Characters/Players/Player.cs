@@ -27,6 +27,7 @@ namespace RpgGame.Scripts.Characters.Players
 
         public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
 
+        [Export]
         public bool isMoveAtkEnable = true;
 
         public override void _Ready()
