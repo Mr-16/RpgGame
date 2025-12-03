@@ -1,3 +1,4 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +9,37 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class PatrolState : StateBase
     {
-        public PatrolState(MeleeEnemy enemy)
-        {
-            this.enemy = enemy;
-        }
+        float range = 50;//巡逻范围, 在出生点的这个范围内随机生成巡逻点
+        Vector2 curTarPos;
+        Random rd = null;
+
+        public PatrolState(MeleeEnemy enemy) => this.enemy = enemy;
 
         public override void Enter()
         {
+            if(rd == null) rd = new Random();
+            curTarPos.X = rd.Next((int)(enemy.startPos.X - range), (int)(enemy.startPos.X + range));
+            curTarPos.Y = rd.Next((int)(enemy.startPos.Y - range), (int)(enemy.startPos.Y + range));
+
+            enemy.anim.Play("Patrol");
         }
 
-        public override void Exit()
+        public override void Update(float delta)
         {
+            if(enemy.GlobalPosition.DistanceTo(curTarPos) < 1)
+            {
+                enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+            }
+            enemy.PatrolTo(curTarPos);
         }
 
         public override void FixedUpdate(float delta)
         {
         }
 
-        public override void Update(float delta)
+        
+
+        public override void Exit()
         {
         }
     }

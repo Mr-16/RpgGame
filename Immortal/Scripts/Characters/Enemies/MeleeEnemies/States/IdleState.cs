@@ -8,6 +8,9 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class IdleState : StateBase
     {
+        float timer = 0;
+        float duration = 0.5f;
+
         public IdleState(MeleeEnemy enemy)
         {
             this.enemy = enemy;
@@ -18,16 +21,23 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             enemy.anim.Play("Idle");
         }
 
+        public override void Update(float delta)
+        {
+            timer += delta;
+            if(timer >= duration)
+            {
+                timer = 0;
+                enemy.stateMachine.ChangeState(enemy.stateMachine.patrolState);
+            }
+        }
+        
+        public override void FixedUpdate(float delta)
+        {
+        }
+        
         public override void Exit()
         {
         }
 
-        public override void FixedUpdate(float delta)
-        {
-        }
-
-        public override void Update(float delta)
-        {
-        }
     }
 }
