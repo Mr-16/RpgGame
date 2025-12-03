@@ -9,7 +9,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class PatrolState : StateBase
     {
-        float range = 50;//巡逻范围, 在出生点的这个范围内随机生成巡逻点
+        float range = 300;//巡逻范围, 在出生点的这个范围内随机生成巡逻点
         Vector2 curTarPos;
         Random rd = null;
 
@@ -26,7 +26,13 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Update(float delta)
         {
-            if(enemy.GlobalPosition.DistanceTo(curTarPos) < 1)
+            if (enemy.chaseTarget != null)
+            {
+                enemy.stateMachine.ChangeState(enemy.stateMachine.chaseState);
+                return;
+            }
+
+            if (enemy.GlobalPosition.DistanceTo(curTarPos) < 1)
             {
                 enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
             }

@@ -8,25 +8,30 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class ChaseState : StateBase
     {
-        public ChaseState(MeleeEnemy enemy)
-        {
-            this.enemy = enemy;
-        }
+        public ChaseState(MeleeEnemy enemy) => this.enemy = enemy;
 
         public override void Enter()
         {
+            enemy.anim.Play("Chase");
         }
-
+        public override void Update(float delta)
+        {
+            if(enemy.chaseTarget == null)
+            {
+                enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+                return;
+            }
+            enemy.Chase();
+        }
+        public override void FixedUpdate(float delta)
+        {
+        }
         public override void Exit()
         {
         }
 
-        public override void FixedUpdate(float delta)
-        {
-        }
+        
 
-        public override void Update(float delta)
-        {
-        }
+        
     }
 }

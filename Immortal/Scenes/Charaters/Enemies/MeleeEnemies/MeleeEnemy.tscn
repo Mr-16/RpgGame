@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://7p5ygkkuunr2"]
+[gd_scene load_steps=33 format=3 uid="uid://7p5ygkkuunr2"]
 
 [ext_resource type="Texture2D" uid="uid://dbg3rbxpksit3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="1_1kamg"]
 [ext_resource type="Texture2D" uid="uid://db2cci1jm0c5d" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="2_jk3o0"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://ddicl624bv3rn" path="res://Scripts/Characters/Enemies/MeleeEnemies/MeleeEnemy.cs" id="2_r2bah"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r2bah"]
+radius = 30.0
+height = 100.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4wgew"]
 atlas = ExtResource("2_pmv0k")
@@ -198,15 +200,37 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("anim")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_pmv0k"]
+radius = 252.00793
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1hut"]
+radius = 84.48077
+
+[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("anim", "chaseArea", "atkArea")]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("2_r2bah")
 anim = NodePath("AnimatedSprite2D")
+chaseArea = NodePath("ChaseArea")
+atkArea = NodePath("AtkArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
 shape = SubResource("CapsuleShape2D_r2bah")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
 animation = &"Atk"
-frame_progress = 0.70057225
+frame_progress = 0.56475544
+
+[node name="ChaseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseArea"]
+shape = SubResource("CircleShape2D_pmv0k")
+
+[node name="AtkArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea"]
+shape = SubResource("CircleShape2D_y1hut")
+debug_color = Color(0.9901194, 0, 0.28787816, 0.41960785)

@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
 
         [Export]
         public AnimatedSprite2D anim;
+        [Export]
+        public Area2D chaseArea;
+        [Export]
+        public Area2D atkArea;
+        public Player chaseTarget = null;
+        public Player atkTarget = null;
 
         [Export]
         public float patrolSpeed = 100;
@@ -26,7 +33,35 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             base._Ready();
             stateMachine = new StateMachine(this);
             startPos = GlobalPosition;
+            chaseArea.BodyEntered += ChaseArea_BodyEntered;
+            chaseArea.BodyExited += ChaseArea_BodyExited;
+            atkArea.BodyEntered += AtkArea_BodyEntered;
+            atkArea.BodyExited += AtkArea_BodyExited;
         }
+        private void ChaseArea_BodyEntered(Node2D body)
+        {
+            if (body is not Player player) return;
+            chaseTarget = player;
+        }
+        private void ChaseArea_BodyExited(Node2D body)
+        {
+            if (body is not Player player) return;
+            chaseTarget = null;
+        }
+
+        private void AtkArea_BodyEntered(Node2D body)
+        {
+            if (body is not Player player) return;
+            atkTarget = player;
+        }
+        private void AtkArea_BodyExited(Node2D body)
+        {
+            if (body is not Player player) return;
+            atkTarget = null;
+        }
+        
+
+        
 
         public override void _Process(double delta)
         {
@@ -46,10 +81,10 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             Velocity = (tarPos - GlobalPosition).Normalized() * patrolSpeed;
             MoveAndSlide();
         }
-        //public void ChaseTo(Vector2 tarPos)
-        //{
-        //    Velocity = (tarPos - GlobalPosition).Normalized() * chaseSpeed;
-        //    MoveAndSlide();
-        //}
+        public void Chase()
+        {
+            Velocity = (chaseTarget.GlobalPosition - GlobalPosition).Normalized() * chaseSpeed;
+            MoveAndSlide();
+        }
     }
 }

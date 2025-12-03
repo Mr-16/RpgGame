@@ -23,11 +23,18 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Update(float delta)
         {
+            if(enemy.chaseTarget != null)
+            {
+                enemy.stateMachine.ChangeState(enemy.stateMachine.chaseState);
+                return;
+            }
+
             timer += delta;
             if(timer >= duration)
             {
                 timer = 0;
                 enemy.stateMachine.ChangeState(enemy.stateMachine.patrolState);
+                return;
             }
         }
         
