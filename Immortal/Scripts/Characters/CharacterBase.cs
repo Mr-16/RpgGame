@@ -3,7 +3,7 @@ using System;
 
 public partial class CharacterBase : CharacterBody2D
 {
-    
+    public Vector2 curDir = Vector2.Right;
 
     public override void _Ready()
 	{

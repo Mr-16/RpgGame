@@ -120,7 +120,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qc76p")
 }],
-"loop": true,
+"loop": false,
 "name": &"Atk",
 "speed": 5.0
 }, {
@@ -222,7 +222,8 @@ shape = SubResource("CapsuleShape2D_r2bah")
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
 animation = &"Atk"
-frame_progress = 0.56475544
+frame = 3
+frame_progress = 1.0
 
 [node name="ChaseArea" type="Area2D" parent="."]
 

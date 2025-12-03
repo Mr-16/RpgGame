@@ -1,3 +1,4 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,25 +9,32 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class AtkState : StateBase
     {
-        public AtkState(MeleeEnemy enemy)
-        {
-            this.enemy = enemy;
-        }
+        public AtkState(MeleeEnemy enemy) => this.enemy = enemy;
 
         public override void Enter()
         {
+            enemy.anim.Play("Atk");
+            enemy.anim.AnimationFinished += Anim_AnimationFinished;
         }
 
-        public override void Exit()
+        private void Anim_AnimationFinished()
         {
-        }
-
-        public override void FixedUpdate(float delta)
-        {
+            GD.Print("atk finish!!!");
+            enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+            return;
         }
 
         public override void Update(float delta)
         {
+            
         }
+        public override void FixedUpdate(float delta)
+        {
+        }
+        public override void Exit()
+        {
+            enemy.anim.AnimationFinished -= Anim_AnimationFinished;
+        }
+
     }
 }

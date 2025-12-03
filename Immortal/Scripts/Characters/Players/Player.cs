@@ -23,7 +23,7 @@ namespace RpgGame.Scripts.Characters.Players
 
         [Export]
         public AnimatedSprite2D anim;
-        public Vector2 curDir = Vector2.Right;
+        
 
         public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
 
@@ -42,7 +42,7 @@ namespace RpgGame.Scripts.Characters.Players
 
             staminaProgressBar.MaxValue = maxStamina;
             staminaProgressBar.Value = curStamina;
-            GD.Print("curState" + stateMachine.curState);
+            //GD.Print("curState" + stateMachine.curState);
         }
         public override void _PhysicsProcess(double delta)
         {
