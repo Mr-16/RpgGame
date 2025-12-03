@@ -16,6 +16,7 @@ namespace RpgGame.Scripts.Characters.Players
         public RollState rollState;
         public AtkState atkState;
         public SkillState skillState;
+        public DeathState deathState;
 
         public StateMachine(Player player)
         {

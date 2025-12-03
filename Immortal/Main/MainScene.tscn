@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtkh8030dvaay"]
+[gd_scene load_steps=4 format=3 uid="uid://dtkh8030dvaay"]
 
 [ext_resource type="PackedScene" uid="uid://do7ba1r70tslw" path="res://Scenes/Charaters/Players/Player.tscn" id="1_acn4n"]
 [ext_resource type="Texture2D" uid="uid://d120xglayjjgp" path="res://icon.svg" id="1_b5tta"]
+[ext_resource type="PackedScene" uid="uid://7p5ygkkuunr2" path="res://Scenes/Charaters/Enemies/MeleeEnemies/MeleeEnemy.tscn" id="3_1whlm"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -493,3 +494,12 @@ texture = ExtResource("1_b5tta")
 
 [node name="Player" parent="." instance=ExtResource("1_acn4n")]
 position = Vector2(57, 56)
+
+[node name="MeleeEnemy" parent="." instance=ExtResource("3_1whlm")]
+position = Vector2(-568, 40)
+
+[node name="MeleeEnemy2" parent="." instance=ExtResource("3_1whlm")]
+position = Vector2(-568, 176)
+
+[node name="MeleeEnemy3" parent="." instance=ExtResource("3_1whlm")]
+position = Vector2(-584, -112)

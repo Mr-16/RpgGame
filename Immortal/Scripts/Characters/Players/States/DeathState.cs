@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace RpgGame.Scripts.Characters.Players.States
 {
-    public class DeadState : StateBase
+    public class DeathState : StateBase
     {
-        public DeadState(Player player)
+        public DeathState(Player player)
         {
             this.player = player;
         }
