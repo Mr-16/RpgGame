@@ -11,8 +11,8 @@ namespace RpgGame.Scripts.Characters.Players
     {
         public StateMachine stateMachine;
 
-        [Export]
-        private float moveSpeed = 200f;
+        //[Export]
+        //private float moveSpeed = 200f;
         private float rollSpeed = 800f;
 
         public float maxStamina = 200;

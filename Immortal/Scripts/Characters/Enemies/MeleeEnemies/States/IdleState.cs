@@ -9,7 +9,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
     public class IdleState : StateBase
     {
         float timer = 0;
-        float duration = 0.5f;
+        float duration = 1f;
 
         public IdleState(MeleeEnemy enemy)
         {
