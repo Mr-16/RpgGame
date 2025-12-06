@@ -8,7 +8,7 @@ namespace RpgGame.Scripts.Characters.Players
 {
     public abstract class StateBase
     {
-        public Player player;
+        protected Player player;
 
         public abstract void Enter();
         public abstract void Update(float delta);

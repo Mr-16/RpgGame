@@ -1,8 +1,10 @@
 using Godot;
+using RpgGame.Scripts.Characters.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,8 +19,11 @@ namespace RpgGame.Scripts.Characters.Players
         public ProgressBar StamPb;
 
         [Export]
-        public AnimatedSprite2D anim;
-        
+        public AnimatedSprite2D Anim;
+
+        [Export]
+        public Area2D DamageArea;
+        public List<Enemy> DmgEnemyList = new List<Enemy>();
 
         public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
 
@@ -29,7 +34,23 @@ namespace RpgGame.Scripts.Characters.Players
         {
             Sm = new StateMachine(this);
             InitAttribute();
+            DamageArea.BodyEntered += DamageArea_BodyEntered;
+            DamageArea.BodyExited += DamageArea_BodyExited;
         }
+        private void DamageArea_BodyEntered(Node2D body)
+        {
+            if (body is not Enemy enemy) return;
+            DmgEnemyList.Add(enemy);
+            //GD.Print("enemy entered");
+        }
+        private void DamageArea_BodyExited(Node2D body)
+        {
+            if (body is not Enemy enemy) return;
+            DmgEnemyList.Remove(enemy);
+            //GD.Print("enemy exited");
+        }
+
+        
 
         public override void _Process(double delta)
         {
@@ -101,17 +122,21 @@ namespace RpgGame.Scripts.Characters.Players
 
         public void Walk(Vector2 moveDir)
         {
+            if (moveDir == Vector2.Zero) return;
             CurDir = moveDir;
-            if (CurDir.X < 0) anim.FlipH = true;
-            else anim.FlipH = false;
+            if (CurDir.X < 0) Anim.FlipH = true;
+            else if (CurDir.X > 0) Anim.FlipH = false;
+            DamageArea.Rotation = CurDir.Angle();
             Velocity = FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
         public void Run(Vector2 moveDir)
         {
+            if (moveDir == Vector2.Zero) return;
             CurDir = moveDir;
-            if (CurDir.X < 0) anim.FlipH = true;
-            else anim.FlipH = false;
+            if (CurDir.X < 0) Anim.FlipH = true;
+            else if(CurDir.X > 0) Anim.FlipH = false;
+            DamageArea.Rotation = CurDir.Angle();
             Velocity = 2 * FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
@@ -121,7 +146,7 @@ namespace RpgGame.Scripts.Characters.Players
             MoveAndSlide();
         }
 
-        public void RecoverStamina(float delta)
+        public void RegenStam(float delta)
         {
             if (CurStam < FinalAttr.MaxStam)
             {

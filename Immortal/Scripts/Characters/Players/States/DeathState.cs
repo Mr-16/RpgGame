@@ -16,11 +16,11 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            player.anim.Play("Dead");
+            player.Anim.Play("Dead");
         }
         public override void Update(float delta)
         {
-            player.RecoverStamina(delta);
+            player.RegenStam(delta);
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir != Vector2.Zero)
             {

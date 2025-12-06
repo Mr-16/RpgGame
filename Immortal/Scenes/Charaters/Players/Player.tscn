@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=50 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -316,10 +316,14 @@ bg_color = Color(0.2763919, 0.23732501, 6.256998e-07, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oivwb"]
 bg_color = Color(0.8854759, 0.74905115, 0, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "anim")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obb2g"]
+size = Vector2(76, 116)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "DamageArea")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
-anim = NodePath("AnimatedSprite2D")
+Anim = NodePath("AnimatedSprite2D")
+DamageArea = NodePath("DamageArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_b7en5")
@@ -343,3 +347,13 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_oivwb")
 value = 29.87
 fill_mode = 3
 show_percentage = false
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(51, -6)
+shape = SubResource("RectangleShape2D_obb2g")
+debug_color = Color(0.66433716, 0, 0.18002993, 0.41960785)

@@ -9,6 +9,8 @@ namespace RpgGame.Scripts.Characters.Players.States
 {
     public class AtkState : StateBase
     {
+        private float speedScale;
+        public int AtkFrame = 2;
 
         public AtkState(Player player)
         {
@@ -17,8 +19,22 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            player.anim.Play("Atk");
-            player.anim.AnimationFinished += Anim_AnimationFinished;
+            player.DamageArea.Monitoring = true;
+            speedScale = player.Anim.SpeedScale;
+            player.Anim.SpeedScale = 1 + player.FinalAttr.AtkSpeed;
+            player.Anim.Play("Atk");
+            player.Anim.AnimationFinished += Anim_AnimationFinished;
+            player.Anim.FrameChanged += Anim_FrameChanged;
+        }
+
+        private void Anim_FrameChanged()
+        {
+            if(player.Anim.Frame == AtkFrame)
+            {
+                GD.Print(player.DmgEnemyList.Count);
+            }
+            //GD.Print(player.Anim.Frame);
+            //throw new NotImplementedException();
         }
 
         private void Anim_AnimationFinished()
@@ -33,7 +49,7 @@ namespace RpgGame.Scripts.Characters.Players.States
                 Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
                 player.Walk(moveDir);
             }
-            
+
         }
 
         public override void FixedUpdate(float delta)
@@ -42,21 +58,24 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Exit()
         {
-            player.anim.AnimationFinished -= Anim_AnimationFinished;
+            player.DamageArea.Monitoring = false;
+            player.Anim.AnimationFinished -= Anim_AnimationFinished;
+            player.Anim.FrameChanged -= Anim_FrameChanged;
+            player.Anim.SpeedScale = speedScale;
 
             if (player.Sm.curState == player.Sm.idleState)
             {
-                player.anim.Play("Idle");
+                player.Anim.Play("Idle");
                 return;
             }
             if (player.Sm.curState == player.Sm.walkState)
             {
-                player.anim.Play("Walk");
+                player.Anim.Play("Walk");
                 return;
             }
             if (player.Sm.curState == player.Sm.runState)
             {
-                player.anim.Play("Run");
+                player.Anim.Play("Run");
                 return;
             }
         }

@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         }
         public override void Enter()
         {
-            player.anim.Play("Run");
+            player.Anim.Play("Run");
         }
         public override void Update(float delta)
         {

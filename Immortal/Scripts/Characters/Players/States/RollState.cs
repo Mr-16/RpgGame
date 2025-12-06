@@ -23,10 +23,11 @@ namespace RpgGame.Scripts.Characters.Players.States
             if(player.CurStam < rollCost)
             {
                 player.Sm.ChangeState(player.Sm.idleState);
+                return;
             }
             timer = 0;
             player.CurStam -= rollCost;
-            player.anim.Play("Roll");
+            player.Anim.Play("Roll");
             if (player.Sm.curState == player.Sm.atkState)
             {
                 player.Sm.ChangeState(player.Sm.idleState);

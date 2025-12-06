@@ -6,6 +6,11 @@
 
 [node name="MainScene" type="Node2D"]
 
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(-180.00003, 138)
+scale = Vector2(23.6875, 13.09375)
+texture = ExtResource("1_b5tta")
+
 [node name="Player" parent="." instance=ExtResource("1_acn4n")]
 position = Vector2(57, 56)
 
@@ -17,8 +22,3 @@ position = Vector2(-568, 176)
 
 [node name="MeleeEnemy3" parent="." instance=ExtResource("3_1whlm")]
 position = Vector2(-584, -112)
-
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(-180.00003, 138)
-scale = Vector2(23.6875, 13.09375)
-texture = ExtResource("1_b5tta")

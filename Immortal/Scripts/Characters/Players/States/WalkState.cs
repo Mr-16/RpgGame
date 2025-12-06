@@ -18,7 +18,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             if (player.Sm.curState != player.Sm.atkState)
             {
-                player.anim.Play("Walk");
+                player.Anim.Play("Walk");
             }
 
         }
@@ -29,7 +29,7 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.Sm.ChangeState(player.Sm.idleState);
             }
 
-            player.RecoverStamina(delta);
+            player.RegenStam(delta);
 
 
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");

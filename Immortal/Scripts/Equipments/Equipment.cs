@@ -43,7 +43,7 @@ namespace RpgGame.Scripts.Equipments
             Grade = grade;
             Level = level;
 
-            BonusAttr.MaxHealth = 100;
+            BonusAttr.MaxHealth = 5;
         }
     }
 }
