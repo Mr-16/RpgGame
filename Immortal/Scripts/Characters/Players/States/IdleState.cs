@@ -23,17 +23,17 @@ namespace RpgGame.Scripts.Characters.Players.States
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir != Vector2.Zero)
             {
-                player.stateMachine.ChangeState(player.stateMachine.walkState);
+                player.Sm.ChangeState(player.Sm.walkState);
                 return;
             }
-            if (Input.IsActionJustPressed("Roll") && player.curStamina >= player.rollStamina)
+            if (Input.IsActionJustPressed("Roll"))
             {
-                player.stateMachine.ChangeState(player.stateMachine.rollState);
+                player.Sm.ChangeState(player.Sm.rollState);
                 return;
             }
             if (Input.IsActionJustPressed("Atk"))
             {
-                player.stateMachine.ChangeState(player.stateMachine.atkState);
+                player.Sm.ChangeState(player.Sm.atkState);
                 return;
             }
         }

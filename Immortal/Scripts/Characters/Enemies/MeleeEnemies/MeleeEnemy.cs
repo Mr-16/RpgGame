@@ -78,18 +78,18 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
 
         public void PatrolTo(Vector2 tarPos)
         {
-            curDir = (tarPos - GlobalPosition).Normalized();
-            if (curDir.X < 0) anim.FlipH = true;
+            CurDir = (tarPos - GlobalPosition).Normalized();
+            if (CurDir.X < 0) anim.FlipH = true;
             else anim.FlipH = false;
-            Velocity = curDir * patrolSpeed;
+            Velocity = CurDir * patrolSpeed;
             MoveAndSlide();
         }
         public void Chase()
         {
-            curDir = (chaseTarget.GlobalPosition - GlobalPosition).Normalized();
-            if (curDir.X < 0) anim.FlipH = true;
+            CurDir = (chaseTarget.GlobalPosition - GlobalPosition).Normalized();
+            if (CurDir.X < 0) anim.FlipH = true;
             else anim.FlipH = false;
-            Velocity = curDir * chaseSpeed;
+            Velocity = CurDir * chaseSpeed;
             MoveAndSlide();
         }
     }

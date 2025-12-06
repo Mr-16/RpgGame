@@ -11,6 +11,7 @@ namespace RpgGame.Scripts.Characters.Players.States
     {
         double timer = 0;
         double duration = 0.3;
+        private float rollCost = 20;
         public RollState(Player player)
         {
             this.player = player;
@@ -19,12 +20,16 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            timer = 0;
-            player.curStamina -= player.rollStamina;
-            player.anim.Play("Roll");
-            if (player.stateMachine.curState == player.stateMachine.atkState)
+            if(player.CurStam < rollCost)
             {
-                player.stateMachine.ChangeState(player.stateMachine.idleState);
+                player.Sm.ChangeState(player.Sm.idleState);
+            }
+            timer = 0;
+            player.CurStam -= rollCost;
+            player.anim.Play("Roll");
+            if (player.Sm.curState == player.Sm.atkState)
+            {
+                player.Sm.ChangeState(player.Sm.idleState);
             }
         }
 
@@ -35,12 +40,12 @@ namespace RpgGame.Scripts.Characters.Players.States
             {
                 if (Input.IsActionPressed("Roll"))
                 {
-                    player.stateMachine.ChangeState(player.stateMachine.runState);
+                    player.Sm.ChangeState(player.Sm.runState);
                     return;
                 }
                 else
                 {
-                    player.stateMachine.ChangeState(player.stateMachine.idleState);
+                    player.Sm.ChangeState(player.Sm.idleState);
                     return;
                 }
             }

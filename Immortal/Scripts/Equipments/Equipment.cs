@@ -1,3 +1,4 @@
+using RpgGame.Scripts.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,29 +29,21 @@ namespace RpgGame.Scripts.Equipments
 
     public class Equipment
     {
-        public string name;
-        public EquipmentGrade grade;
-        public int level;
+        public string Name;
+        public EquipmentType Type;
+        public EquipmentGrade Grade;
+        public int Level;
 
-        //基础属性加成
-        public float maxHealthBonus;
-        public float maxManaBonus;
-        public float moveSpeedBonus;
+        public CharAttribute BonusAttr = new CharAttribute();
 
-        //攻击属性加成
-        public float atkSpeedBonus;
-        public float phyAtkBonus;
-        public float phyPenBouns;
-        public float magAtkBonus;
-        public float magPenBonus;
-        public float critRateBonus;
-        public float critDamageBonus;
+        public Equipment(string name, EquipmentType type, EquipmentGrade grade, int level)
+        {
+            Name = name;
+            Type = type;
+            Grade = grade;
+            Level = level;
 
-        //防御属性加成
-        public float phyDefBonus;
-        public float magDefBonus;
-
-        //特殊属性加成
-        public float lifeStealBonus;
+            BonusAttr.MaxHealth = 100;
+        }
     }
 }

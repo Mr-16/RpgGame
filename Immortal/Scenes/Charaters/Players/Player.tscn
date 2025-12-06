@@ -316,9 +316,9 @@ bg_color = Color(0.2763919, 0.23732501, 6.256998e-07, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oivwb"]
 bg_color = Color(0.8854759, 0.74905115, 0, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("staminaProgressBar", "anim")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "anim")]
 script = ExtResource("1_uq38h")
-staminaProgressBar = NodePath("StaminaProgressBar")
+StamPb = NodePath("StaminaProgressBar")
 anim = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

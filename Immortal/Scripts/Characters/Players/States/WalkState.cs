@@ -16,7 +16,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         }
         public override void Enter()
         {
-            if (player.stateMachine.curState != player.stateMachine.atkState)
+            if (player.Sm.curState != player.Sm.atkState)
             {
                 player.anim.Play("Walk");
             }
@@ -24,9 +24,9 @@ namespace RpgGame.Scripts.Characters.Players.States
         }
         public override void Update(float delta)
         {
-            if (player.isMoveAtkEnable == false && player.stateMachine.curState == player.stateMachine.atkState)
+            if (player.isMoveAtkEnable == false && player.Sm.curState == player.Sm.atkState)
             {
-                player.stateMachine.ChangeState(player.stateMachine.idleState);
+                player.Sm.ChangeState(player.Sm.idleState);
             }
 
             player.RecoverStamina(delta);
@@ -35,17 +35,17 @@ namespace RpgGame.Scripts.Characters.Players.States
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir == Vector2.Zero)
             {
-                player.stateMachine.ChangeState(player.stateMachine.idleState);
+                player.Sm.ChangeState(player.Sm.idleState);
                 return;
             }
-            if (Input.IsActionJustPressed("Roll") && player.curStamina >= player.rollStamina)
+            if (Input.IsActionJustPressed("Roll"))
             {
-                player.stateMachine.ChangeState(player.stateMachine.rollState);
+                player.Sm.ChangeState(player.Sm.rollState);
                 return;
             }
             if (Input.IsActionJustPressed("Atk"))
             {
-                player.stateMachine.ChangeState(player.stateMachine.atkState);
+                player.Sm.ChangeState(player.Sm.atkState);
                 return;
             }
             player.Walk(moveDir);

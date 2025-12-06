@@ -23,7 +23,7 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         private void Anim_AnimationFinished()
         {
-            player.stateMachine.ChangeState(player.stateMachine.idleState);
+            player.Sm.ChangeState(player.Sm.idleState);
         }
 
         public override void Update(float delta)
@@ -44,17 +44,17 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             player.anim.AnimationFinished -= Anim_AnimationFinished;
 
-            if (player.stateMachine.curState == player.stateMachine.idleState)
+            if (player.Sm.curState == player.Sm.idleState)
             {
                 player.anim.Play("Idle");
                 return;
             }
-            if (player.stateMachine.curState == player.stateMachine.walkState)
+            if (player.Sm.curState == player.Sm.walkState)
             {
                 player.anim.Play("Walk");
                 return;
             }
-            if (player.stateMachine.curState == player.stateMachine.runState)
+            if (player.Sm.curState == player.Sm.runState)
             {
                 player.anim.Play("Run");
                 return;

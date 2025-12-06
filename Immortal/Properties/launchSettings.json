@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "RpgGame": {
+      "commandName": "Project"
+    },
+    "GodotDebug": {
+      "commandName": "Executable",
+      "executablePath": "F:\\Godot\\Godot_v4.5-stable_mono_win64\\Godot_v4.5-stable_mono_win64.exe",
+      "commandLineArgs": "--path . --verbose",
+      "workingDirectory": "."
+    }
+  }
+}

@@ -1,60 +1,25 @@
 using Godot;
+using RpgGame.Scripts.Characters;
 using RpgGame.Scripts.Equipments;
 using System;
 
 public partial class CharacterBase : CharacterBody2D
 {
-    public float curHealth;
-    public float curMana;
-    public Vector2 curDir = Vector2.Right;
-    public int level;
+    public float CurHealth;
+    public float CurMana;
+    public float CurStam;
+    public Vector2 CurDir = Vector2.Right;
+    public int Level;
 
-    //基础
-    public float baseMaxHealth;
-    public float baseMaxMana;
-    public float baseMoveSpeed;
+    //属性分为基础属性和最终属性, 最终属性只在变更时改动(穿卸装备, 加减buff等), 目的是优化性能, 不用每次用都动态计算
+    public CharAttribute BaseAttr = new CharAttribute();
+    public CharAttribute FinalAttr = new CharAttribute();
+    //public EquipmentSystem EquipmentSystem = new EquipmentSystem();
 
-    //攻击
-    public float baseAtkSpeed;
-    public float basePhyAtk;
-    public float basePhyPen;
-    public float baseMagAtk;
-    public float baseMagPen;
-    public float baseCritRate;
-    public float baseCritDamage;
-
-    //防御
-    public float basePhyDef;
-    public float baseMagDef;
-
-    //特殊
-    public float baseLifeSteal;
-
-    //基础
-    public float maxHealth => baseMaxHealth + weapon.maxHealthBonus + ;
-    public float maxMana;
-    public float moveSpeed;
-
-    //攻击
-    public float atkSpeed;
-    public float phyAtk;
-    public float phyPen;
-    public float magAtk;
-    public float magPen;
-    public float critRate;
-    public float critDamage;
-
-    //防御
-    public float phyDef;
-    public float magDef;
-
-    //特殊
-    public float lifeSteal;
-
-    Equipment weapon = null;
-    Equipment helmet = null;
-    Equipment armor = null;
-    Equipment boot = null;
+    public Equipment Weapon = new Equipment("新手剑", EquipmentType.Sword, EquipmentGrade.White, 1);
+    public Equipment Helmet = new Equipment("新手头盔", EquipmentType.Helmet, EquipmentGrade.White, 1);
+    public Equipment Armor = new Equipment("新手盔甲", EquipmentType.Armor, EquipmentGrade.White, 1);
+    public Equipment Boot = new Equipment("新手靴", EquipmentType.Boot, EquipmentGrade.White, 1);
 
     public override void _Ready()
 	{

@@ -28,7 +28,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             timer += delta;
             if (timer < duration) return;
-            player.stateMachine.ChangeState(player.stateMachine.idleState);
+            player.Sm.ChangeState(player.Sm.idleState);
             return;
         }
 
