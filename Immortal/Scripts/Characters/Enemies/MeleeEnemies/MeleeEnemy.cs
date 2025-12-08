@@ -17,6 +17,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         [Export]
         public AnimatedSprite2D anim;
         [Export]
+        public ProgressBar HealthPb;
+        [Export]
         public Area2D chaseArea;
         [Export]
         public Area2D atkArea;
@@ -27,6 +29,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public float patrolSpeed = 100;
         [Export]
         public float chaseSpeed = 200;
+
+        
 
         public override void _Ready()
         {
@@ -66,12 +70,14 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             base._Process(delta);
             stateMachine.curState.Update((float)delta);
 
+            
         }
 
         public override void _PhysicsProcess(double delta)
         {
             base._PhysicsProcess(delta);
             stateMachine.curState.FixedUpdate((float)delta);
+            UpdateUi((float)delta);
         }
 
         private void InitAttr()
@@ -144,5 +150,17 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             Velocity = CurDir * chaseSpeed;
             MoveAndSlide();
         }
+
+        private float uiUpdateTimer = 0;
+        private void UpdateUi(float delta)
+        {
+            uiUpdateTimer += delta;
+            if (uiUpdateTimer < 0.1f) return;
+            uiUpdateTimer = 0;
+            //TODO : 更新ui
+            HealthPb.MaxValue = FinalAttr.MaxHealth;
+            HealthPb.Value = CurHealth;
+        }
+
     }
 }

@@ -32,6 +32,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             if(player.Anim.Frame == AtkFrame)
             {
                 GD.Print(player.DmgEnemyList.Count);
+                player.Atk();
             }
             //GD.Print(player.Anim.Frame);
             //throw new NotImplementedException();

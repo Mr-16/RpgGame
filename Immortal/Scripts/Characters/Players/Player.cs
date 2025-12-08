@@ -55,15 +55,15 @@ namespace RpgGame.Scripts.Characters.Players
         public override void _Process(double delta)
         {
             Sm.curState.Update((float)delta);
-            StamPb.MaxValue = FinalAttr.MaxStam;
-            StamPb.Value = CurStam;
-            //GD.Print("curState" + Sm.curState);
             
+            //GD.Print("curState" + Sm.curState);
+
         }
         public override void _PhysicsProcess(double delta)
         {
             Sm.curState.FixedUpdate((float)delta);
             //GD.Print("Stamina" + curStamina);
+            UpdateUi((float)delta);
         }
 
         private void InitAttribute()
@@ -76,7 +76,7 @@ namespace RpgGame.Scripts.Characters.Players
             BaseAttr.MoveSpeed = 300;
             BaseAttr.RollSpeed = 1000;
             BaseAttr.MaxStam = 200;
-            BaseAttr.StamRegen = 10;//每秒恢复量
+            BaseAttr.StamRegen = 30;//每秒恢复量
             //攻击属性
             BaseAttr.AtkSpeed = 0.1f;
             BaseAttr.PhyAtk = 10;
@@ -157,8 +157,23 @@ namespace RpgGame.Scripts.Characters.Players
                 CurStam = FinalAttr.MaxStam;
             }
         }
-        
-        
+        public void Atk()
+        {
+            for(int i = 0; i < DmgEnemyList.Count; i++)
+            {
+                DmgEnemyList[i].CurHealth -= 10;
+            }
+        }
+        private float uiUpdateTimer = 0;
+        private void UpdateUi(float delta)
+        {
+            uiUpdateTimer += delta;
+            if (uiUpdateTimer < 0.1f) return;
+            uiUpdateTimer = 0;
+            //TODO : 更新ui
+            StamPb.MaxValue = FinalAttr.MaxStam;
+            StamPb.Value = CurStam;
+        }
 
     }
 }
