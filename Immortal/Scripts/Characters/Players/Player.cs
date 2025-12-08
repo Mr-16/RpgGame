@@ -22,7 +22,7 @@ namespace RpgGame.Scripts.Characters.Players
         public AnimatedSprite2D Anim;
 
         [Export]
-        public Area2D DamageArea;
+        public Area2D DmgArea;
         public List<Enemy> DmgEnemyList = new List<Enemy>();
 
         public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
@@ -30,12 +30,15 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public bool isMoveAtkEnable = true;
 
+        [Export]
+        public ProgressBar HealthPb;
+
         public override void _Ready()
         {
             Sm = new StateMachine(this);
             InitAttribute();
-            DamageArea.BodyEntered += DamageArea_BodyEntered;
-            DamageArea.BodyExited += DamageArea_BodyExited;
+            DmgArea.BodyEntered += DamageArea_BodyEntered;
+            DmgArea.BodyExited += DamageArea_BodyExited;
         }
         private void DamageArea_BodyEntered(Node2D body)
         {
@@ -126,7 +129,7 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if (CurDir.X > 0) Anim.FlipH = false;
-            DamageArea.Rotation = CurDir.Angle();
+            DmgArea.Rotation = CurDir.Angle();
             Velocity = FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
@@ -136,7 +139,7 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if(CurDir.X > 0) Anim.FlipH = false;
-            DamageArea.Rotation = CurDir.Angle();
+            DmgArea.Rotation = CurDir.Angle();
             Velocity = 2 * FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
@@ -161,7 +164,7 @@ namespace RpgGame.Scripts.Characters.Players
         {
             for(int i = 0; i < DmgEnemyList.Count; i++)
             {
-                DmgEnemyList[i].CurHealth -= 10;
+                DmgEnemyList[i].TakeDmg(10);
             }
         }
         private float uiUpdateTimer = 0;
@@ -173,6 +176,8 @@ namespace RpgGame.Scripts.Characters.Players
             //TODO : 更新ui
             StamPb.MaxValue = FinalAttr.MaxStam;
             StamPb.Value = CurStam;
+            HealthPb.MaxValue = FinalAttr.MaxHealth;
+            HealthPb.Value = CurHealth;
         }
 
     }

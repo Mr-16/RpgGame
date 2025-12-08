@@ -18,7 +18,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Enter()
         {
-            enemy.anim.Play("Idle");
+            enemy.Anim.Play("Idle");
         }
 
         public override void Update(float delta)

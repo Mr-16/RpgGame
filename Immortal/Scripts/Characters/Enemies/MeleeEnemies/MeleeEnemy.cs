@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public Vector2 startPos;
 
         [Export]
-        public AnimatedSprite2D anim;
+        public AnimatedSprite2D Anim;
         [Export]
         public ProgressBar HealthPb;
         [Export]
@@ -24,6 +24,10 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public Area2D atkArea;
         public Player chaseTarget = null;
         public Player atkTarget = null;
+
+        [Export]
+        public Area2D DmgArea;
+        private Player dmgPlayer;
 
         [Export]
         public float patrolSpeed = 100;
@@ -41,8 +45,22 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             chaseArea.BodyExited += ChaseArea_BodyExited;
             atkArea.BodyEntered += AtkArea_BodyEntered;
             atkArea.BodyExited += AtkArea_BodyExited;
+            DmgArea.BodyEntered += DmgArea_BodyEntered;
+            DmgArea.BodyExited += DmgArea_BodyExited;
             InitAttr();
         }
+
+        private void DmgArea_BodyEntered(Node2D body)
+        {
+            if (body is not Player player) return;
+            dmgPlayer = player;
+        }
+        private void DmgArea_BodyExited(Node2D body)
+        {
+            if (body is not Player player) return;
+            dmgPlayer = null;
+        }
+
         private void ChaseArea_BodyEntered(Node2D body)
         {
             if (body is not Player player) return;
@@ -137,16 +155,16 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public void PatrolTo(Vector2 tarPos)
         {
             CurDir = (tarPos - GlobalPosition).Normalized();
-            if (CurDir.X < 0) anim.FlipH = true;
-            else anim.FlipH = false;
+            if (CurDir.X < 0) Anim.FlipH = true;
+            else Anim.FlipH = false;
             Velocity = CurDir * patrolSpeed;
             MoveAndSlide();
         }
         public void Chase()
         {
             CurDir = (chaseTarget.GlobalPosition - GlobalPosition).Normalized();
-            if (CurDir.X < 0) anim.FlipH = true;
-            else anim.FlipH = false;
+            if (CurDir.X < 0) Anim.FlipH = true;
+            else Anim.FlipH = false;
             Velocity = CurDir * chaseSpeed;
             MoveAndSlide();
         }
@@ -160,6 +178,11 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             //TODO : 更新ui
             HealthPb.MaxValue = FinalAttr.MaxHealth;
             HealthPb.Value = CurHealth;
+        }
+        public void Atk()
+        {
+            if (dmgPlayer == null) return;
+            dmgPlayer.TakeDmg(10);
         }
 
     }

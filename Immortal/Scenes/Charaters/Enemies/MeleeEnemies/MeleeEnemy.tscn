@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://7p5ygkkuunr2"]
+[gd_scene load_steps=36 format=3 uid="uid://7p5ygkkuunr2"]
 
 [ext_resource type="Texture2D" uid="uid://dbg3rbxpksit3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="1_1kamg"]
 [ext_resource type="Texture2D" uid="uid://db2cci1jm0c5d" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="2_jk3o0"]
@@ -204,7 +204,7 @@ animations = [{
 radius = 252.00793
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y1hut"]
-radius = 84.48077
+radius = 70.11419
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmv0k"]
 bg_color = Color(0.25201213, 0, 0.046545036, 1)
@@ -212,14 +212,18 @@ bg_color = Color(0.25201213, 0, 0.046545036, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1hut"]
 bg_color = Color(0.63478816, 0, 0.118817456, 1)
 
-[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("anim", "HealthPb", "chaseArea", "atkArea")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmv0k"]
+size = Vector2(50.25, 75.5)
+
+[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "HealthPb", "chaseArea", "atkArea", "DmgArea")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_r2bah")
-anim = NodePath("AnimatedSprite2D")
+Anim = NodePath("AnimatedSprite2D")
 HealthPb = NodePath("ProgressBar")
 chaseArea = NodePath("ChaseArea")
 atkArea = NodePath("AtkArea")
+DmgArea = NodePath("DmgArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -241,14 +245,21 @@ shape = SubResource("CircleShape2D_pmv0k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea"]
 shape = SubResource("CircleShape2D_y1hut")
-debug_color = Color(0.9901194, 0, 0.28787816, 0.41960785)
+debug_color = Color(0.75228196, 0.45375586, 0.05740816, 0.41960785)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = -27.0
-offset_top = -61.0
-offset_right = 29.0
-offset_bottom = -52.0
+offset_left = -33.0
+offset_top = -65.0
+offset_right = 35.0
+offset_bottom = -54.0
 theme_override_styles/background = SubResource("StyleBoxFlat_pmv0k")
 theme_override_styles/fill = SubResource("StyleBoxFlat_y1hut")
 value = 40.0
 show_percentage = false
+
+[node name="DmgArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DmgArea"]
+position = Vector2(35.875, -2)
+shape = SubResource("RectangleShape2D_pmv0k")
+debug_color = Color(0.7921569, 0, 0.047058824, 0.41960785)

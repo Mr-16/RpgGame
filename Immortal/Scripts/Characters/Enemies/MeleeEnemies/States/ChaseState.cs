@@ -12,7 +12,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Enter()
         {
-            enemy.anim.Play("Chase");
+            enemy.Anim.Play("Chase");
         }
         public override void Update(float delta)
         {

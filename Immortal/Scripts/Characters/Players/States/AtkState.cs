@@ -19,7 +19,7 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            player.DamageArea.Monitoring = true;
+            player.DmgArea.Monitoring = true;
             speedScale = player.Anim.SpeedScale;
             player.Anim.SpeedScale = 1 + player.FinalAttr.AtkSpeed;
             player.Anim.Play("Atk");
@@ -59,26 +59,10 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Exit()
         {
-            player.DamageArea.Monitoring = false;
+            player.DmgArea.Monitoring = false;
             player.Anim.AnimationFinished -= Anim_AnimationFinished;
             player.Anim.FrameChanged -= Anim_FrameChanged;
             player.Anim.SpeedScale = speedScale;
-
-            if (player.Sm.curState == player.Sm.idleState)
-            {
-                player.Anim.Play("Idle");
-                return;
-            }
-            if (player.Sm.curState == player.Sm.walkState)
-            {
-                player.Anim.Play("Walk");
-                return;
-            }
-            if (player.Sm.curState == player.Sm.runState)
-            {
-                player.Anim.Play("Run");
-                return;
-            }
         }
     }
 }

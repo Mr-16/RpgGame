@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=52 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -319,11 +319,18 @@ bg_color = Color(0.8854759, 0.74905115, 0, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obb2g"]
 size = Vector2(76, 116)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "DamageArea")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3tor"]
+bg_color = Color(0.26147327, 0, 0.00930306, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_621qp"]
+bg_color = Color(0.7475232, 0.07432025, 0.06564945, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "DmgArea", "HealthPb")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
-DamageArea = NodePath("DamageArea")
+DmgArea = NodePath("DamageArea")
+HealthPb = NodePath("Control/HealthBp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_b7en5")
@@ -357,3 +364,29 @@ monitorable = false
 position = Vector2(51, -6)
 shape = SubResource("RectangleShape2D_obb2g")
 debug_color = Color(0.66433716, 0, 0.18002993, 0.41960785)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HealthBp" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -407.0
+offset_top = -256.0
+offset_right = 67.0
+offset_bottom = -233.0
+theme_override_styles/background = SubResource("StyleBoxFlat_p3tor")
+theme_override_styles/fill = SubResource("StyleBoxFlat_621qp")
+value = 37.93
+show_percentage = false
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -476.0
+offset_top = -268.0
+offset_right = -419.0
+offset_bottom = -226.0
+theme_override_font_sizes/font_size = 30
+text = "HP"
+horizontal_alignment = 1
+vertical_alignment = 1

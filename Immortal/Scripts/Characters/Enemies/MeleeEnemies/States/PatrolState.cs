@@ -21,7 +21,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             curTarPos.X = rd.Next((int)(enemy.startPos.X - range), (int)(enemy.startPos.X + range));
             curTarPos.Y = rd.Next((int)(enemy.startPos.Y - range), (int)(enemy.startPos.Y + range));
 
-            enemy.anim.Play("Patrol");
+            enemy.Anim.Play("Patrol");
         }
 
         public override void Update(float delta)

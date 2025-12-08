@@ -34,4 +34,19 @@ public partial class CharacterBase : CharacterBody2D
     {
         
     }
+
+    
+    public void TakeDmg(float dmg)
+    {
+        CurHealth -= dmg;
+        if(CurHealth <= 0)
+        {
+            CurHealth = 0;
+            Die();
+        }
+    }
+    protected void Die()
+    {
+        QueueFree();
+    }
 }

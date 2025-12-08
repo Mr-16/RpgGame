@@ -9,12 +9,27 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 {
     public class AtkState : StateBase
     {
+        private float speedScale;
+        public int DmgFrame = 2;
+
         public AtkState(MeleeEnemy enemy) => this.enemy = enemy;
 
         public override void Enter()
         {
-            enemy.anim.Play("Atk");
-            enemy.anim.AnimationFinished += Anim_AnimationFinished;
+            enemy.DmgArea.Monitoring = true;
+            speedScale = enemy.Anim.SpeedScale;
+            enemy.Anim.SpeedScale = 1 + enemy.FinalAttr.AtkSpeed;
+            enemy.Anim.Play("Atk");
+            enemy.Anim.AnimationFinished += Anim_AnimationFinished;
+            enemy.Anim.FrameChanged += Anim_FrameChanged;
+        }
+
+        private void Anim_FrameChanged()
+        {
+            if(enemy.Anim.Frame == DmgFrame)
+            {
+                enemy.Atk();
+            }
         }
 
         private void Anim_AnimationFinished()
@@ -33,7 +48,10 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         }
         public override void Exit()
         {
-            enemy.anim.AnimationFinished -= Anim_AnimationFinished;
+            enemy.DmgArea.Monitoring = false;
+            enemy.Anim.FrameChanged -= Anim_FrameChanged;
+            enemy.Anim.AnimationFinished -= Anim_AnimationFinished;
+            enemy.Anim.SpeedScale = speedScale;
         }
 
     }
