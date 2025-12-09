@@ -220,7 +220,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_r2bah")
 Anim = NodePath("AnimatedSprite2D")
-HealthPb = NodePath("ProgressBar")
+HealthPb = NodePath("HealthPb")
 chaseArea = NodePath("ChaseArea")
 atkArea = NodePath("AtkArea")
 DmgArea = NodePath("DmgArea")
@@ -247,7 +247,8 @@ shape = SubResource("CircleShape2D_pmv0k")
 shape = SubResource("CircleShape2D_y1hut")
 debug_color = Color(0.75228196, 0.45375586, 0.05740816, 0.41960785)
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthPb" type="ProgressBar" parent="."]
+z_index = 10
 offset_left = -33.0
 offset_top = -65.0
 offset_right = 35.0

@@ -1,3 +1,4 @@
+using RpgGame.Scripts.GameManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace RpgGame.Scripts.Characters.Enemies
         public override void _Ready()
         {
             base._Ready();
+            EnemyManager.Instance().EnemyList.Add(this);
         }
 
         public override void _Process(double delta)
@@ -23,6 +25,12 @@ namespace RpgGame.Scripts.Characters.Enemies
         {
             base._PhysicsProcess(delta);
 
+        }
+
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+            EnemyManager.Instance().EnemyList.Remove(this);
         }
     }
 }

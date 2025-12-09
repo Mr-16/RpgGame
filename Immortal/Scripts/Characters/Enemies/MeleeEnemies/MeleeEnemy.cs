@@ -182,7 +182,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public void Atk()
         {
             if (dmgPlayer == null) return;
-            dmgPlayer.TakeDmg(10);
+            dmgPlayer.TakeDmg(3);
         }
 
     }

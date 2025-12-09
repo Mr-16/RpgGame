@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Characters.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         private float speedScale;
         public int AtkFrame = 2;
 
+
         public AtkState(Player player)
         {
             this.player = player;
@@ -19,19 +21,27 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            player.DmgArea.Monitoring = true;
             speedScale = player.Anim.SpeedScale;
             player.Anim.SpeedScale = 1 + player.FinalAttr.AtkSpeed;
             player.Anim.Play("Atk");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
+
+            //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
+            Enemy target = player.GetClosestEnemy();
+            if (target != null)
+            {
+                GD.Print(target);
+                player.CurDir = (target.GlobalPosition - player.GlobalPosition).Normalized();//target.GlobalPosition.DirectionTo(player.GlobalPosition);
+                if (player.CurDir.X < 0) player.Anim.FlipH = true;
+                else if (player.CurDir.X > 0) player.Anim.FlipH = false;
+            }
         }
 
         private void Anim_FrameChanged()
         {
             if(player.Anim.Frame == AtkFrame)
             {
-                GD.Print(player.DmgEnemyList.Count);
                 player.Atk();
             }
             //GD.Print(player.Anim.Frame);
@@ -48,9 +58,12 @@ namespace RpgGame.Scripts.Characters.Players.States
             if (player.isMoveAtkEnable)//可以跑打
             {
                 Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-                player.Walk(moveDir);
+                player.CurDir = moveDir;
+                player.Velocity = player.FinalAttr.MoveSpeed * moveDir;
+                player.MoveAndSlide();
             }
 
+            
         }
 
         public override void FixedUpdate(float delta)
@@ -59,7 +72,6 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Exit()
         {
-            player.DmgArea.Monitoring = false;
             player.Anim.AnimationFinished -= Anim_AnimationFinished;
             player.Anim.FrameChanged -= Anim_FrameChanged;
             player.Anim.SpeedScale = speedScale;

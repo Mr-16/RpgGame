@@ -49,4 +49,48 @@ public partial class CharacterBase : CharacterBody2D
     {
         QueueFree();
     }
+
+    //伤害计算公式
+    public float CalcPhyDamage(CharAttribute targetAttr)
+    {
+        // 1. 计算有效防御
+        float effDef = (targetAttr.PhyDef * (1 - FinalAttr.PhyPen)) - FinalAttr.PhyPenFlat;
+        if (effDef < 0) effDef = 0; // 防御不可能为负数（可选）
+
+        // 2. 计算未暴击时的基础伤害
+        float dmg = FinalAttr.PhyAtk - effDef;
+        if (dmg < 1) dmg = 1;
+
+        // 3. 计算暴击
+        Random rd = new Random();
+        bool isCrit = rd.NextDouble() < FinalAttr.CritRate;
+        float finalDmg = isCrit ? dmg * FinalAttr.CritMult : dmg;
+
+        // 4. 吸血
+        float heal = finalDmg * FinalAttr.LifeSteal;
+        CurHealth = MathF.Min(FinalAttr.MaxHealth, CurHealth + heal);
+        return finalDmg;
+    }
+
+    public float CalcMagDamage(CharAttribute targetAttr)
+    {
+        // 1. 计算有效防御
+        float effDef = (targetAttr.MagDef * (1 - FinalAttr.MagPen)) - FinalAttr.MagPenFlat;
+        if (effDef < 0) effDef = 0; // 防御不可能为负数（可选）
+
+        // 2. 计算未暴击时的基础伤害
+        float dmg = FinalAttr.MagAtk - effDef;
+        if (dmg < 1) dmg = 1;
+
+        // 3. 计算暴击
+        Random rd = new Random();
+        bool isCrit = rd.NextDouble() < FinalAttr.CritRate;
+        float finalDmg = isCrit ? dmg * FinalAttr.CritMult : dmg;
+
+        // 4. 吸血
+        float heal = finalDmg * FinalAttr.LifeSteal;
+        CurHealth = MathF.Min(FinalAttr.MaxHealth, CurHealth + heal);
+        return finalDmg;
+    }
+
 }

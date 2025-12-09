@@ -1,5 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
+using RpgGame.Scripts.GameManager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace RpgGame.Scripts.Characters.Players
 {
@@ -21,9 +24,10 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public AnimatedSprite2D Anim;
 
+
+        [Export] float AtkRange = 50;
+        [Export] float AtkAngle = 160;
         [Export]
-        public Area2D DmgArea;
-        public List<Enemy> DmgEnemyList = new List<Enemy>();
 
         public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
 
@@ -37,28 +41,12 @@ namespace RpgGame.Scripts.Characters.Players
         {
             Sm = new StateMachine(this);
             InitAttribute();
-            DmgArea.BodyEntered += DamageArea_BodyEntered;
-            DmgArea.BodyExited += DamageArea_BodyExited;
-        }
-        private void DamageArea_BodyEntered(Node2D body)
-        {
-            if (body is not Enemy enemy) return;
-            DmgEnemyList.Add(enemy);
-            //GD.Print("enemy entered");
-        }
-        private void DamageArea_BodyExited(Node2D body)
-        {
-            if (body is not Enemy enemy) return;
-            DmgEnemyList.Remove(enemy);
-            //GD.Print("enemy exited");
-        }
 
-        
+        }
 
         public override void _Process(double delta)
         {
             Sm.curState.Update((float)delta);
-            
             //GD.Print("curState" + Sm.curState);
 
         }
@@ -129,7 +117,6 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if (CurDir.X > 0) Anim.FlipH = false;
-            DmgArea.Rotation = CurDir.Angle();
             Velocity = FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
@@ -139,7 +126,6 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if(CurDir.X > 0) Anim.FlipH = false;
-            DmgArea.Rotation = CurDir.Angle();
             Velocity = 2 * FinalAttr.MoveSpeed * moveDir;
             MoveAndSlide();
         }
@@ -162,9 +148,19 @@ namespace RpgGame.Scripts.Characters.Players
         }
         public void Atk()
         {
-            for(int i = 0; i < DmgEnemyList.Count; i++)
+            List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+            foreach (Enemy enemy in enemyList)
             {
-                DmgEnemyList[i].TakeDmg(10);
+                float disSq = GlobalPosition.DistanceSquaredTo(enemy.GlobalPosition);
+                if (disSq > AtkRange * AtkRange)
+                    continue;
+
+                //扇形攻击判断
+                Vector2 dirToEnemy = (enemy.GlobalPosition - GlobalPosition).Normalized();
+                if (dirToEnemy.AngleTo(CurDir) > AtkAngle / 2)
+                    continue;
+
+                enemy.TakeDmg(10);
             }
         }
         private float uiUpdateTimer = 0;
@@ -180,5 +176,37 @@ namespace RpgGame.Scripts.Characters.Players
             HealthPb.Value = CurHealth;
         }
 
+        public Enemy GetClosestEnemy()
+        {
+            Enemy tarEnmey = null;
+            List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+            float minDis = float.MaxValue;
+            foreach (Enemy enmey in enemyList)
+            {
+                float curDis = GlobalPosition.DistanceTo(enmey.GlobalPosition);
+                if (curDis > AtkRange) continue;
+                if(curDis < minDis)
+                {
+                    minDis = curDis;
+                    tarEnmey = enmey;
+                }
+            }
+            return tarEnmey;
+        }
+
+        public override void _Draw()
+        {
+            //DrawCircle(Vector2.Zero, AtkRange, new Color(0, 1, 0, 0.3f));
+            //// 扇形弧长
+            //float startAngle = CurDir.Angle() - Mathf.DegToRad(AtkAngle) / 2;
+            //float endAngle = CurDir.Angle() + Mathf.DegToRad(AtkAngle) / 2;
+
+            //int points = 64; // 圆弧分段数
+            //DrawArc(Vector2.Zero, AtkRange, startAngle, endAngle, points, new Color(1, 0, 0, 0.3f), 2);
+
+            //// 可选：填充扇形（Debug用）
+            //DrawLine(Vector2.Zero, Vector2.Zero + CurDir.Rotated(-Mathf.DegToRad(AtkAngle) / 2) * AtkRange, Colors.Red, 1);
+            //DrawLine(Vector2.Zero, Vector2.Zero + CurDir.Rotated(Mathf.DegToRad(AtkAngle) / 2) * AtkRange, Colors.Red, 1);
+        }
     }
 }
