@@ -327,6 +327,7 @@ script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
 AtkRange = 120.0
+isMoveAtkEnable = false
 HealthPb = NodePath("Control/HealthBp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

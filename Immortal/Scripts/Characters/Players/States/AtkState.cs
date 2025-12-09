@@ -27,15 +27,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
 
-            //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
-            Enemy target = player.GetClosestEnemy();
-            if (target != null)
-            {
-                GD.Print(target);
-                player.CurDir = (target.GlobalPosition - player.GlobalPosition).Normalized();//target.GlobalPosition.DirectionTo(player.GlobalPosition);
-                if (player.CurDir.X < 0) player.Anim.FlipH = true;
-                else if (player.CurDir.X > 0) player.Anim.FlipH = false;
-            }
+
         }
 
         private void Anim_FrameChanged()
@@ -62,8 +54,17 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.Velocity = player.FinalAttr.MoveSpeed * moveDir;
                 player.MoveAndSlide();
             }
-
+            //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
+            Enemy target = player.GetClosestEnemy();
+            if (target != null)
+            {
+                GD.Print(target);
+                player.CurDir = (target.GlobalPosition - player.GlobalPosition).Normalized();//target.GlobalPosition.DirectionTo(player.GlobalPosition);
+                if (player.CurDir.X < 0) player.Anim.FlipH = true;
+                else if (player.CurDir.X > 0) player.Anim.FlipH = false;
+            }
             
+
         }
 
         public override void FixedUpdate(float delta)
