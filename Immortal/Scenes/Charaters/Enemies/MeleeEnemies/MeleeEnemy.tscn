@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://7p5ygkkuunr2"]
+[gd_scene load_steps=45 format=3 uid="uid://7p5ygkkuunr2"]
 
 [ext_resource type="Texture2D" uid="uid://dbg3rbxpksit3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="1_1kamg"]
 [ext_resource type="Texture2D" uid="uid://db2cci1jm0c5d" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="2_jk3o0"]
 [ext_resource type="Texture2D" uid="uid://dq87jn28i28ih" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Attack2.png" id="2_pmv0k"]
 [ext_resource type="Script" uid="uid://ddicl624bv3rn" path="res://Scripts/Characters/Enemies/MeleeEnemies/MeleeEnemy.cs" id="2_r2bah"]
+[ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="4_y1hut"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r2bah"]
 radius = 30.0
@@ -48,6 +49,38 @@ region = Rect2(768, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7k0qf"]
 atlas = ExtResource("2_jk3o0")
 region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf1ui"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(0, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgghd"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(192, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekx7q"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(384, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3knn2"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(576, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75u73"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(768, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64yy0"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(960, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idsd7"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(1152, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n51os"]
+atlas = ExtResource("4_y1hut")
+region = Rect2(1344, 0, 192, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jk3o0"]
 atlas = ExtResource("1_1kamg")
@@ -149,6 +182,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_kf1ui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgghd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekx7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3knn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75u73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64yy0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idsd7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n51os")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_jk3o0")
 }, {
 "duration": 1.0,
@@ -232,9 +294,9 @@ shape = SubResource("CapsuleShape2D_r2bah")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
-animation = &"Atk"
-frame = 3
-frame_progress = 1.0
+animation = &"Death"
+frame = 7
+frame_progress = 0.91564935
 
 [node name="ChaseArea" type="Area2D" parent="."]
 

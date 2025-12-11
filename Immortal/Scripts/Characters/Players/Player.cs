@@ -69,10 +69,10 @@ namespace RpgGame.Scripts.Characters.Players
             BaseAttr.MaxStam = 200;
             BaseAttr.StamRegen = 30;//每秒恢复量
             //攻击属性
-            BaseAttr.AtkSpeed = 0.1f;
-            BaseAttr.PhyAtk = 10;
-            BaseAttr.PhyPen = 0.1f;
-            BaseAttr.PhyPenFlat = 10;
+            BaseAttr.AtkSpeed = 0.5f;
+            BaseAttr.PhyAtk = 50;
+            BaseAttr.PhyPen = 0.2f;
+            BaseAttr.PhyPenFlat = 500;
             BaseAttr.MagAtk = 10;
             BaseAttr.MagPen = 0.1f;
             BaseAttr.MagPenFlat = 10;
@@ -160,7 +160,7 @@ namespace RpgGame.Scripts.Characters.Players
                 if (dirToEnemy.AngleTo(CurDir) > AtkAngle / 2)
                     continue;
 
-                enemy.TakeDmg(10);
+                enemy.TakeDmg(CalcPhyDamage(enemy.FinalAttr));
             }
         }
         private float uiUpdateTimer = 0;

@@ -10,7 +10,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
 {
     public partial class MeleeEnemy : Enemy
     {
-        public StateMachine stateMachine;
+        public StateMachine Sm;
 
         public Vector2 startPos;
 
@@ -39,7 +39,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public override void _Ready()
         {
             base._Ready();
-            stateMachine = new StateMachine(this);
+            Sm = new StateMachine(this);
             startPos = GlobalPosition;
             chaseArea.BodyEntered += ChaseArea_BodyEntered;
             chaseArea.BodyExited += ChaseArea_BodyExited;
@@ -86,7 +86,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public override void _Process(double delta)
         {
             base._Process(delta);
-            stateMachine.curState.Update((float)delta);
+            Sm.CurState.Update((float)delta);
 
             
         }
@@ -94,7 +94,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public override void _PhysicsProcess(double delta)
         {
             base._PhysicsProcess(delta);
-            stateMachine.curState.FixedUpdate((float)delta);
+            Sm.CurState.FixedUpdate((float)delta);
             UpdateUi((float)delta);
         }
 
@@ -185,5 +185,9 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             dmgPlayer.TakeDmg(3);
         }
 
+        protected override void Die()
+        {
+            Sm.ChangeState(Sm.DeathState);
+        }
     }
 }

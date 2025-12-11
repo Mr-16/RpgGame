@@ -35,7 +35,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         private void Anim_AnimationFinished()
         {
             //GD.Print("atk finish!!!");
-            enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+            enemy.Sm.ChangeState(enemy.Sm.IdleState);
             return;
         }
 

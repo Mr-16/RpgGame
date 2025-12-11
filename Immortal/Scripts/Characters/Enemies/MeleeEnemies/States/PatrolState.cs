@@ -28,18 +28,18 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         {
             if (enemy.atkTarget != null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.atkState);
+                enemy.Sm.ChangeState(enemy.Sm.AtkState);
                 return;
             }
             if (enemy.chaseTarget != null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.chaseState);
+                enemy.Sm.ChangeState(enemy.Sm.ChaseState);
                 return;
             }
 
             if (enemy.GlobalPosition.DistanceTo(curTarPos) < 1)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+                enemy.Sm.ChangeState(enemy.Sm.IdleState);
             }
             enemy.PatrolTo(curTarPos);
         }

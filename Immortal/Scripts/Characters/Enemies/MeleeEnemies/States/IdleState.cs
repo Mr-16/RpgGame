@@ -25,12 +25,12 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         {
             if(enemy.atkTarget != null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.atkState);
+                enemy.Sm.ChangeState(enemy.Sm.AtkState);
                 return;
             }
             if(enemy.chaseTarget != null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.chaseState);
+                enemy.Sm.ChangeState(enemy.Sm.ChaseState);
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             if(timer >= duration)
             {
                 timer = 0;
-                enemy.stateMachine.ChangeState(enemy.stateMachine.patrolState);
+                enemy.Sm.ChangeState(enemy.Sm.PatrolState);
                 return;
             }
         }

@@ -18,12 +18,12 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         {
             if (enemy.atkTarget != null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.atkState);
+                enemy.Sm.ChangeState(enemy.Sm.AtkState);
                 return;
             }
             if (enemy.chaseTarget == null)
             {
-                enemy.stateMachine.ChangeState(enemy.stateMachine.idleState);
+                enemy.Sm.ChangeState(enemy.Sm.IdleState);
                 return;
             }
             enemy.Chase();

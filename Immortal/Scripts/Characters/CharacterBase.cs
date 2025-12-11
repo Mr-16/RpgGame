@@ -45,9 +45,9 @@ public partial class CharacterBase : CharacterBody2D
             Die();
         }
     }
-    protected void Die()
+    protected virtual void Die()
     {
-        QueueFree();
+        //QueueFree();
     }
 
     //伤害计算公式
