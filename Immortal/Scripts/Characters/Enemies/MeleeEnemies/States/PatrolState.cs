@@ -43,7 +43,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             }
 
 
-            if (enemy.GlobalPosition.DistanceTo(curTarPos) < 1)
+            if (enemy.GlobalPosition.DistanceSquaredTo(curTarPos) < 1)
             {
                 enemy.Sm.ChangeState(enemy.Sm.IdleState);
             }

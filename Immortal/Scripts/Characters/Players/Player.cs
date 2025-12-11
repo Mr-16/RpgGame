@@ -26,6 +26,7 @@ namespace RpgGame.Scripts.Characters.Players
 
 
         [Export] float AtkRange = 50;
+        public float AtkRangeSq;
         [Export] float AtkAngle = 160;
         [Export]
 
@@ -42,7 +43,7 @@ namespace RpgGame.Scripts.Characters.Players
             AddToGroup("player");
             Sm = new StateMachine(this);
             InitAttribute();
-
+            AtkRangeSq = AtkRange * AtkRange;
         }
 
         public override void _Process(double delta)
@@ -181,14 +182,14 @@ namespace RpgGame.Scripts.Characters.Players
         {
             Enemy tarEnmey = null;
             List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
-            float minDis = float.MaxValue;
+            float minDisSq = float.MaxValue;
             foreach (Enemy enmey in enemyList)
             {
-                float curDis = GlobalPosition.DistanceTo(enmey.GlobalPosition);
-                if (curDis > AtkRange) continue;
-                if(curDis < minDis)
+                float curDisSq = GlobalPosition.DistanceSquaredTo(enmey.GlobalPosition);
+                if (curDisSq > AtkRangeSq) continue;
+                if(curDisSq < minDisSq)
                 {
-                    minDis = curDis;
+                    minDisSq = curDisSq;
                     tarEnmey = enmey;
                 }
             }
