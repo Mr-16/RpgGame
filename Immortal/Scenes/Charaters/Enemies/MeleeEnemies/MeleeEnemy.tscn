@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://7p5ygkkuunr2"]
+[gd_scene load_steps=42 format=3 uid="uid://7p5ygkkuunr2"]
 
 [ext_resource type="Texture2D" uid="uid://dbg3rbxpksit3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="1_1kamg"]
 [ext_resource type="Texture2D" uid="uid://db2cci1jm0c5d" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="2_jk3o0"]
@@ -207,7 +207,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Death",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -268,18 +268,12 @@ bg_color = Color(0.25201213, 0, 0.046545036, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1hut"]
 bg_color = Color(0.63478816, 0, 0.118817456, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmv0k"]
-size = Vector2(50.25, 75.5)
-
-[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "HealthPb", "chaseArea", "atkArea", "DmgArea")]
+[node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "HealthPb")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_r2bah")
 Anim = NodePath("AnimatedSprite2D")
 HealthPb = NodePath("HealthPb")
-chaseArea = NodePath("")
-atkArea = NodePath("")
-DmgArea = NodePath("DmgArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -302,10 +296,3 @@ theme_override_styles/background = SubResource("StyleBoxFlat_pmv0k")
 theme_override_styles/fill = SubResource("StyleBoxFlat_y1hut")
 value = 40.0
 show_percentage = false
-
-[node name="DmgArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DmgArea"]
-position = Vector2(35.875, -2)
-shape = SubResource("RectangleShape2D_pmv0k")
-debug_color = Color(0.7921569, 0, 0.047058824, 0.41960785)

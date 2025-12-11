@@ -204,6 +204,13 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             Player.TakeDmg(CalcPhyDamage(Player.FinalAttr));
         }
 
+        public event Action TakeDmged;
+        public override void TakeDmg(float dmg)
+        {
+            base.TakeDmg(dmg);
+            if (Sm.CurState == Sm.DeathState) return;
+            Sm.ChangeState(Sm.KnockBackState);
+        }
         protected override void Die()
         {
             Sm.ChangeState(Sm.DeathState);

@@ -36,7 +36,7 @@ public partial class CharacterBase : CharacterBody2D
     }
 
     
-    public void TakeDmg(float dmg)
+    public virtual void TakeDmg(float dmg)
     {
         CurHealth -= dmg;
         if(CurHealth <= 0)

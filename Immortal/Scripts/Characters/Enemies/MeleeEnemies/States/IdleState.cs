@@ -23,6 +23,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Update(float delta)
         {
+            
+
             if (enemy.GlobalPosition.DistanceSquaredTo(enemy.Player.GlobalPosition) < enemy.ChaseRangeSq)
             {
                 enemy.Sm.ChangeState(enemy.Sm.ChaseState);

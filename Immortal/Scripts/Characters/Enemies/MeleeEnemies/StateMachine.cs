@@ -14,6 +14,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public PatrolState PatrolState;
         public ChaseState ChaseState;
         public AtkState AtkState;
+        public KnockBackState KnockBackState;
         public DeathState DeathState;
 
         public StateMachine(MeleeEnemy enemy)
@@ -22,6 +23,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             PatrolState = new PatrolState(enemy);
             ChaseState = new ChaseState(enemy);
             AtkState = new AtkState(enemy);
+            KnockBackState = new KnockBackState(enemy);
             DeathState = new DeathState(enemy);
             ChangeState(IdleState);
         }
