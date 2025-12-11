@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,9 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Enter()
         {
-            //enemy.DmgArea.Monitoring = true;
+            enemy.CurDir = (enemy.Player.GlobalPosition - enemy.GlobalPosition).Normalized();
+            if (enemy.CurDir.X < 0) enemy.Anim.FlipH = true;
+            else if (enemy.CurDir.X > 0) enemy.Anim.FlipH = false;
             speedScale = enemy.Anim.SpeedScale;
             enemy.Anim.SpeedScale = 1 + enemy.FinalAttr.AtkSpeed;
             enemy.Anim.Play("Atk");
