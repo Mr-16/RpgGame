@@ -16,12 +16,23 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         }
         public override void Update(float delta)
         {
-            if (enemy.atkTarget != null)
+            //if (enemy.atkTarget != null)
+            //{
+            //    enemy.Sm.ChangeState(enemy.Sm.AtkState);
+            //    return;
+            //}
+            float disSq = enemy.GlobalPosition.DistanceSquaredTo(enemy.Player.GlobalPosition);
+            if (disSq < enemy.AtkRangeSq)
             {
                 enemy.Sm.ChangeState(enemy.Sm.AtkState);
                 return;
             }
-            if (enemy.chaseTarget == null)
+            //if (enemy.chaseTarget == null)
+            //{
+            //    enemy.Sm.ChangeState(enemy.Sm.IdleState);
+            //    return;
+            //}
+            if(disSq > enemy.ChaseRangeSq)
             {
                 enemy.Sm.ChangeState(enemy.Sm.IdleState);
                 return;

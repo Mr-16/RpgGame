@@ -19,7 +19,7 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            GD.Print("curSkillIndex : " + player.curSkillIndex);
+            //GD.Print("curSkillIndex : " + player.curSkillIndex);
             //todo : 这里根据索引找到具体技能, 从具体技能那获取技能是否禁用移动, 持续时间, 能否被roll打断等信息
 
         }

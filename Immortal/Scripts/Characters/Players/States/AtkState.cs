@@ -58,7 +58,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             Enemy target = player.GetClosestEnemy();
             if (target != null)
             {
-                GD.Print(target);
+                //GD.Print(target);
                 player.CurDir = (target.GlobalPosition - player.GlobalPosition).Normalized();//target.GlobalPosition.DirectionTo(player.GlobalPosition);
                 if (player.CurDir.X < 0) player.Anim.FlipH = true;
                 else if (player.CurDir.X > 0) player.Anim.FlipH = false;

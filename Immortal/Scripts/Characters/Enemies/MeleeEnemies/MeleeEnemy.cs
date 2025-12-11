@@ -18,16 +18,26 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public AnimatedSprite2D Anim;
         [Export]
         public ProgressBar HealthPb;
-        [Export]
-        public Area2D chaseArea;
-        [Export]
-        public Area2D atkArea;
-        public Player chaseTarget = null;
-        public Player atkTarget = null;
 
-        [Export]
-        public Area2D DmgArea;
-        private Player dmgPlayer;
+
+        //
+        //[Export]
+        //public Area2D chaseArea;
+        //[Export]
+        //public Area2D atkArea;
+        //public Player chaseTarget = null;
+        //public Player atkTarget = null;
+
+        //[Export]
+        //public Area2D DmgArea;
+        //private Player dmgPlayer;
+        //
+        [Export] public float ChaseRange = 250;
+        [Export] public float AtkRange = 100;
+        public float ChaseRangeSq;
+        public float AtkRangeSq;
+        public Player Player;
+
 
         [Export]
         public float patrolSpeed = 100;
@@ -39,49 +49,54 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         public override void _Ready()
         {
             base._Ready();
+            
             Sm = new StateMachine(this);
             startPos = GlobalPosition;
-            chaseArea.BodyEntered += ChaseArea_BodyEntered;
-            chaseArea.BodyExited += ChaseArea_BodyExited;
-            atkArea.BodyEntered += AtkArea_BodyEntered;
-            atkArea.BodyExited += AtkArea_BodyExited;
-            DmgArea.BodyEntered += DmgArea_BodyEntered;
-            DmgArea.BodyExited += DmgArea_BodyExited;
+            //chaseArea.BodyEntered += ChaseArea_BodyEntered;
+            //chaseArea.BodyExited += ChaseArea_BodyExited;
+            //atkArea.BodyEntered += AtkArea_BodyEntered;
+            //atkArea.BodyExited += AtkArea_BodyExited;
+            //DmgArea.BodyEntered += DmgArea_BodyEntered;
+            //DmgArea.BodyExited += DmgArea_BodyExited;
             InitAttr();
+            var playerList = GetTree().GetNodesInGroup("player");
+            Player = playerList[0] as Player;
+            ChaseRangeSq = ChaseRange * ChaseRange;
+            AtkRangeSq = AtkRange * AtkRange;
         }
 
-        private void DmgArea_BodyEntered(Node2D body)
-        {
-            if (body is not Player player) return;
-            dmgPlayer = player;
-        }
-        private void DmgArea_BodyExited(Node2D body)
-        {
-            if (body is not Player player) return;
-            dmgPlayer = null;
-        }
+        //private void DmgArea_BodyEntered(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    dmgPlayer = player;
+        //}
+        //private void DmgArea_BodyExited(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    dmgPlayer = null;
+        //}
 
-        private void ChaseArea_BodyEntered(Node2D body)
-        {
-            if (body is not Player player) return;
-            chaseTarget = player;
-        }
-        private void ChaseArea_BodyExited(Node2D body)
-        {
-            if (body is not Player player) return;
-            chaseTarget = null;
-        }
+        //private void ChaseArea_BodyEntered(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    chaseTarget = player;
+        //}
+        //private void ChaseArea_BodyExited(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    chaseTarget = null;
+        //}
 
-        private void AtkArea_BodyEntered(Node2D body)
-        {
-            if (body is not Player player) return;
-            atkTarget = player;
-        }
-        private void AtkArea_BodyExited(Node2D body)
-        {
-            if (body is not Player player) return;
-            atkTarget = null;
-        }
+        //private void AtkArea_BodyEntered(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    atkTarget = player;
+        //}
+        //private void AtkArea_BodyExited(Node2D body)
+        //{
+        //    if (body is not Player player) return;
+        //    atkTarget = null;
+        //}
 
         public override void _Process(double delta)
         {
@@ -162,7 +177,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         }
         public void Chase()
         {
-            CurDir = (chaseTarget.GlobalPosition - GlobalPosition).Normalized();
+            CurDir = (Player.GlobalPosition - GlobalPosition).Normalized();
             if (CurDir.X < 0) Anim.FlipH = true;
             else Anim.FlipH = false;
             Velocity = CurDir * chaseSpeed;
@@ -179,15 +194,25 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             HealthPb.MaxValue = FinalAttr.MaxHealth;
             HealthPb.Value = CurHealth;
         }
+
+        [Export] float AtkAngle = 160;
         public void Atk()
         {
-            if (dmgPlayer == null) return;
-            dmgPlayer.TakeDmg(3);
+            if (GlobalPosition.DistanceSquaredTo(Player.GlobalPosition) > AtkRangeSq) return;
+            Vector2 dirToPlayer = (Player.GlobalPosition - GlobalPosition).Normalized();
+            if (Mathf.Abs(dirToPlayer.AngleTo(CurDir)) > Mathf.DegToRad(AtkAngle / 2)) return;// 玩家是否在攻击扇形范围内
+            Player.TakeDmg(CalcPhyDamage(Player.FinalAttr));
         }
 
         protected override void Die()
         {
             Sm.ChangeState(Sm.DeathState);
+        }
+
+        public override void _Draw()
+        {
+            base._Draw();
+            //DrawCircle(Vector2.Zero, ChaseRange, new Color(1, 0, 0));
         }
     }
 }

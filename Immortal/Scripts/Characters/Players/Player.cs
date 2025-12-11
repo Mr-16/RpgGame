@@ -39,6 +39,7 @@ namespace RpgGame.Scripts.Characters.Players
 
         public override void _Ready()
         {
+            AddToGroup("player");
             Sm = new StateMachine(this);
             InitAttribute();
 

@@ -16,7 +16,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Enter()
         {
-            enemy.DmgArea.Monitoring = true;
+            //enemy.DmgArea.Monitoring = true;
             speedScale = enemy.Anim.SpeedScale;
             enemy.Anim.SpeedScale = 1 + enemy.FinalAttr.AtkSpeed;
             enemy.Anim.Play("Atk");
@@ -48,7 +48,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         }
         public override void Exit()
         {
-            enemy.DmgArea.Monitoring = false;
+            //enemy.DmgArea.Monitoring = false;
             enemy.Anim.FrameChanged -= Anim_FrameChanged;
             enemy.Anim.AnimationFinished -= Anim_AnimationFinished;
             enemy.Anim.SpeedScale = speedScale;
