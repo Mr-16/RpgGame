@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.GameSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,26 +13,23 @@ namespace RpgGame.Scripts.Characters.Players.States
         public DeathState(Player player)
         {
             this.player = player;
+            player.Anim.AnimationFinished += Anim_AnimationFinished;
+        }
+
+        private void Anim_AnimationFinished()
+        {
+            player.Anim.AnimationFinished -= Anim_AnimationFinished;
+            player.QueueFree();
+            GameManager.Instance().ChangeState(GameState.GameOver);
         }
 
         public override void Enter()
         {
-            player.Anim.Play("Dead");
+            player.Anim.Play("Death");
         }
         public override void Update(float delta)
         {
-            player.RegenStam(delta);
-            Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
-            if (moveDir != Vector2.Zero)
-            {
-                player.Sm.ChangeState(player.Sm.walkState);
-                return;
-            }
-            if (Input.IsActionJustPressed("Roll"))
-            {
-                player.Sm.ChangeState(player.Sm.rollState);
-                return;
-            }
+
         }
         public override void FixedUpdate(float delta)
         {

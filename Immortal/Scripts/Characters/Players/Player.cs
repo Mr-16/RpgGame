@@ -1,6 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
-using RpgGame.Scripts.GameManager;
+using RpgGame.Scripts.GameSystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,13 +48,13 @@ namespace RpgGame.Scripts.Characters.Players
 
         public override void _Process(double delta)
         {
-            Sm.curState.Update((float)delta);
+            Sm.CurState.Update((float)delta);
             //GD.Print("curState" + Sm.curState);
 
         }
         public override void _PhysicsProcess(double delta)
         {
-            Sm.curState.FixedUpdate((float)delta);
+            Sm.CurState.FixedUpdate((float)delta);
             //GD.Print("Stamina" + curStamina);
             UpdateUi((float)delta);
         }
@@ -194,6 +194,12 @@ namespace RpgGame.Scripts.Characters.Players
                 }
             }
             return tarEnmey;
+        }
+
+        protected override void Die()
+        {
+            base.Die();
+            Sm.ChangeState(Sm.DeathState);
         }
 
         public override void _Draw()

@@ -270,7 +270,7 @@ bg_color = Color(0.63478816, 0, 0.118817456, 1)
 
 [node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "HealthPb")]
 collision_layer = 2
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("2_r2bah")
 Anim = NodePath("AnimatedSprite2D")
 HealthPb = NodePath("HealthPb")

@@ -22,23 +22,23 @@ namespace RpgGame.Scripts.Characters.Players.States
             player.CurStam -= 0.1f;
             if (player.CurStam <= 0)//没力了, 回去走路
             {
-                player.Sm.ChangeState(player.Sm.walkState);
+                player.Sm.ChangeState(player.Sm.WalkState);
                 return;
             }
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
             if (moveDir == Vector2.Zero)//不再输入, 回idle
             {
-                player.Sm.ChangeState(player.Sm.idleState);
+                player.Sm.ChangeState(player.Sm.IdleState);
                 return;
             }
             if (!Input.IsActionPressed("Roll"))//不再按着k, 回去走路
             {
-                player.Sm.ChangeState(player.Sm.walkState);
+                player.Sm.ChangeState(player.Sm.WalkState);
                 return;
             }
             if (Input.IsActionJustPressed("Atk"))
             {
-                player.Sm.ChangeState(player.Sm.atkState);
+                player.Sm.ChangeState(player.Sm.RtkState);
                 return;
             }
             player.Run(moveDir);

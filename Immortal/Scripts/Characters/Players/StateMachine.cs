@@ -9,30 +9,32 @@ namespace RpgGame.Scripts.Characters.Players
 {
     public class StateMachine
     {
-        public StateBase curState;
-        public IdleState idleState;
-        public WalkState walkState;
-        public RunState runState;
-        public RollState rollState;
-        public AtkState atkState;
-        public SkillState skillState;
-        public DeathState deathState;
+        public StateBase CurState;
+        public IdleState IdleState;
+        public WalkState WalkState;
+        public RunState RunState;
+        public RollState RollState;
+        public AtkState RtkState;
+        public SkillState SkillState;
+        public DeathState DeathState;
 
         public StateMachine(Player player)
         {
-            idleState = new IdleState(player);
-            walkState = new WalkState(player);
-            runState = new RunState(player);
-            rollState = new RollState(player);
-            atkState = new AtkState(player);
-            ChangeState(idleState);
+            IdleState = new IdleState(player);
+            WalkState = new WalkState(player);
+            RunState = new RunState(player);
+            RollState = new RollState(player);
+            RtkState = new AtkState(player);
+            DeathState = new DeathState(player);
+            ChangeState(IdleState);
         }
 
         public void ChangeState(StateBase newState)
         {
-            if (curState != null) curState.Exit();
-            curState = newState;
-            curState.Enter();
+            if (newState == CurState) return;
+            if (CurState != null) CurState.Exit();
+            CurState = newState;
+            CurState.Enter();
         }
     }
 }

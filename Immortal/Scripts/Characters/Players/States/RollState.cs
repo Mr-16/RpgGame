@@ -22,15 +22,15 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             if(player.CurStam < rollCost)
             {
-                player.Sm.ChangeState(player.Sm.idleState);
+                player.Sm.ChangeState(player.Sm.IdleState);
                 return;
             }
             timer = 0;
             player.CurStam -= rollCost;
             player.Anim.Play("Roll");
-            if (player.Sm.curState == player.Sm.atkState)
+            if (player.Sm.CurState == player.Sm.RtkState)
             {
-                player.Sm.ChangeState(player.Sm.idleState);
+                player.Sm.ChangeState(player.Sm.IdleState);
             }
         }
 
@@ -41,12 +41,12 @@ namespace RpgGame.Scripts.Characters.Players.States
             {
                 if (Input.IsActionPressed("Roll"))
                 {
-                    player.Sm.ChangeState(player.Sm.runState);
+                    player.Sm.ChangeState(player.Sm.RunState);
                     return;
                 }
                 else
                 {
-                    player.Sm.ChangeState(player.Sm.idleState);
+                    player.Sm.ChangeState(player.Sm.IdleState);
                     return;
                 }
             }

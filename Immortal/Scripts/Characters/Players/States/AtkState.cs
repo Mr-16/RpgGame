@@ -42,7 +42,7 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         private void Anim_AnimationFinished()
         {
-            player.Sm.ChangeState(player.Sm.idleState);
+            player.Sm.ChangeState(player.Sm.IdleState);
         }
 
         public override void Update(float delta)

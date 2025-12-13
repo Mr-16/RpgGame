@@ -32,8 +32,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         //public Area2D DmgArea;
         //private Player dmgPlayer;
         //
-        [Export] public float ChaseRange = 250;
-        [Export] public float AtkRange = 100;
+        [Export] public float ChaseRange = 500;
+        [Export] public float AtkRange = 50;
         public float ChaseRangeSq;
         public float AtkRangeSq;
         public Player Player;
@@ -52,51 +52,12 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             
             Sm = new StateMachine(this);
             startPos = GlobalPosition;
-            //chaseArea.BodyEntered += ChaseArea_BodyEntered;
-            //chaseArea.BodyExited += ChaseArea_BodyExited;
-            //atkArea.BodyEntered += AtkArea_BodyEntered;
-            //atkArea.BodyExited += AtkArea_BodyExited;
-            //DmgArea.BodyEntered += DmgArea_BodyEntered;
-            //DmgArea.BodyExited += DmgArea_BodyExited;
             InitAttr();
             var playerList = GetTree().GetNodesInGroup("player");
             Player = playerList[0] as Player;
             ChaseRangeSq = ChaseRange * ChaseRange;
             AtkRangeSq = AtkRange * AtkRange;
         }
-
-        //private void DmgArea_BodyEntered(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    dmgPlayer = player;
-        //}
-        //private void DmgArea_BodyExited(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    dmgPlayer = null;
-        //}
-
-        //private void ChaseArea_BodyEntered(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    chaseTarget = player;
-        //}
-        //private void ChaseArea_BodyExited(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    chaseTarget = null;
-        //}
-
-        //private void AtkArea_BodyEntered(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    atkTarget = player;
-        //}
-        //private void AtkArea_BodyExited(Node2D body)
-        //{
-        //    if (body is not Player player) return;
-        //    atkTarget = null;
-        //}
 
         public override void _Process(double delta)
         {
@@ -126,7 +87,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             BaseAttr.StamRegen = 10;//每秒恢复量
             //攻击属性
             BaseAttr.AtkSpeed = 0.1f;
-            BaseAttr.PhyAtk = 10;
+            BaseAttr.PhyAtk = 100;
             BaseAttr.PhyPen = 0.1f;
             BaseAttr.PhyPenFlat = 10;
             BaseAttr.MagAtk = 10;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpgGame.Scripts.GameManager
+namespace RpgGame.Scripts.GameSystem
 {
     public class EnemyManager
     {
