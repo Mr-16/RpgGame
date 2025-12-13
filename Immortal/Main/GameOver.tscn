@@ -1,12 +1,17 @@
-[gd_scene format=3 uid="uid://c6yk1mhgedbds"]
+[gd_scene load_steps=2 format=3 uid="uid://c6yk1mhgedbds"]
 
-[node name="GameOverScene" type="Control"]
+[ext_resource type="Script" uid="uid://xwgs06dxhred" path="res://Scripts/UI/GameOver.cs" id="1_4eqdf"]
+
+[node name="GameOverScene" type="Control" node_paths=PackedStringArray("BackMenuBtn", "ExitBtn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4eqdf")
+BackMenuBtn = NodePath("HBoxContainer/BackMenuBtn")
+ExitBtn = NodePath("HBoxContainer/ExitBtn")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -49,12 +54,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 200
 
-[node name="Button" type="Button" parent="HBoxContainer"]
+[node name="BackMenuBtn" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "回到主菜单"
 
-[node name="Button2" type="Button" parent="HBoxContainer"]
+[node name="ExitBtn" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "退出游戏"

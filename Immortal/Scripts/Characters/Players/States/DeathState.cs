@@ -13,6 +13,12 @@ namespace RpgGame.Scripts.Characters.Players.States
         public DeathState(Player player)
         {
             this.player = player;
+            
+        }
+
+        public override void Enter()
+        {
+            player.Anim.Play("Death");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
         }
 
@@ -23,10 +29,6 @@ namespace RpgGame.Scripts.Characters.Players.States
             GameManager.Instance().ChangeState(GameState.GameOver);
         }
 
-        public override void Enter()
-        {
-            player.Anim.Play("Death");
-        }
         public override void Update(float delta)
         {
 

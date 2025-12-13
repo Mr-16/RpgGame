@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="4_y1hut"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r2bah"]
-radius = 30.0
-height = 100.0
+radius = 16.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4wgew"]
 atlas = ExtResource("2_pmv0k")
@@ -270,21 +270,19 @@ bg_color = Color(0.63478816, 0, 0.118817456, 1)
 
 [node name="MeleeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "HealthPb")]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 2
 script = ExtResource("2_r2bah")
 Anim = NodePath("AnimatedSprite2D")
 HealthPb = NodePath("HealthPb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 1
+z_index = 3
 shape = SubResource("CapsuleShape2D_r2bah")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
-animation = &"Death"
-frame = 7
-frame_progress = 0.91564935
+animation = &"Atk"
 
 [node name="HealthPb" type="ProgressBar" parent="."]
 z_index = 10
