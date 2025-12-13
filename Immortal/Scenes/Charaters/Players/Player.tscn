@@ -343,6 +343,7 @@ frame_progress = 1.0
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="StaminaProgressBar" type="ProgressBar" parent="."]
+z_index = 10
 offset_left = 69.0
 offset_top = -81.0
 offset_right = 75.0
