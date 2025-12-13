@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="RpgGame"
-run/main_scene="uid://dtkh8030dvaay"
+run/main_scene="uid://cubt28xych84h"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 

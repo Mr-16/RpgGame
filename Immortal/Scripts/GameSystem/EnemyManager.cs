@@ -11,6 +11,7 @@ namespace RpgGame.Scripts.GameManager
     {
         public List<Enemy> EnemyList = new List<Enemy>();
         private static EnemyManager instance;
+        private EnemyManager() { }
         public static EnemyManager Instance()
         {
             if (instance == null)
