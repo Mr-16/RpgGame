@@ -1,14 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cubt28xych84h"]
+[gd_scene load_steps=3 format=3 uid="uid://cubt28xych84h"]
 
+[ext_resource type="Script" uid="uid://daf6uqbo01xrn" path="res://Main/StartMenu.cs" id="1_s6wwf"]
 [ext_resource type="Texture2D" uid="uid://d120xglayjjgp" path="res://icon.svg" id="1_xt31v"]
 
-[node name="StartMenu" type="Control"]
+[node name="StartMenu" type="Control" node_paths=PackedStringArray("StartBtn", "SettingBtn", "StatisticsBtn", "ExitBtn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_s6wwf")
+StartBtn = NodePath("VBoxContainer/StartBtn")
+SettingBtn = NodePath("VBoxContainer/SettingBtn")
+StatisticsBtn = NodePath("VBoxContainer/StatisticsBtn")
+ExitBtn = NodePath("VBoxContainer/ExitBtn")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -28,19 +34,19 @@ offset_right = -868.0
 offset_bottom = -69.0
 theme_override_constants/separation = 30
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="StartBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "开始游戏"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="SettingBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "游戏设置"
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="StatisticsBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "统计"
 
-[node name="Button4" type="Button" parent="VBoxContainer"]
+[node name="ExitBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "退出游戏"
 

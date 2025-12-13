@@ -19,14 +19,14 @@ namespace RpgGame.Scripts.GameSystem
     {
         //单例, 管理游戏状态 + 游戏全局数据
         private static GameManager instance;
-        private GameManager() { }
         public static GameManager Instance()
         {
-            if(instance == null)
-            {
-                instance = new GameManager();
-            }
             return instance;
+        }
+        public override void _Ready()
+        {
+            base._Ready();
+            instance = this;
         }
 
         //统一管理所有的游戏场景
@@ -36,17 +36,42 @@ namespace RpgGame.Scripts.GameSystem
         public PackedScene MainScene;
         [Export]
         public PackedScene GameOverScene;
+        private void ChangeScene(PackedScene newPackedScene)
+        {
+            if (newPackedScene == null) return;
+            SceneTree tree = GetTree();
+
+            tree.CurrentScene.QueueFree();
+            Node node = newPackedScene.Instantiate();
+            tree.Root.AddChild(node);
+            tree.CurrentScene = node;
+        }
 
         //游戏状态机
         public GameState curState;
-        public void ChangeState(GameState state)
-        {
-            if(curState != null) ExitState(curState);
-            curState = state;
-            EnterState(state);
-        }
+        
 
         private void EnterState(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.StartMenu:
+                    ChangeScene(StartMenuScene);
+                    break;
+                case GameState.Play:
+                    ChangeScene(MainScene);
+                    break;
+                case GameState.Pause:
+                    
+                    break;
+                case GameState.GameOver:
+                    ChangeScene(GameOverScene);
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void ExitState(GameState state)
         {
             switch (state)
             {
@@ -63,9 +88,11 @@ namespace RpgGame.Scripts.GameSystem
                     break;
             }
         }
-        private void ExitState(GameState state)
+        public void ChangeState(GameState state)
         {
-
+            ExitState(curState);
+            curState = state;
+            EnterState(state);
         }
     }
 }
