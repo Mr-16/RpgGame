@@ -55,7 +55,7 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.MoveAndSlide();
             }
             //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
-            Enemy target = player.GetClosestEnemy();
+            Enemy target = player.GetClosestEnemy(player.AtkRangeSq);
             if (target != null)
             {
                 //GD.Print(target);

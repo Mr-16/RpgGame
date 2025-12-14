@@ -177,7 +177,7 @@ namespace RpgGame.Scripts.Characters.Players
             HealthPb.Value = CurHealth;
         }
 
-        public Enemy GetClosestEnemy()
+        public Enemy GetClosestEnemy(float rangeSq)
         {
             Enemy tarEnmey = null;
             List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
@@ -185,7 +185,7 @@ namespace RpgGame.Scripts.Characters.Players
             foreach (Enemy enmey in enemyList)
             {
                 float curDisSq = GlobalPosition.DistanceSquaredTo(enmey.GlobalPosition);
-                if (curDisSq > AtkRangeSq) continue;
+                if (curDisSq > rangeSq) continue;
                 if(curDisSq < minDisSq)
                 {
                     minDisSq = curDisSq;
@@ -231,6 +231,19 @@ namespace RpgGame.Scripts.Characters.Players
         private void FireBall()
         {
             GD.Print("正在释放火球术");
+            SkillData data = GameManager.Instance().SkillDataMap[SkillType.FireBall];
+            //范围内找到目标然后生成火球射过去
+            Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
+            FireBall fireBall =  FireBallScene.Instantiate<FireBall>();
+            fireBall.GlobalPosition = GlobalPosition;
+            if (tarEnmey == null) fireBall.Dir = CurDir;
+            else
+            {
+                CurDir = (tarEnmey.GlobalPosition - GlobalPosition).Normalized();
+                fireBall.Dir = CurDir;
+            }
+
+            GetTree().CurrentScene.AddChild(fireBall);
         }
         private void IceSpike()
         {
@@ -250,6 +263,9 @@ namespace RpgGame.Scripts.Characters.Players
             SkillTypeList.Add(SkillType.Lightning);
             SkillTypeList.Add(SkillType.IceSpike);
         }
+
+        [Export]
+        public PackedScene FireBallScene;
 
         public override void _Draw()
         {
