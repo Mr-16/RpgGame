@@ -30,54 +30,66 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 60.0
-offset_top = 318.0
-offset_right = -868.0
-offset_bottom = -69.0
+offset_left = 88.0
+offset_top = 280.0
+offset_right = -840.0
+offset_bottom = -78.0
 theme_override_constants/separation = 30
+alignment = 1
 
 [node name="StartBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "开始游戏"
 
 [node name="SettingBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "游戏设置"
 
 [node name="StatisticsBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "统计"
 
 [node name="ExitBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "退出游戏"
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(587, 349)
+position = Vector2(628, 358)
 scale = Vector2(1.21875, 1.2109375)
 texture = ExtResource("1_xt31v")
 
 [node name="Icon2" type="Sprite2D" parent="."]
-position = Vector2(452.99997, 470.99997)
-scale = Vector2(0.8984375, 0.7890625)
+position = Vector2(479.99997, 498.00003)
+scale = Vector2(1.1132817, 1.0195313)
 texture = ExtResource("1_xt31v")
 
 [node name="Icon3" type="Sprite2D" parent="."]
-position = Vector2(739.00006, 483)
+position = Vector2(783, 492)
 scale = Vector2(1.125, 1.140625)
 texture = ExtResource("1_xt31v")
 
 [node name="Icon4" type="Sprite2D" parent="."]
-position = Vector2(902, 318.00003)
+position = Vector2(946.00006, 325.00003)
 scale = Vector2(1.515625, 1.6328125)
 texture = ExtResource("1_xt31v")
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 358.0
-offset_top = 46.0
-offset_right = 756.0
-offset_bottom = 184.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 89.0
+offset_top = 60.0
+offset_right = -55.0
+offset_bottom = -450.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(0.21176471, 0.23921569, 0.32156864, 1)
 theme_override_font_sizes/font_size = 100
-text = "RPG游戏"
+text = "VeryGood Game"
+horizontal_alignment = 1
+vertical_alignment = 1

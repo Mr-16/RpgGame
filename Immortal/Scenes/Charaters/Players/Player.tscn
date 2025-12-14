@@ -1,10 +1,11 @@
-[gd_scene load_steps=51 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=64 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
 [ext_resource type="Texture2D" uid="uid://c3aavsxepq1xu" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack1.png" id="2_obb2g"]
 [ext_resource type="Texture2D" uid="uid://berck4kasqmn3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Guard.png" id="3_b7en5"]
 [ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="3_oivwb"]
+[ext_resource type="Texture2D" uid="uid://bgvt87nwrxdd0" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack2.png" id="4_oivwb"]
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7en5"]
@@ -59,6 +60,38 @@ region = Rect2(1152, 0, 192, 256)
 atlas = ExtResource("3_oivwb")
 region = Rect2(1344, 0, 192, 256)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmp7c"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvhtf"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boeij"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0s1sl"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6c81"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qphyv"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8krl2"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfyab"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(576, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_onnvg"]
 atlas = ExtResource("2_cq5ir")
 region = Rect2(0, 0, 192, 192)
@@ -90,6 +123,22 @@ region = Rect2(1152, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_r364p"]
 atlas = ExtResource("2_cq5ir")
 region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iu2t"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htb82"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_he7o3"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3p6u"]
+atlas = ExtResource("4_oivwb")
+region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp737"]
 atlas = ExtResource("3_b7en5")
@@ -213,6 +262,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_cmp7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvhtf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boeij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0s1sl")
+}],
+"loop": false,
+"name": &"FireBall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6c81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qphyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8krl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfyab")
+}],
+"loop": false,
+"name": &"IceSpike",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_onnvg")
 }, {
 "duration": 1.0,
@@ -239,6 +322,23 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iu2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htb82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_he7o3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3p6u")
+}],
+"loop": false,
+"name": &"Lightning",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -335,7 +435,7 @@ shape = SubResource("CapsuleShape2D_b7en5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 5
 sprite_frames = SubResource("SpriteFrames_tp737")
-animation = &"Death"
+animation = &"Lightning"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

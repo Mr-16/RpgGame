@@ -48,6 +48,24 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.Sm.ChangeState(player.Sm.RtkState);
                 return;
             }
+            if (Input.IsActionJustPressed("Skill_1"))
+            {
+                player.curSkillTypeIndex = 0;
+                player.Sm.ChangeState(player.Sm.SkillState);
+                return;
+            }
+            if (Input.IsActionJustPressed("Skill_2"))
+            {
+                player.curSkillTypeIndex = 1;
+                player.Sm.ChangeState(player.Sm.SkillState);
+                return;
+            }
+            if (Input.IsActionJustPressed("Skill_3"))
+            {
+                player.curSkillTypeIndex = 2;
+                player.Sm.ChangeState(player.Sm.SkillState);
+                return;
+            }
             player.Walk(moveDir);
         }
         public override void FixedUpdate(float delta)

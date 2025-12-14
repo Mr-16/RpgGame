@@ -28,9 +28,7 @@ namespace RpgGame.Scripts.Characters.Players
         [Export] float AtkRange = 50;
         public float AtkRangeSq;
         [Export] float AtkAngle = 160;
-        [Export]
 
-        public int curSkillIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
 
         [Export]
         public bool isMoveAtkEnable = true;
@@ -42,7 +40,8 @@ namespace RpgGame.Scripts.Characters.Players
         {
             AddToGroup("player");
             Sm = new StateMachine(this);
-            InitAttribute();
+            InitAttribute();//属性
+            InitSkillData();//技能
             AtkRangeSq = AtkRange * AtkRange;
         }
 
@@ -200,6 +199,56 @@ namespace RpgGame.Scripts.Characters.Players
         {
             base.Die();
             Sm.ChangeState(Sm.DeathState);
+        }
+
+        public void CastSkill(SkillType skillType)
+        {
+            //TODO : 根据技能类型和技能数据释放技能
+            switch (skillType)
+            {
+                case SkillType.None:
+                    return;
+                case SkillType.FireBall:
+                    FireBall();
+                    return;
+                case SkillType.IceSpike:
+                    IceSpike();
+                    return;
+                case SkillType.Lightning:
+                    Lightning();
+                    break;
+                case SkillType.DashAtk:
+                    break;
+                case SkillType.PowerUp:
+                    break;
+                case SkillType.AddHealth:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void FireBall()
+        {
+            GD.Print("正在释放火球术");
+        }
+        private void IceSpike()
+        {
+            GD.Print("正在释放冰刺术");
+        }
+        private void Lightning()
+        {
+            GD.Print("正在释放闪电术");
+        }
+
+        public int curSkillTypeIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
+        public List<SkillType> SkillTypeList = new List<SkillType>(3);
+        private void InitSkillData()
+        {
+            //暂时随便填值, 后期加入存档后从Json里反序列化出来
+            SkillTypeList.Add(SkillType.FireBall);
+            SkillTypeList.Add(SkillType.Lightning);
+            SkillTypeList.Add(SkillType.IceSpike);
         }
 
         public override void _Draw()
