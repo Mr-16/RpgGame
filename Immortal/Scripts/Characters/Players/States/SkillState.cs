@@ -24,7 +24,12 @@ namespace RpgGame.Scripts.Characters.Players.States
             //GD.Print("curSkillIndex : " + player.curSkillTypeIndex);
             SkillType skillType = player.SkillTypeList[player.curSkillTypeIndex];
             curSkillData = GameManager.Instance().SkillDataMap[skillType];
-
+            if (player.CurMana < curSkillData.ManaCost)
+            {
+                player.Sm.ChangeState(player.Sm.IdleState);
+                return;
+            }
+            player.CurMana -= curSkillData.ManaCost;
             speedScale = player.Anim.SpeedScale;
             player.Anim.SpeedScale = 1 + curSkillData.AnimSpeedScale;
 
@@ -42,6 +47,9 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         private void Anim_AnimationFinished()
         {
+            player.Anim.AnimationFinished -= Anim_AnimationFinished;
+            player.Anim.FrameChanged -= Anim_FrameChanged;
+
             player.Sm.ChangeState(player.Sm.IdleState);
             return;
         }
@@ -70,8 +78,6 @@ namespace RpgGame.Scripts.Characters.Players.States
         public override void Exit()
         {
             player.curSkillTypeIndex = -1;
-            player.Anim.AnimationFinished -= Anim_AnimationFinished;
-            player.Anim.FrameChanged -= Anim_FrameChanged;
             player.Anim.SpeedScale = speedScale;
         }
     }

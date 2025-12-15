@@ -35,6 +35,8 @@ namespace RpgGame.Scripts.Characters.Players
 
         [Export]
         public ProgressBar HealthPb;
+        [Export]
+        public ProgressBar ManaPb;
 
         public override void _Ready()
         {
@@ -55,6 +57,9 @@ namespace RpgGame.Scripts.Characters.Players
         {
             Sm.CurState.FixedUpdate((float)delta);
             //GD.Print("Stamina" + curStamina);
+            RegenHealth((float)delta);
+            RegenMana((float)delta);
+
             UpdateUi((float)delta);
         }
 
@@ -64,11 +69,13 @@ namespace RpgGame.Scripts.Characters.Players
             //基础属性直接赋值(后面有存档了改成在json里读)
             //最终属性根据装备等加成计算
             BaseAttr.MaxHealth = 100;
+            BaseAttr.HealthRegen = 3;
             BaseAttr.MaxMana = 100;
+            BaseAttr.ManaRegen = 3;
+            BaseAttr.MaxStam = 200;
+            BaseAttr.StamRegen = 300;//每秒恢复量
             BaseAttr.MoveSpeed = 300;
             BaseAttr.RollSpeed = 1000;
-            BaseAttr.MaxStam = 200;
-            BaseAttr.StamRegen = 30;//每秒恢复量
             //攻击属性
             BaseAttr.AtkSpeed = 0.5f;
             BaseAttr.PhyAtk = 50;
@@ -86,11 +93,13 @@ namespace RpgGame.Scripts.Characters.Players
             BaseAttr.LifeSteal = 0;
 
             FinalAttr.MaxHealth = BaseAttr.MaxHealth + Weapon.BonusAttr.MaxHealth + Helmet.BonusAttr.MaxHealth + Armor.BonusAttr.MaxHealth + Boot.BonusAttr.MaxHealth;
+            FinalAttr.HealthRegen = BaseAttr.HealthRegen + Weapon.BonusAttr.HealthRegen + Helmet.BonusAttr.HealthRegen + Armor.BonusAttr.HealthRegen + Boot.BonusAttr.HealthRegen;
             FinalAttr.MaxMana = BaseAttr.MaxMana + Weapon.BonusAttr.MaxMana + Helmet.BonusAttr.MaxMana + Armor.BonusAttr.MaxMana + Boot.BonusAttr.MaxMana;
-            FinalAttr.MoveSpeed = BaseAttr.MoveSpeed + Weapon.BonusAttr.MoveSpeed + Helmet.BonusAttr.MoveSpeed + Armor.BonusAttr.MoveSpeed + Boot.BonusAttr.MoveSpeed;
-            FinalAttr.RollSpeed = BaseAttr.RollSpeed + Weapon.BonusAttr.RollSpeed + Helmet.BonusAttr.RollSpeed + Armor.BonusAttr.RollSpeed + Boot.BonusAttr.RollSpeed;
+            FinalAttr.ManaRegen = BaseAttr.ManaRegen + Weapon.BonusAttr.ManaRegen + Helmet.BonusAttr.ManaRegen + Armor.BonusAttr.ManaRegen + Boot.BonusAttr.ManaRegen;
             FinalAttr.MaxStam = BaseAttr.MaxStam + Weapon.BonusAttr.MaxStam + Helmet.BonusAttr.MaxStam + Armor.BonusAttr.MaxStam + Boot.BonusAttr.MaxStam;
             FinalAttr.StamRegen = BaseAttr.StamRegen + Weapon.BonusAttr.StamRegen + Helmet.BonusAttr.StamRegen + Armor.BonusAttr.StamRegen + Boot.BonusAttr.StamRegen;
+            FinalAttr.MoveSpeed = BaseAttr.MoveSpeed + Weapon.BonusAttr.MoveSpeed + Helmet.BonusAttr.MoveSpeed + Armor.BonusAttr.MoveSpeed + Boot.BonusAttr.MoveSpeed;
+            FinalAttr.RollSpeed = BaseAttr.RollSpeed + Weapon.BonusAttr.RollSpeed + Helmet.BonusAttr.RollSpeed + Armor.BonusAttr.RollSpeed + Boot.BonusAttr.RollSpeed;
             //攻击属性
             FinalAttr.AtkSpeed = BaseAttr.AtkSpeed + Weapon.BonusAttr.AtkSpeed + Helmet.BonusAttr.AtkSpeed + Armor.BonusAttr.AtkSpeed + Boot.BonusAttr.AtkSpeed;
             FinalAttr.PhyAtk = BaseAttr.PhyAtk + Weapon.BonusAttr.PhyAtk + Helmet.BonusAttr.PhyAtk + Armor.BonusAttr.PhyAtk + Boot.BonusAttr.PhyAtk;
@@ -136,6 +145,28 @@ namespace RpgGame.Scripts.Characters.Players
             MoveAndSlide();
         }
 
+        public void RegenHealth(float delta)
+        {
+            if (CurHealth < FinalAttr.MaxHealth)
+            {
+                CurHealth += FinalAttr.HealthRegen * delta;
+            }
+            else
+            {
+                CurHealth = FinalAttr.MaxHealth;
+            }
+        }
+        public void RegenMana(float delta)
+        {
+            if (CurMana < FinalAttr.MaxMana)
+            {
+                CurMana += FinalAttr.ManaRegen * delta;
+            }
+            else
+            {
+                CurMana = FinalAttr.MaxMana;
+            }
+        }
         public void RegenStam(float delta)
         {
             if (CurStam < FinalAttr.MaxStam)
@@ -175,6 +206,8 @@ namespace RpgGame.Scripts.Characters.Players
             StamPb.Value = CurStam;
             HealthPb.MaxValue = FinalAttr.MaxHealth;
             HealthPb.Value = CurHealth;
+            ManaPb.MaxValue = FinalAttr.MaxMana;
+            ManaPb.Value = CurMana;
         }
 
         public Enemy GetClosestEnemy(float rangeSq)

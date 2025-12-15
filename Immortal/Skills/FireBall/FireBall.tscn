@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cewnsg14jderp"]
 
 [ext_resource type="Shader" uid="uid://clpcwtmr18t7g" path="res://Skills/FireBall/FireBall.gdshader" id="1_cd4mn"]
-[ext_resource type="Script" uid="uid://cqykii2o2vwx0" path="res://Skills/FireBall/FireBall.cs" id="1_so1om"]
+[ext_resource type="Script" uid="uid://l5eas7rqx41r" path="res://Skills/FireBall/FireBall.cs" id="1_so1om"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_so1om"]
 shader = ExtResource("1_cd4mn")
@@ -10,7 +10,7 @@ shader_parameter/noise_scale = 4.0
 shader_parameter/glow_strength = 1.2
 
 [node name="FireBall" type="Node2D"]
-scale = Vector2(5, 5)
+scale = Vector2(2, 2)
 script = ExtResource("1_so1om")
 Dmg = 50.0
 

@@ -13,11 +13,16 @@ namespace RpgGame.Scripts.Characters
 
         //一般属性
         public float MaxHealth = 0;
+        public float HealthRegen = 0;
+
         public float MaxMana = 0;
-        public float MoveSpeed = 0;
-        public float RollSpeed = 0;
+        public float ManaRegen = 0;
+
         public float MaxStam = 0;
         public float StamRegen = 0;//每秒恢复量
+
+        public float MoveSpeed = 0;
+        public float RollSpeed = 0;
         //攻击属性
         public float AtkSpeed = 0;
         public float PhyAtk = 0;

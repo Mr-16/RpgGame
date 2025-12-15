@@ -10,7 +10,7 @@ public partial class FireBall : Node2D
     private float timer = 0;
 
     [Export]
-    public float Range = 50;//火球的碰撞范围
+    public float Range = 30;//火球的碰撞范围
     private float rangeSq;
     [Export]
     public float ExplosionRange = 200;
@@ -20,7 +20,7 @@ public partial class FireBall : Node2D
     public float Dmg = 1;
 
 
-    private float Speed = 300;
+    private float Speed = 500;
 
     public Vector2 Dir;
 

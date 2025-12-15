@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=68 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -424,12 +424,19 @@ bg_color = Color(0.26147327, 0, 0.00930306, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_621qp"]
 bg_color = Color(0.7475232, 0.07432025, 0.06564945, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7an1"]
+bg_color = Color(0.07058824, 0.05490196, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3o16"]
+bg_color = Color(0.07058824, 0.12156863, 0.41960785, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
 AtkRange = 120.0
 HealthPb = NodePath("Control/HealthBp")
+ManaPb = NodePath("Control/ManaBp")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
 
@@ -461,22 +468,44 @@ anchors_preset = 0
 
 [node name="HealthBp" type="ProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = -407.0
-offset_top = -256.0
-offset_right = 67.0
-offset_bottom = -233.0
+offset_left = -504.0
+offset_top = -276.0
+offset_right = -57.0
+offset_bottom = -260.0
 theme_override_styles/background = SubResource("StyleBoxFlat_p3tor")
 theme_override_styles/fill = SubResource("StyleBoxFlat_621qp")
 value = 37.93
 show_percentage = false
 
-[node name="Label" type="Label" parent="Control"]
+[node name="HealthLb" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = -476.0
-offset_top = -268.0
-offset_right = -419.0
-offset_bottom = -226.0
+offset_left = -555.0
+offset_top = -292.0
+offset_right = -514.0
+offset_bottom = -250.0
 theme_override_font_sizes/font_size = 30
 text = "HP"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ManaLb" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -558.0
+offset_top = -250.0
+offset_right = -512.0
+offset_bottom = -208.0
+theme_override_font_sizes/font_size = 30
+text = "MP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ManaBp" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -504.0
+offset_top = -237.0
+offset_right = -54.0
+offset_bottom = -219.0
+theme_override_styles/background = SubResource("StyleBoxFlat_i7an1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y3o16")
+value = 26.71
+show_percentage = false
