@@ -245,9 +245,33 @@ namespace RpgGame.Scripts.Characters.Players
 
             GetTree().CurrentScene.AddChild(fireBall);
         }
+
         private void IceSpike()
         {
             GD.Print("正在释放冰刺术");
+            float radius = 50f;
+
+            for (int angle = 0; angle < 360; angle += 10)
+            {
+                IceSpike iceSpike = IceSpikeScene.Instantiate<IceSpike>();
+
+                // 角度 → 弧度
+                float rad = Mathf.DegToRad(angle);
+
+                // 方向向量
+                Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+
+                // 设置位置（环形）
+                iceSpike.GlobalPosition = GlobalPosition + dir * radius;
+
+                // 设置朝向（如果冰刺有方向）
+                iceSpike.Rotation = rad;
+
+                // 如果冰刺需要知道移动方向
+                iceSpike.Dir = dir; // 前提：你在 IceSpike.cs 里定义了
+
+                GetTree().CurrentScene.AddChild(iceSpike);
+            }
         }
         private void Lightning()
         {
@@ -266,6 +290,8 @@ namespace RpgGame.Scripts.Characters.Players
 
         [Export]
         public PackedScene FireBallScene;
+        [Export]
+        public PackedScene IceSpikeScene;
 
         public override void _Draw()
         {

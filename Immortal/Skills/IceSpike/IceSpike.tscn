@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://duk1wi41crb7t"]
+
+[ext_resource type="Script" uid="uid://bn3w8o8dc5o7i" path="res://Skills/IceSpike/IceSpike.cs" id="1_gg26b"]
+[ext_resource type="Shader" uid="uid://dgqnyshvmte4v" path="res://Skills/IceSpike/IceSpike.gdshader" id="2_s88fn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlu6c"]
+shader = ExtResource("2_s88fn")
+shader_parameter/ice_color = Color(0.6, 0.85, 1, 1)
+shader_parameter/sharpness = 3.0
+shader_parameter/noise_strength = 0.15
+shader_parameter/glow_strength = 0.6
+shader_parameter/time_scale = 1.5
+
+[node name="IceSpike" type="Node2D"]
+script = ExtResource("1_gg26b")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vlu6c")
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+rotation = -1.5707964

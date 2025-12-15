@@ -100,7 +100,7 @@ namespace RpgGame.Scripts.GameSystem
         public Dictionary<SkillType, SkillData> SkillDataMap = new Dictionary<SkillType, SkillData>()
         {
             { SkillType.FireBall, new SkillData("火球术", 3, 5, "FireBall", 2, 2f, 300 * 300, true)},
-            { SkillType.IceSpike, new SkillData("冰刺术", 5, 10, "IceSpike", 2, 2f, 300 * 300, true)},
+            { SkillType.IceSpike, new SkillData("冰刺术", 5, 10, "IceSpike", 2, 2f, 300 * 300, false)},
             { SkillType.Lightning, new SkillData("闪电术", 10, 15, "Lightning", 2, 2f,300 * 300, true)},
         };
     }
@@ -109,9 +109,9 @@ namespace RpgGame.Scripts.GameSystem
     {
         None,
         // 主动技能 - 伤害
-        FireBall,      // 火球
-        IceSpike,      // 冰刺
-        Lightning,     // 闪电
+        FireBall,      // 火球, 射火球, 然后爆炸
+        IceSpike,      // 冰刺, 360度射出
+        Lightning,     // 闪电, 类似飞龙, 连环弹弹弹
 
         // 主动技能 - 强化
         DashAtk,       // 冲刺攻击

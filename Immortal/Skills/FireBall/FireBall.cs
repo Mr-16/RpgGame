@@ -24,7 +24,6 @@ public partial class FireBall : Node2D
 
     public Vector2 Dir;
 
-    //private bool isHit = false;
 
     public override void _Ready()
 	{
@@ -32,8 +31,7 @@ public partial class FireBall : Node2D
         explosionRangSq = ExplosionRange * ExplosionRange;
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         base._Process(delta);
         GlobalPosition += Dir * Speed * (float)delta;

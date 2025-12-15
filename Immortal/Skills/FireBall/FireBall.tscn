@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cewnsg14jderp"]
 
-[ext_resource type="Shader" uid="uid://clpcwtmr18t7g" path="res://Skills/FireBall.gdshader" id="1_cd4mn"]
-[ext_resource type="Script" uid="uid://cqykii2o2vwx0" path="res://Skills/FireBall.cs" id="1_so1om"]
+[ext_resource type="Shader" uid="uid://clpcwtmr18t7g" path="res://Skills/FireBall/FireBall.gdshader" id="1_cd4mn"]
+[ext_resource type="Script" uid="uid://cqykii2o2vwx0" path="res://Skills/FireBall/FireBall.cs" id="1_so1om"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_so1om"]
 shader = ExtResource("1_cd4mn")
