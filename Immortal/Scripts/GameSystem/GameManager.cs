@@ -101,7 +101,7 @@ namespace RpgGame.Scripts.GameSystem
         {
             { SkillType.FireBall, new SkillData("火球术", 3, 5, "FireBall", 2, 2f, 600 * 600, true)},
             { SkillType.IceSpike, new SkillData("冰刺术", 5, 10, "IceSpike", 2, 2f, 300 * 300, false)},
-            { SkillType.Lightning, new SkillData("闪电术", 10, 15, "Lightning", 2, 2f,300 * 300, true)},
+            { SkillType.Lightning, new SkillData("闪电术", 10, 15, "Lightning", 2, 2f, 800 * 800, true)},
         };
     }
 

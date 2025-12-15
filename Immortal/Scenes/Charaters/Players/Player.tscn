@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=69 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://duk1wi41crb7t" path="res://Skills/IceSpike/IceSpike.tscn" id="3_621qp"]
 [ext_resource type="Texture2D" uid="uid://berck4kasqmn3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Guard.png" id="3_b7en5"]
 [ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="3_oivwb"]
+[ext_resource type="PackedScene" uid="uid://cprsxrodfrxku" path="res://Skills/Lightning/Lightning.tscn" id="4_i7an1"]
 [ext_resource type="Texture2D" uid="uid://bgvt87nwrxdd0" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack2.png" id="4_oivwb"]
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
 
@@ -439,6 +440,7 @@ HealthPb = NodePath("Control/HealthBp")
 ManaPb = NodePath("Control/ManaBp")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
+LightningScene = ExtResource("4_i7an1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_b7en5")

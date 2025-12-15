@@ -49,7 +49,6 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             player.Anim.AnimationFinished -= Anim_AnimationFinished;
             player.Anim.FrameChanged -= Anim_FrameChanged;
-
             player.Sm.ChangeState(player.Sm.IdleState);
             return;
         }

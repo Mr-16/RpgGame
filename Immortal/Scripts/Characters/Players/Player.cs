@@ -309,6 +309,14 @@ namespace RpgGame.Scripts.Characters.Players
         private void Lightning()
         {
             GD.Print("正在释放闪电术");
+            SkillData data = GameManager.Instance().SkillDataMap[SkillType.Lightning];
+            Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
+            if (tarEnmey == null) return;
+            Lightning lightning = LightningScene.Instantiate<Lightning>();
+            lightning.GlobalPosition = GlobalPosition;
+            lightning.curTarget = tarEnmey;
+
+            GetTree().CurrentScene.AddChild(lightning);
         }
 
         public int curSkillTypeIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
@@ -325,6 +333,8 @@ namespace RpgGame.Scripts.Characters.Players
         public PackedScene FireBallScene;
         [Export]
         public PackedScene IceSpikeScene;
+        [Export]
+        public PackedScene LightningScene;
 
         public override void _Draw()
         {
