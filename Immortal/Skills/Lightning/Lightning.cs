@@ -8,17 +8,17 @@ using static Lightning;
 public partial class Lightning : Node2D
 {
     public Enemy curTarget;
-	public float Dmg = 1;
+	public float Dmg = 5;
 
     //连锁电
-    private float chaseRange = 300;//锁定范围
+    private float chaseRange = 500;//锁定范围
     private float chaseRangeSq;
-    private float range = 50;//捕获范围
+    private float range = 100;//捕获范围
     private float rangeSq;
     private int remainChainCount = 10;
     private float lightDuration = 0.2f;
     private float timer = 0;
-    private float speed = 500;
+    private float speed = 300;
 
     public LightningState curState = LightningState.Chase;
     public enum LightningState

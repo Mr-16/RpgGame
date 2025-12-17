@@ -20,9 +20,11 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
         {
             timer = 0;
             knockBackDir = -(enemy.Player.GlobalPosition - enemy.GlobalPosition).Normalized();
+            enemy.Anim.Modulate = new Color(2f, 2f, 2f, 1f);
+            enemy.Anim.Scale = new Vector2(1.5f, 1.5f);
         }
 
-        
+
         public override void Update(float delta)
         {
             enemy.Velocity = knockBackDir * knockBackSpeed;
@@ -39,7 +41,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
 
         public override void Exit()
         {
-
+            enemy.Anim.Modulate = new Color(1f, 1f, 1f, 1f);
+            enemy.Anim.Scale = new Vector2(1f, 1f); 
         }
     }
 }

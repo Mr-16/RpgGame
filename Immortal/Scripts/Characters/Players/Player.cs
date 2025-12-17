@@ -70,7 +70,7 @@ namespace RpgGame.Scripts.Characters.Players
             //最终属性根据装备等加成计算
             BaseAttr.MaxHealth = 100;
             BaseAttr.HealthRegen = 3;
-            BaseAttr.MaxMana = 100;
+            BaseAttr.MaxMana = 1000;
             BaseAttr.ManaRegen = 3;
             BaseAttr.MaxStam = 200;
             BaseAttr.StamRegen = 300;//每秒恢复量

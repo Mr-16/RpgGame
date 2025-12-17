@@ -15,6 +15,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             enemy.HealthPb.Visible = false;
             enemy.Anim.Play("Death");
             enemy.Anim.AnimationFinished += Anim_AnimationFinished;
+            enemy.DmgParticles.OneShot = false;
+            enemy.DmgParticles.Emitting = true;
         }
 
         private void Anim_AnimationFinished()

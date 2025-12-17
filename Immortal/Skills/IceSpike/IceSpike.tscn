@@ -16,7 +16,8 @@ script = ExtResource("1_gg26b")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vlu6c")
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+offset_left = -6.0
+offset_top = 16.0
+offset_right = 27.002396
+offset_bottom = 127.84216
 rotation = -1.5707964
