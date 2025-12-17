@@ -2,6 +2,7 @@ using Godot;
 using RpgGame.Scripts.Characters;
 using RpgGame.Scripts.Equipments;
 using System;
+using System.Formats.Tar;
 
 public partial class CharacterBase : CharacterBody2D
 {
@@ -10,6 +11,9 @@ public partial class CharacterBase : CharacterBody2D
     public float CurStam;
     public Vector2 CurDir = Vector2.Right;
     public int Level;
+
+    [Export]
+    public PackedScene FloatTextLabel;
 
     //属性分为基础属性和最终属性, 最终属性只在变更时改动(穿卸装备, 加减buff等), 目的是优化性能, 不用每次用都动态计算
     public CharAttribute BaseAttr = new CharAttribute();
@@ -44,7 +48,12 @@ public partial class CharacterBase : CharacterBody2D
             CurHealth = 0;
             Die();
         }
+        FloatText label = FloatTextLabel.Instantiate<FloatText>();
+        label.GlobalPosition = GlobalPosition;
+        label.Init(dmg.ToString(), new Color(1, 0, 0, 1));
+        GetTree().CurrentScene.AddChild(label);
     }
+
     protected virtual void Die()
     {
         //QueueFree();
