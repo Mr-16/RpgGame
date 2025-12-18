@@ -10,6 +10,7 @@ namespace RpgGame.Scripts.GameSystem
     public class EnemyManager
     {
         public List<Enemy> EnemyList = new List<Enemy>();
+        public KDTree<Enemy> EnemyKdTree = new KDTree<Enemy>(2);//优化敌人遍历
         private static EnemyManager instance;
         private EnemyManager() { }
         public static EnemyManager Instance()

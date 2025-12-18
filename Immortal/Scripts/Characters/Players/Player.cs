@@ -222,7 +222,7 @@ namespace RpgGame.Scripts.Characters.Players
             ExpLb.Text = $"{CurExp} / {ExpToNextLevel}";
             ExpPb.Value = CurExp;
             ExpPb.MaxValue = ExpToNextLevel;
-            LevelLb.Text = $"等级 : {CurLevel}";
+            LevelLb.Text = $"等级 : {Level}";
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
@@ -352,20 +352,28 @@ namespace RpgGame.Scripts.Characters.Players
 
 
         #region 等级系统
-        public int CurLevel;
         public int CurExp;
         public int ExpToNextLevel;
         public event Action<int> LevelUped;
         public void AddExp(int exp)
         {
             CurExp += exp;
-            while(CurExp >= ExpToNextLevel)
+            FloatText expText = FloatTextLabel.Instantiate<FloatText>();
+            expText.GlobalPosition = GlobalPosition;
+            expText.Init(exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
+            GetTree().CurrentScene.AddChild(expText);
+            while (CurExp >= ExpToNextLevel)
             {
                 CurExp -= ExpToNextLevel;
-                CurLevel++;
-                ExpToNextLevel = NeedExp(CurLevel);
-                LevelUped?.Invoke(CurLevel);
-                GD.Print("CurLevel : " + CurLevel);
+                Level++;
+                ExpToNextLevel = NeedExp(Level);
+                LevelUped?.Invoke(Level);
+                GD.Print("Level : " + Level);
+                FloatText levelText = FloatTextLabel.Instantiate<FloatText>();
+                levelText.GlobalPosition = GlobalPosition;
+                levelText.Init($"LEVEL UP!! 当前等级 : {Level}", new Color(0, 0, 1, 1), 2);
+                levelText.ZIndex = 120;
+                GetTree().CurrentScene.AddChild(levelText);
             }
         }
         public static int NeedExp(int level)
@@ -375,8 +383,8 @@ namespace RpgGame.Scripts.Characters.Players
         private void InitLevel()
         {
             //Json序列化出来
-            CurLevel = 1;
-            ExpToNextLevel = NeedExp(CurLevel);
+            Level = 1;
+            ExpToNextLevel = NeedExp(Level);
             CurExp = 0;
         }
         #endregion

@@ -22,6 +22,8 @@ namespace RpgGame.Scripts.Characters.Enemies
             EnemyManager.Instance().EnemyList.Add(this);
             //DmgParticles.Visible = false;
             //DmgParticles.Emitting = false;
+            Random rd = new Random();
+            Level = rd.Next(1, 30);
         }
 
         public override void _Process(double delta)
@@ -66,11 +68,17 @@ namespace RpgGame.Scripts.Characters.Enemies
 
         public void SpawnExpBall()
         {
+            int exp = LevelToExp();
+
             ExpBall expBall = ExpBall.Instantiate<ExpBall>();
             expBall.GlobalPosition = GlobalPosition;
-            expBall.Exp = 18;
+            expBall.Exp = exp;
             //expBall.Init(dmg.ToString(), new Color(1, 0, 0, 1));
             GetTree().CurrentScene.AddChild(expBall);
+        }
+        private int LevelToExp()
+        {
+            return Level * 10;
         }
     }
 }
