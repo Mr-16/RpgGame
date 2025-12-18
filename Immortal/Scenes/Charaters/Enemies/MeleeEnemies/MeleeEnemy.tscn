@@ -1,10 +1,11 @@
-[gd_scene load_steps=44 format=3 uid="uid://7p5ygkkuunr2"]
+[gd_scene load_steps=45 format=3 uid="uid://7p5ygkkuunr2"]
 
 [ext_resource type="Texture2D" uid="uid://dbg3rbxpksit3" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="1_1kamg"]
 [ext_resource type="Texture2D" uid="uid://db2cci1jm0c5d" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="2_jk3o0"]
-[ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="2_ky2kj"]
+[ext_resource type="PackedScene" uid="uid://vqs22r8bomfg" path="res://Scenes/Interactions/ExpBall.tscn" id="2_ky2kj"]
 [ext_resource type="Texture2D" uid="uid://dq87jn28i28ih" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Attack2.png" id="2_pmv0k"]
 [ext_resource type="Script" uid="uid://ddicl624bv3rn" path="res://Scripts/Characters/Enemies/MeleeEnemies/MeleeEnemy.cs" id="2_r2bah"]
+[ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="3_1d5jv"]
 [ext_resource type="Texture2D" uid="uid://trcikj72vlw" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Trees/Tree1.png" id="4_y1hut"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r2bah"]
@@ -295,7 +296,8 @@ script = ExtResource("2_r2bah")
 Anim = NodePath("AnimatedSprite2D")
 HealthPb = NodePath("HealthPb")
 DmgParticles = NodePath("DmgGPUParticles2D")
-FloatTextLabel = ExtResource("2_ky2kj")
+ExpBall = ExtResource("2_ky2kj")
+FloatTextLabel = ExtResource("3_1d5jv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 3

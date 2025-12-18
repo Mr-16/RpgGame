@@ -17,12 +17,15 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             enemy.Anim.AnimationFinished += Anim_AnimationFinished;
             enemy.DmgParticles.OneShot = false;
             enemy.DmgParticles.Emitting = true;
+
         }
 
         private void Anim_AnimationFinished()
         {
             //enemy.Sm.ChangeState(enemy.Sm.)
             enemy.Anim.AnimationFinished -= Anim_AnimationFinished;
+            //生成经验
+            enemy.SpawnExpBall();
             enemy.QueueFree();
         }
 

@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace RpgGame.Scripts.GameSystem
             base._Ready();
             instance = this;
         }
+
+        //管理玩家引用
+        public Player Player;
 
         //统一管理所有的游戏场景
         [Export]

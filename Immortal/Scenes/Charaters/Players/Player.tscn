@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=73 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -432,13 +432,30 @@ bg_color = Color(0.07058824, 0.05490196, 0.1882353, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3o16"]
 bg_color = Color(0.07058824, 0.12156863, 0.41960785, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r364p"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp737"]
+bg_color = Color(0.101032026, 0.16291168, 0.012003292, 1)
+border_color = Color(0, 0.8, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4du0"]
+bg_color = Color(0, 0.4565437, 0.17558163, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
 AtkRange = 120.0
 HealthPb = NodePath("Control/HealthBp")
 ManaPb = NodePath("Control/ManaBp")
+ExpPb = NodePath("Control/PanelContainer/ExpBp")
+ExpLb = NodePath("Control/ExpLb")
+LevelLb = NodePath("Control/LevelLb")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
 LightningScene = ExtResource("4_i7an1")
@@ -453,6 +470,7 @@ sprite_frames = SubResource("SpriteFrames_tp737")
 animation = &"Lightning"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.715, 0.715)
 
 [node name="StaminaProgressBar" type="ProgressBar" parent="."]
 z_index = 10
@@ -467,15 +485,16 @@ fill_mode = 3
 show_percentage = false
 
 [node name="Control" type="Control" parent="."]
+z_index = 20
 layout_mode = 3
 anchors_preset = 0
 
 [node name="HealthBp" type="ProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = -504.0
-offset_top = -276.0
-offset_right = -57.0
-offset_bottom = -260.0
+offset_left = -497.0
+offset_top = -277.0
+offset_right = -50.0
+offset_bottom = -261.0
 theme_override_styles/background = SubResource("StyleBoxFlat_p3tor")
 theme_override_styles/fill = SubResource("StyleBoxFlat_621qp")
 value = 37.93
@@ -487,6 +506,7 @@ offset_left = -555.0
 offset_top = -292.0
 offset_right = -514.0
 offset_bottom = -250.0
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 30
 text = "HP"
 horizontal_alignment = 1
@@ -498,6 +518,7 @@ offset_left = -558.0
 offset_top = -250.0
 offset_right = -512.0
 offset_bottom = -208.0
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 30
 text = "MP"
 horizontal_alignment = 1
@@ -505,11 +526,49 @@ vertical_alignment = 1
 
 [node name="ManaBp" type="ProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = -504.0
-offset_top = -237.0
-offset_right = -54.0
-offset_bottom = -219.0
+offset_left = -498.0
+offset_top = -238.0
+offset_right = -48.0
+offset_bottom = -220.0
 theme_override_styles/background = SubResource("StyleBoxFlat_i7an1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_y3o16")
 value = 26.71
 show_percentage = false
+
+[node name="LevelLb" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -565.0
+offset_top = 267.0
+offset_right = -370.0
+offset_bottom = 309.0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 30
+text = "等级 : 999"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -419.0
+offset_top = 275.0
+offset_right = 557.0
+offset_bottom = 305.16
+theme_override_styles/panel = SubResource("StyleBoxFlat_r364p")
+
+[node name="ExpBp" type="ProgressBar" parent="Control/PanelContainer"]
+custom_minimum_size = Vector2(0, 26.16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_tp737")
+theme_override_styles/fill = SubResource("StyleBoxFlat_t4du0")
+value = 40.17
+show_percentage = false
+
+[node name="ExpLb" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -69.0
+offset_top = 267.0
+offset_right = 80.0
+offset_bottom = 309.0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 20
+text = "999/99999"
+horizontal_alignment = 1
+vertical_alignment = 1

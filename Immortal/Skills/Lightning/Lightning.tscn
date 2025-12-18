@@ -28,7 +28,7 @@ linear_accel_min = 49.079998
 linear_accel_max = 49.079998
 scale_min = 5.5499997
 scale_max = 5.5499997
-color = Color(0, 0.7897846, 1.5229772, 1)
+color = Color(4.139543, 0, 5.203367, 1)
 
 [node name="Lightning" type="Node2D"]
 z_index = 10
@@ -45,8 +45,8 @@ rotation = -1.5707964
 scale = Vector2(2, 2)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-amount = 100
-lifetime = 0.27
+amount = 500
+lifetime = 0.09999999999999999
 preprocess = 1.0
 speed_scale = 2.85
 explosiveness = 0.35

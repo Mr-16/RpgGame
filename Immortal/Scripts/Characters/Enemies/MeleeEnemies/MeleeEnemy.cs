@@ -1,5 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Players;
+using RpgGame.Scripts.GameSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,8 +54,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
             Sm = new StateMachine(this);
             startPos = GlobalPosition;
             InitAttr();
-            var playerList = GetTree().GetNodesInGroup("player");
-            Player = playerList[0] as Player;
+            Player = GameManager.Instance().Player;
             ChaseRangeSq = ChaseRange * ChaseRange;
             AtkRangeSq = AtkRange * AtkRange;
         }

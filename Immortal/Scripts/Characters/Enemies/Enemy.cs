@@ -3,6 +3,7 @@ using RpgGame.Scripts.GameSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace RpgGame.Scripts.Characters.Enemies
     {
         [Export]
         public GpuParticles2D DmgParticles;
+        [Export]
+        public PackedScene ExpBall;
 
         public override void _Ready()
         {
@@ -58,6 +61,16 @@ namespace RpgGame.Scripts.Characters.Enemies
 
             //// 如果是一次性特效，可以直接销毁
             //DmgParticles.QueueFree();
+        }
+
+
+        public void SpawnExpBall()
+        {
+            ExpBall expBall = ExpBall.Instantiate<ExpBall>();
+            expBall.GlobalPosition = GlobalPosition;
+            expBall.Exp = 18;
+            //expBall.Init(dmg.ToString(), new Color(1, 0, 0, 1));
+            GetTree().CurrentScene.AddChild(expBall);
         }
     }
 }

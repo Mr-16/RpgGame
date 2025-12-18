@@ -37,14 +37,23 @@ namespace RpgGame.Scripts.Characters.Players
         public ProgressBar HealthPb;
         [Export]
         public ProgressBar ManaPb;
+        [Export]
+        public ProgressBar ExpPb;
+        [Export]
+        public Label ExpLb;
+        [Export]
+        public Label LevelLb;
 
         public override void _Ready()
         {
-            AddToGroup("player");
+            GameManager.Instance().Player = this;
             Sm = new StateMachine(this);
             InitAttribute();//属性
             InitSkillData();//技能
+            InitLevel();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
+
+            
         }
 
         public override void _Process(double delta)
@@ -208,6 +217,12 @@ namespace RpgGame.Scripts.Characters.Players
             HealthPb.Value = CurHealth;
             ManaPb.MaxValue = FinalAttr.MaxMana;
             ManaPb.Value = CurMana;
+
+            //经验
+            ExpLb.Text = $"{CurExp} / {ExpToNextLevel}";
+            ExpPb.Value = CurExp;
+            ExpPb.MaxValue = ExpToNextLevel;
+            LevelLb.Text = $"等级 : {CurLevel}";
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
@@ -263,7 +278,6 @@ namespace RpgGame.Scripts.Characters.Players
 
         private void FireBall()
         {
-            GD.Print("正在释放火球术");
             SkillData data = GameManager.Instance().SkillDataMap[SkillType.FireBall];
             //范围内找到目标然后生成火球射过去
             Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
@@ -281,7 +295,6 @@ namespace RpgGame.Scripts.Characters.Players
 
         private void IceSpike()
         {
-            GD.Print("正在释放冰刺术");
             float radius = 50f;
 
             for (int angle = 0; angle < 360; angle += 10)
@@ -308,7 +321,6 @@ namespace RpgGame.Scripts.Characters.Players
         }
         private void Lightning()
         {
-            GD.Print("正在释放闪电术");
             SkillData data = GameManager.Instance().SkillDataMap[SkillType.Lightning];
             Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
             if (tarEnmey == null) return;
@@ -335,6 +347,43 @@ namespace RpgGame.Scripts.Characters.Players
         public PackedScene IceSpikeScene;
         [Export]
         public PackedScene LightningScene;
+
+
+
+
+        #region 等级系统
+        public int CurLevel;
+        public int CurExp;
+        public int ExpToNextLevel;
+        public event Action<int> LevelUped;
+        public void AddExp(int exp)
+        {
+            CurExp += exp;
+            while(CurExp >= ExpToNextLevel)
+            {
+                CurExp -= ExpToNextLevel;
+                CurLevel++;
+                ExpToNextLevel = NeedExp(CurLevel);
+                LevelUped?.Invoke(CurLevel);
+                GD.Print("CurLevel : " + CurLevel);
+            }
+        }
+        public static int NeedExp(int level)
+        {
+            return (int)(100 * Math.Pow(level, 1.5));
+        }
+        private void InitLevel()
+        {
+            //Json序列化出来
+            CurLevel = 1;
+            ExpToNextLevel = NeedExp(CurLevel);
+            CurExp = 0;
+        }
+        #endregion
+
+
+
+
 
         public override void _Draw()
         {
