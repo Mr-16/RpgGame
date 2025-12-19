@@ -15,6 +15,8 @@ public partial class Lightning : Node2D
     private float chaseRangeSq;
     private float range = 100;//捕获范围
     private float rangeSq;
+    private float dmgRange = 50;
+    private float dmgRangeSq;
     private int remainChainCount = 10;
     private float lightDuration = 0.2f;
     private float timer = 0;
@@ -33,6 +35,7 @@ public partial class Lightning : Node2D
 	{
         chaseRangeSq = chaseRange * chaseRange;
         rangeSq = range * range;
+        dmgRangeSq = dmgRange * dmgRange;
         ChangeState(LightningState.Chase);
     }
 
@@ -74,6 +77,11 @@ public partial class Lightning : Node2D
                     QueueFree();
                     return;
                 }
+                //foreach(Enemy curEnemy in EnemyManager.Instance().EnemyList)
+                //{
+                //    if (GlobalPosition.DistanceSquaredTo(curEnemy.GlobalPosition) > dmgRangeSq) continue;
+                //    curEnemy.TakeDmg(Dmg);
+                //}
                 GlobalPosition = curTarget.GlobalPosition;
                 curTarget.TakeDmg(Dmg);
                 if (timer < lightDuration) return;
@@ -93,7 +101,7 @@ public partial class Lightning : Node2D
                     QueueFree();
                 }
                 remainChainCount--;
-                List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+                List<Enemy> enemyList = GameManager.Instance().EnemyList;
                 Enemy target = null;
                 float minDisSq = float.MaxValue;
                 foreach(Enemy curEnemy in enemyList)

@@ -28,7 +28,7 @@ public partial class IceSpike : Node2D
     {
 		base._Process(delta);
 
-		List<Enemy> enemyList =  EnemyManager.Instance().EnemyList;
+		List<Enemy> enemyList =  GameManager.Instance().EnemyList;
 		foreach(Enemy curEnemy in enemyList)
 		{
 			if (curEnemy.GlobalPosition.DistanceSquaredTo(GlobalPosition) > rangeSq) continue;

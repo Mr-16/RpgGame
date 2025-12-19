@@ -19,7 +19,7 @@ namespace RpgGame.Scripts.Characters.Enemies
         public override void _Ready()
         {
             base._Ready();
-            EnemyManager.Instance().EnemyList.Add(this);
+            GameManager.Instance().EnemyList.Add(this);
             //DmgParticles.Visible = false;
             //DmgParticles.Emitting = false;
             Random rd = new Random();
@@ -41,7 +41,7 @@ namespace RpgGame.Scripts.Characters.Enemies
         public override void _ExitTree()
         {
             base._ExitTree();
-            EnemyManager.Instance().EnemyList.Remove(this);
+            GameManager.Instance().EnemyList.Remove(this);
         }
 
 

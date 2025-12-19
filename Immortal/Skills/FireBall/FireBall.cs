@@ -46,7 +46,7 @@ public partial class FireBall : Node2D
         }
 
 
-        List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+        List<Enemy> enemyList = GameManager.Instance().EnemyList;
         foreach (Enemy enemy in enemyList)
         {
             if (GlobalPosition.DistanceSquaredTo(enemy.Position) > rangeSq) continue;

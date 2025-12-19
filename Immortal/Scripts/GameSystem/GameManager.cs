@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,15 @@ namespace RpgGame.Scripts.GameSystem
             base._Ready();
             instance = this;
         }
+        public override void _PhysicsProcess(double delta)
+        {
+            base._PhysicsProcess(delta);
+        }
 
         //管理玩家引用
         public Player Player;
+
+        public List<Enemy> EnemyList = new List<Enemy>();
 
         //统一管理所有的游戏场景
         [Export]

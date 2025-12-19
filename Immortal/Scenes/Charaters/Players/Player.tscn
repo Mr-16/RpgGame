@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=74 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cprsxrodfrxku" path="res://Skills/Lightning/Lightning.tscn" id="4_i7an1"]
 [ext_resource type="Texture2D" uid="uid://bgvt87nwrxdd0" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack2.png" id="4_oivwb"]
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
+[ext_resource type="PackedScene" uid="uid://cqf8mkmuxsyga" path="res://Scenes/UI/item_slot.tscn" id="5_r364p"]
 [ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="5_y3o16"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7en5"]
@@ -446,7 +447,7 @@ border_color = Color(0, 0.8, 0.8, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4du0"]
 bg_color = Color(0, 0.4565437, 0.17558163, 1)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb", "InventoryGc")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
@@ -459,6 +460,8 @@ LevelLb = NodePath("Control/LevelLb")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
 LightningScene = ExtResource("4_i7an1")
+ItemSlot = ExtResource("5_r364p")
+InventoryGc = NodePath("Control/InventoryGC")
 FloatTextLabel = ExtResource("5_y3o16")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -572,3 +575,11 @@ theme_override_font_sizes/font_size = 20
 text = "999/99999"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="InventoryGC" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_left = 127.0
+offset_top = -327.0
+offset_right = 783.0
+offset_bottom = 197.0
+columns = 5

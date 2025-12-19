@@ -1,6 +1,7 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.GameSystem;
+using RpgGame.Scripts.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,6 +45,9 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public Label LevelLb;
 
+        [Export] public TextureRect Texture1;
+        [Export] public TextureRect Texture2;
+        [Export] public TextureRect Texture3;
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -51,6 +55,7 @@ namespace RpgGame.Scripts.Characters.Players
             InitAttribute();//属性
             InitSkillData();//技能
             InitLevel();//初始化等级
+            InitInventory();//初始化库存
             AtkRangeSq = AtkRange * AtkRange;
 
             
@@ -189,7 +194,7 @@ namespace RpgGame.Scripts.Characters.Players
         }
         public void Atk()
         {
-            List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+            List<Enemy> enemyList = GameManager.Instance().EnemyList;
             foreach (Enemy enemy in enemyList)
             {
                 float disSq = GlobalPosition.DistanceSquaredTo(enemy.GlobalPosition);
@@ -223,12 +228,18 @@ namespace RpgGame.Scripts.Characters.Players
             ExpPb.Value = CurExp;
             ExpPb.MaxValue = ExpToNextLevel;
             LevelLb.Text = $"等级 : {Level}";
+
+            //库存
+            //Texture1.Texture = GD.Load<Texture2D>(item1.ItemData.IconPath);
+            //Texture2.Texture = GD.Load<Texture2D>(item2.ItemData.IconPath);
+            //Texture3.Texture = GD.Load<Texture2D>(item3.ItemData.IconPath);
+
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
         {
             Enemy tarEnmey = null;
-            List<Enemy> enemyList = EnemyManager.Instance().EnemyList;
+            List<Enemy> enemyList = GameManager.Instance().EnemyList;
             float minDisSq = float.MaxValue;
             foreach (Enemy enmey in enemyList)
             {
@@ -390,7 +401,101 @@ namespace RpgGame.Scripts.Characters.Players
         #endregion
 
 
+        #region 库存系统
+        //ItemInstance item1;
+        //ItemInstance item2;
+        //ItemInstance item3;
+        [Export] public PackedScene ItemSlot;
+        [Export] public GridContainer InventoryGc;
 
+        public List<ItemInstance> ItemInstanceList = new List<ItemInstance>();
+        public int InventoryCapacity = 30;
+        public bool AddItem(ItemData data, int amount = 1)
+        {
+            // 1. 尝试堆叠到现有槽位
+            if (data.MaxStack > 1)
+            {
+                foreach (var slot in ItemInstanceList.Where(s => s != null && s.ItemData.Id == data.Id))
+                {
+                    amount = slot.AddQuantity(amount);
+                    if (amount <= 0)
+                    {
+                        //EmitSignal(SignalName.InventoryChanged);
+                        //todo通知ui
+                        return true;
+                    }
+                }
+            }
+
+            // 2. 尝试放入空槽位
+            while (amount > 0)
+            {
+                if (ItemInstanceList.Count >= InventoryCapacity)
+                {
+                    GD.Print("Inventory Full!");
+                    //EmitSignal(SignalName.InventoryChanged);
+                    
+                    return false; // 背包已满
+                }
+                ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
+                slot.NameLb.Text = data.Name;
+                //slot.Name
+                slot.IconTr.Texture = GD.Load<Texture2D>(data.IconPath);
+                InventoryGc.AddChild(slot);
+                int stackAmount = Mathf.Min(amount, data.MaxStack);
+                ItemInstanceList.Add(new ItemInstance(data, stackAmount));
+                amount -= stackAmount;
+            }
+
+            //EmitSignal(SignalName.InventoryChanged);
+            return amount <= 0;
+        }
+
+        /// <summary>
+        /// 移除指定 ID 的物品数量
+        /// </summary>
+        public bool RemoveItem(int id, int amount = 1)
+        {
+            if (GetItemTotalCount(id) < amount) return false;
+
+            for (int i = ItemInstanceList.Count - 1; i >= 0; i--)
+            {
+                if (ItemInstanceList[i] != null && ItemInstanceList[i].ItemData.Id == id)
+                {
+                    if (ItemInstanceList[i].Count > amount)
+                    {
+                        ItemInstanceList[i].Count -= amount;
+                        amount = 0;
+                    }
+                    else
+                    {
+                        amount -= ItemInstanceList[i].Count;
+                        ItemInstanceList[i] = null;
+                    }
+                }
+                if (amount <= 0) break;
+            }
+
+            //EmitSignal(SignalName.InventoryChanged);
+            return true;
+        }
+        public int GetItemTotalCount(int id)
+        {
+            return ItemInstanceList.Where(s => s != null && s.ItemData.Id == id).Sum(s => s.Count);
+        }
+        private void InitInventory()
+        {
+            AddItem(ItemDataBase.Instance().IdItemMap[0], 1);
+            AddItem(ItemDataBase.Instance().IdItemMap[0], 11);
+            AddItem(ItemDataBase.Instance().IdItemMap[1], 1);
+            AddItem(ItemDataBase.Instance().IdItemMap[1], 11);
+            AddItem(ItemDataBase.Instance().IdItemMap[2], 1);
+            AddItem(ItemDataBase.Instance().IdItemMap[2], 11);
+            //item1 = new ItemInstance(ItemDataBase.Instance().IdItemMap[0], 1);
+            //item2 = new ItemInstance(ItemDataBase.Instance().IdItemMap[1], 2);
+            //item3 = new ItemInstance(ItemDataBase.Instance().IdItemMap[2], 3);
+        }
+        #endregion
 
 
         public override void _Draw()
