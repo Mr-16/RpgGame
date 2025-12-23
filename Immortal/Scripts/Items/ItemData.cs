@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,3 +70,69 @@ namespace RpgGame.Scripts.Items
         }
     }
 }
+
+
+//using Godot;
+//using System.Collections.Generic;
+
+//public class Inventory : Node
+//{
+//    public int Capacity { get; private set; } = 30;
+//    private List<ItemInstance> _items = new List<ItemInstance>();
+
+//    public IReadOnlyList<ItemInstance> Items => _items.AsReadOnly();
+
+//    public Inventory(int capacity = 30)
+//    {
+//        Capacity = capacity;
+//    }
+
+//    // 添加物品
+//    public bool AddItem(ItemData data, int quantity = 1)
+//    {
+//        if (data.MaxStack > 1)
+//        {
+//            // 尝试堆叠
+//            var existing = _items.Find(i => i.Data.Id == data.Id && i.Quantity < data.MaxStack);
+//            if (existing != null)
+//            {
+//                int space = data.MaxStack - existing.Quantity;
+//                int toAdd = Mathf.Min(space, quantity);
+//                existing.Quantity += toAdd;
+//                quantity -= toAdd;
+//            }
+//        }
+
+//        while (quantity > 0)
+//        {
+//            if (_items.Count >= Capacity)
+//                return false; // 背包已满
+
+//            int toAdd = Mathf.Min(data.MaxStack, quantity);
+//            _items.Add(new ItemInstance(data, toAdd));
+//            quantity -= toAdd;
+//        }
+
+//        return true;
+//    }
+
+//    // 移除物品
+//    public bool RemoveItem(int itemId, int quantity = 1)
+//    {
+//        var instance = _items.Find(i => i.Data.Id == itemId);
+//        if (instance == null)
+//            return false;
+
+//        if (instance.Quantity > quantity)
+//        {
+//            instance.Quantity -= quantity;
+//        }
+//        else
+//        {
+//            _items.Remove(instance);
+//        }
+
+//        return true;
+//    }
+//}
+

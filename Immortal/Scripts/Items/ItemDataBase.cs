@@ -22,9 +22,9 @@ namespace RpgGame.Scripts.Items
 
         private ItemDataBase() 
         {
-            IdItemMap[0] = new ItemData(0, "Test0", "this is a description0, fuckyou", ItemType.Consumable, 99, "res://icon.svg");
-            IdItemMap[1] = new ItemData(1, "Test1", "this is a description1, fuckyou", ItemType.Material, 99, "res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Archer/Archer_Idle.png");
-            IdItemMap[2] = new ItemData(2, "Test2", "this is a description2, fuckyou", ItemType.Equipment, 99, "res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Archer/Arrow.png");
+            IdItemMap[0] = new ItemData(0, "Test0", "this is a description0, fuckyou", ItemType.Consumable, 16, "res://icon.svg");
+            IdItemMap[1] = new ItemData(1, "Test1", "this is a description1, fuckyou", ItemType.Material, 16, "res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Decorations/Rocks/Rock2.png");
+            IdItemMap[2] = new ItemData(2, "Test2", "this is a description2, fuckyou", ItemType.Equipment, 16, "res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Archer/Arrow.png");
         }
     }
 }

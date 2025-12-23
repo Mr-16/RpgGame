@@ -1,7 +1,7 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.GameSystem;
-using RpgGame.Scripts.Items;
+using RpgGame.Scripts.ItemSystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +10,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace RpgGame.Scripts.Characters.Players
@@ -45,9 +46,16 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public Label LevelLb;
 
-        [Export] public TextureRect Texture1;
-        [Export] public TextureRect Texture2;
-        [Export] public TextureRect Texture3;
+        //[Export]
+        //public ItemView ItemView;
+
+        [Export]
+        public InventoryView InventoryView;
+        [Export] public Button AddBtn;
+        [Export] public Button DelBtn;
+
+        public Inventory Inventory;
+
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -55,10 +63,23 @@ namespace RpgGame.Scripts.Characters.Players
             InitAttribute();//属性
             InitSkillData();//技能
             InitLevel();//初始化等级
-            InitInventory();//初始化库存
+            //InitInventory();//初始化库存
             AtkRangeSq = AtkRange * AtkRange;
 
-            
+            Inventory = new Inventory();
+            Inventory.ItemAdded += InventoryView.Inventory_ItemAdded;
+            Inventory.ItemChanged += InventoryView.Inventory_ItemChanged;
+            Inventory.ItemRemoved += InventoryView.Inventory_ItemRemoved;
+            AddBtn.Pressed += () =>
+            {
+                Inventory.AddItem(ItemDataBase.Instance().IdItemMap[ItemIds.Arrow], 1);
+                
+            };
+
+            DelBtn.Pressed += () =>
+            {
+                Inventory.RemoveItem(ItemIds.Arrow, 1);
+            };
         }
 
         public override void _Process(double delta)
@@ -66,6 +87,20 @@ namespace RpgGame.Scripts.Characters.Players
             Sm.CurState.Update((float)delta);
             //GD.Print("curState" + Sm.curState);
 
+            if (Input.IsActionJustPressed("Inventory"))
+            {
+                if (InventoryView.Visible == false)
+                {
+                    GD.Print("pause");
+                    InventoryView.Visible = true;
+                }
+                else
+                {
+                    //恢复游戏
+                    GD.Print("restart");
+                    InventoryView.Visible = false;
+                }
+            }
         }
         public override void _PhysicsProcess(double delta)
         {
@@ -76,6 +111,11 @@ namespace RpgGame.Scripts.Characters.Players
 
             UpdateUi((float)delta);
         }
+
+        //public override void _Input(InputEvent e)
+        //{
+            
+        //}
 
         private void InitAttribute()
         {
@@ -229,11 +269,13 @@ namespace RpgGame.Scripts.Characters.Players
             ExpPb.MaxValue = ExpToNextLevel;
             LevelLb.Text = $"等级 : {Level}";
 
-            //库存
-            //Texture1.Texture = GD.Load<Texture2D>(item1.ItemData.IconPath);
-            //Texture2.Texture = GD.Load<Texture2D>(item2.ItemData.IconPath);
-            //Texture3.Texture = GD.Load<Texture2D>(item3.ItemData.IconPath);
-
+            //for(int i = 0; i < InventoryCapacity; i++)
+            //{
+            //    ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
+            //    slot.IconTr.Texture = null;
+            //    slot.CountLb.Text = "";
+            //    //ItemView.InventoryGc.AddChild(slot);
+            //}
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
@@ -405,96 +447,78 @@ namespace RpgGame.Scripts.Characters.Players
         //ItemInstance item1;
         //ItemInstance item2;
         //ItemInstance item3;
-        [Export] public PackedScene ItemSlot;
-        [Export] public GridContainer InventoryGc;
+        //[Export] public PackedScene ItemSlot;
 
-        public List<ItemInstance> ItemInstanceList = new List<ItemInstance>();
-        public int InventoryCapacity = 30;
-        public bool AddItem(ItemData data, int amount = 1)
-        {
-            // 1. 尝试堆叠到现有槽位
-            if (data.MaxStack > 1)
-            {
-                foreach (var slot in ItemInstanceList.Where(s => s != null && s.ItemData.Id == data.Id))
-                {
-                    amount = slot.AddQuantity(amount);
-                    if (amount <= 0)
-                    {
-                        //EmitSignal(SignalName.InventoryChanged);
-                        //todo通知ui
-                        return true;
-                    }
-                }
-            }
+        //public List<ItemInstance> ItemInstanceList = new List<ItemInstance>();
+        //public Dictionary<ItemInstance, ItemSlot> InstanceSlotMap = new Dictionary<ItemInstance, ItemSlot>();
+        //public int InventoryCapacity = 30;
 
-            // 2. 尝试放入空槽位
-            while (amount > 0)
-            {
-                if (ItemInstanceList.Count >= InventoryCapacity)
-                {
-                    GD.Print("Inventory Full!");
-                    //EmitSignal(SignalName.InventoryChanged);
-                    
-                    return false; // 背包已满
-                }
-                ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
-                slot.NameLb.Text = data.Name;
-                //slot.Name
-                slot.IconTr.Texture = GD.Load<Texture2D>(data.IconPath);
-                InventoryGc.AddChild(slot);
-                int stackAmount = Mathf.Min(amount, data.MaxStack);
-                ItemInstanceList.Add(new ItemInstance(data, stackAmount));
-                amount -= stackAmount;
-            }
+        //public bool AddItem(ItemData data, int quantity = 1)
+        //{
+        //    if (data.MaxStack > 1)
+        //    {
+        //        // 尝试堆叠
+        //        ItemInstance existedItemInstance = ItemInstanceList.Find(i => i.ItemData.Id == data.Id && i.Count < data.MaxStack);
+        //        if(existedItemInstance != null)
+        //        {
+        //            int space = data.MaxStack - existedItemInstance.Count;
+        //            int toAdd = Mathf.Min(space, quantity);
+        //            existedItemInstance.Count += toAdd;
+        //            quantity -= toAdd;
+        //            InstanceSlotMap[existedItemInstance].CountLb.Text = existedItemInstance.Count.ToString();
+        //        }
+               
+        //    }
+        //    while (quantity > 0)
+        //    {
+        //        if (ItemInstanceList.Count >= InventoryCapacity)
+        //            return false; // 背包已满
+        //        int toAdd = Mathf.Min(data.MaxStack, quantity);
+        //        ItemInstance newItemInstance = new ItemInstance(data, toAdd);
+        //        ItemInstanceList.Add(newItemInstance);
+        //        quantity -= toAdd;
+        //        //ui放入槽中
+        //        ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
+        //        slot.IconTr.Texture = GD.Load<Texture2D>(data.IconPath);
+        //        slot.CountLb.Text = newItemInstance.Count.ToString();
+        //        //ItemView.InventoryGc.AddChild(slot);
+        //        InstanceSlotMap[newItemInstance] = slot;
+        //    }
+        //    return true;
+        //}
 
-            //EmitSignal(SignalName.InventoryChanged);
-            return amount <= 0;
-        }
+        // 移除物品
+        //public bool RemoveItem(int itemId, int quantity = 1)
+        //{
+        //    ItemInstance instance = ItemInstanceList.Find(i => i.ItemData.Id == itemId);
+        //    if (instance == null)
+        //        return false;
 
-        /// <summary>
-        /// 移除指定 ID 的物品数量
-        /// </summary>
-        public bool RemoveItem(int id, int amount = 1)
-        {
-            if (GetItemTotalCount(id) < amount) return false;
+        //    if (instance.Count > quantity)
+        //    {
+        //        instance.Count -= quantity;
+        //        InstanceSlotMap[instance].CountLb.Text = instance.Count.ToString();
+        //    }
+        //    else
+        //    {
+        //        ItemInstanceList.Remove(instance);
+        //        //ui放入槽中
+        //        //ItemView.InventoryGc.RemoveChild(InstanceSlotMap[instance]);
+        //    }
 
-            for (int i = ItemInstanceList.Count - 1; i >= 0; i--)
-            {
-                if (ItemInstanceList[i] != null && ItemInstanceList[i].ItemData.Id == id)
-                {
-                    if (ItemInstanceList[i].Count > amount)
-                    {
-                        ItemInstanceList[i].Count -= amount;
-                        amount = 0;
-                    }
-                    else
-                    {
-                        amount -= ItemInstanceList[i].Count;
-                        ItemInstanceList[i] = null;
-                    }
-                }
-                if (amount <= 0) break;
-            }
+        //    return true;
+        //}
+        
 
-            //EmitSignal(SignalName.InventoryChanged);
-            return true;
-        }
-        public int GetItemTotalCount(int id)
-        {
-            return ItemInstanceList.Where(s => s != null && s.ItemData.Id == id).Sum(s => s.Count);
-        }
-        private void InitInventory()
-        {
-            AddItem(ItemDataBase.Instance().IdItemMap[0], 1);
-            AddItem(ItemDataBase.Instance().IdItemMap[0], 11);
-            AddItem(ItemDataBase.Instance().IdItemMap[1], 1);
-            AddItem(ItemDataBase.Instance().IdItemMap[1], 11);
-            AddItem(ItemDataBase.Instance().IdItemMap[2], 1);
-            AddItem(ItemDataBase.Instance().IdItemMap[2], 11);
-            //item1 = new ItemInstance(ItemDataBase.Instance().IdItemMap[0], 1);
-            //item2 = new ItemInstance(ItemDataBase.Instance().IdItemMap[1], 2);
-            //item3 = new ItemInstance(ItemDataBase.Instance().IdItemMap[2], 3);
-        }
+        //private void InitInventory()
+        //{
+        //    AddItem(ItemDataBase.Instance().IdItemMap[0], 1);
+        //    AddItem(ItemDataBase.Instance().IdItemMap[0], 11);
+        //    AddItem(ItemDataBase.Instance().IdItemMap[1], 1);
+        //    AddItem(ItemDataBase.Instance().IdItemMap[1], 11);
+        //    AddItem(ItemDataBase.Instance().IdItemMap[2], 1);
+        //    AddItem(ItemDataBase.Instance().IdItemMap[2], 11);
+        //}
         #endregion
 
 
