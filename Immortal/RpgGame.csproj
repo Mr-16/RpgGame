@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Main\" />
+    <Folder Include="Scenes\UI\" />
     <Folder Include="Scripts\Characters\Enemies\RangeEnemies\States\" />
   </ItemGroup>
 </Project>

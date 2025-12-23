@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://xpakce63hqvh"]
+
+[ext_resource type="Script" uid="uid://i4tyo2r6sft0" path="res://Scripts/UI/Item/ItemInstCtrl.cs" id="1_4cmdt"]
+[ext_resource type="Texture2D" uid="uid://d120xglayjjgp" path="res://icon.svg" id="2_5afg1"]
+
+[node name="ItemInstCtrl" type="Control" node_paths=PackedStringArray("IconTr", "CountLb")]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_4cmdt")
+IconTr = NodePath("IconTr")
+CountLb = NodePath("IconTr/CountLb")
+
+[node name="IconTr" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 75.0
+mouse_filter = 2
+texture = ExtResource("2_5afg1")
+expand_mode = 1
+
+[node name="CountLb" type="Label" parent="IconTr"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -28.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 20
+text = "999"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://dv2lustq7hwba"]
+
+[ext_resource type="Script" uid="uid://cc5lejodyxj7a" path="res://Scripts/UI/Item/InventoryView.cs" id="1_tf5ll"]
+[ext_resource type="PackedScene" uid="uid://xpakce63hqvh" path="res://Scenes/UI/Items/ItemInstCtrl.tscn" id="2_r4ti0"]
+[ext_resource type="PackedScene" uid="uid://bq4r1y0xpc207" path="res://Scenes/UI/Items/ItemInstSlot.tscn" id="3_l06la"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilxqw"]
+bg_color = Color(0.75467676, 0.47757816, 0.8065553, 1)
+
+[node name="InventoryView" type="PanelContainer" node_paths=PackedStringArray("GridContainer")]
+anchors_preset = -1
+anchor_right = 0.49500003
+anchor_bottom = 0.92300004
+offset_right = -0.24005127
+offset_bottom = -0.104003906
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ilxqw")
+script = ExtResource("1_tf5ll")
+GridContainer = NodePath("GridContainer")
+CtrlScene = ExtResource("2_r4ti0")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 5
+
+[node name="ItemInstSlot" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot2" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="ItemInstSlot3" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstCtrl" parent="GridContainer/ItemInstSlot3" instance=ExtResource("2_r4ti0")]
+layout_mode = 2
+
+[node name="ItemInstSlot4" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot5" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot6" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot7" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot8" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot9" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot10" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot11" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot12" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot13" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot14" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot15" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot16" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot17" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot18" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot19" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot20" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot21" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot22" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot23" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot24" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
+
+[node name="ItemInstSlot25" parent="GridContainer" instance=ExtResource("3_l06la")]
+layout_mode = 2
