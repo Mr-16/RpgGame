@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ItemSlot : Control
+public partial class ItemSlot1 : Control
 {
 	[Export]
 	public TextureRect IconTr;

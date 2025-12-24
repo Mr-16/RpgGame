@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpgGame.Scripts.ItemSystem
+namespace RpgGame.Scripts.InventorySystem
 {
     public class Inventory
     {
@@ -97,4 +98,83 @@ namespace RpgGame.Scripts.ItemSystem
 
 
     }
+
+
+    public class VeryGoodInventory
+    {
+        public int Capacity = 30;
+        public List<ItemSlot> SlotList;
+        public event Action<ItemSlot> OnSlotChanged;
+
+        public VeryGoodInventory()
+        {
+            SlotList = new List<ItemSlot>();
+            for (int i = 0; i < Capacity; i++)
+                SlotList.Add(new ItemSlot());
+        }
+
+        public bool AddItem(string itemId, int count)
+        {
+            ItemData data = ItemDataBase.Instance().GetData(itemId);
+            if (data == null) return false;
+
+            int countToAdd = count;
+
+            // 1. 堆叠已有槽
+            foreach (var slot in SlotList)
+            {
+                if (slot.Item == null) continue;
+                if (slot.Item.ItemData.Id != itemId) continue;
+
+                int added = slot.AddItem(countToAdd);
+                if (added > 0) OnSlotChanged?.Invoke(slot);
+
+
+                countToAdd -= added;
+                if (countToAdd == 0) return true;
+            }
+
+            // 2. 使用空槽
+            foreach (var slot in SlotList)
+            {
+                if (slot.Item != null) continue;
+
+                int curAdd = Math.Min(countToAdd, data.MaxStack);
+                slot.Item = new ItemInstance(data, curAdd);
+                OnSlotChanged?.Invoke(slot);
+
+                countToAdd -= curAdd;
+                if (countToAdd == 0) return true;
+            }
+
+            return false;
+        }
+
+        public bool RemoveItem(string itemId, int count)
+        {
+            int countToRemove = count;
+            foreach (var slot in SlotList)
+            {
+                if (slot.Item == null) continue;
+                if (slot.Item.ItemData.Id != itemId) continue;
+
+                int removed = slot.DelItemCount(countToRemove);
+                if (removed > 0) OnSlotChanged?.Invoke(slot);
+
+                countToRemove -= removed;
+
+                if (slot.Item.Count == 0)
+                {
+                    slot.Item = null;
+                    OnSlotChanged?.Invoke(slot);
+                }
+
+                if (countToRemove == 0)
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
 }

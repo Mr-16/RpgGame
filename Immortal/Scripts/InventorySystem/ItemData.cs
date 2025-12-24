@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpgGame.Scripts.ItemSystem
+namespace RpgGame.Scripts.InventorySystem
 {
     public enum ItemType
     {
@@ -18,16 +18,16 @@ namespace RpgGame.Scripts.ItemSystem
     {
         public string Id;
         public ItemType ItemType;
-        public string IconPath;
+        public Texture2D Icon;
         public int MaxStack;
         public string Name;
         public string Description;
 
-        public ItemData(string id, ItemType type, string iconPath, int maxStack, string name, string dscription)
+        public ItemData(string id, ItemType type, Texture2D icon, int maxStack, string name, string dscription)
         {
             Id = id;
             ItemType = type;
-            IconPath = iconPath;
+            Icon = icon;
             MaxStack = maxStack;
             Name = name;
             Description = dscription;

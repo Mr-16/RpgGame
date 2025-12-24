@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cid36k1d8ctq0"]
+
+[node name="InventoryGrid" type="GridContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 5
