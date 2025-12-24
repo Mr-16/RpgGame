@@ -1,7 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.GameSystem;
-using RpgGame.Scripts.ItemSystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -54,7 +53,7 @@ namespace RpgGame.Scripts.Characters.Players
         [Export] public Button AddBtn;
         [Export] public Button DelBtn;
 
-        public Inventory Inventory;
+        //public Inventory Inventory;
 
         public override void _Ready()
         {
@@ -66,20 +65,20 @@ namespace RpgGame.Scripts.Characters.Players
             //InitInventory();//初始化库存
             AtkRangeSq = AtkRange * AtkRange;
 
-            Inventory = new Inventory();
-            Inventory.ItemAdded += InventoryView.Inventory_ItemAdded;
-            Inventory.ItemChanged += InventoryView.Inventory_ItemChanged;
-            Inventory.ItemRemoved += InventoryView.Inventory_ItemRemoved;
-            AddBtn.Pressed += () =>
-            {
-                Inventory.AddItem(ItemDataBase.Instance().IdItemMap[ItemIds.Arrow], 1);
+            //Inventory = new Inventory();
+            //Inventory.ItemAdded += InventoryView.Inventory_ItemAdded;
+            //Inventory.ItemChanged += InventoryView.Inventory_ItemChanged;
+            //Inventory.ItemRemoved += InventoryView.Inventory_ItemRemoved;
+            //AddBtn.Pressed += () =>
+            //{
+            //    Inventory.AddItem(ItemDataBase.Instance().IdItemMap[ItemIds.Arrow], 1);
                 
-            };
+            //};
 
-            DelBtn.Pressed += () =>
-            {
-                Inventory.RemoveItem(ItemIds.Arrow, 1);
-            };
+            //DelBtn.Pressed += () =>
+            //{
+            //    Inventory.RemoveItem(ItemIds.Arrow, 1);
+            //};
         }
 
         public override void _Process(double delta)
