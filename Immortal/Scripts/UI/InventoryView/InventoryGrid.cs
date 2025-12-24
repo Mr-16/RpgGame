@@ -11,8 +11,9 @@ public partial class InventoryGrid : GridContainer
     [Export]
     public PackedScene ItemSlotCtrlScene;
 
-    public void BuildInventoryGrid()
+    public void BuildInventoryGrid(VeryGoodInventory inventory)
     {
+        Inventory = inventory;
         Inventory.OnSlotChanged += Inventory_OnSlotChanged;
 
 

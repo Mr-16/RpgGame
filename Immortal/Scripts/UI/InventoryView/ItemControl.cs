@@ -22,6 +22,20 @@ public partial class ItemControl : Control
 	{
 	}
 
+    public override Variant _GetDragData(Vector2 atPosition)
+    {
+        TextureRect preview = new TextureRect();
+        preview.Texture = IconTr.Texture;
+        preview.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+        preview.Size = IconTr.Size;
+        preview.Position = -atPosition;
+        Control container = new Control();
+        container.AddChild(preview);
+        SetDragPreview(container);
+
+        return this;
+    }
+
     public void Bind(ItemInstance item)
     {
         this.item = item;
