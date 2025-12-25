@@ -18,29 +18,19 @@ namespace RpgGame.Scripts.InventorySystem
             Data = data;
             Count = count;
         }
-
-        public int CanAdd()
+    }
+    public class EquipmentInstance : ItemInstance
+    {
+        public int Level = 1;
+        public int Stage = 0;
+        public EquipmentInstance(ItemData data, int count) : base(data, count)
         {
-            if (Data.MaxStack <= 1)
-                return 0;
-
-            return Data.MaxStack - Count;
         }
-
-        public int Add(int amount)
+    }
+    public class WeaponInstance : EquipmentInstance
+    {
+        public WeaponInstance(ItemData data, int count) : base(data, count)
         {
-            int add = Math.Min(amount, CanAdd());
-            Count += add;
-            return add;
         }
-
-        public int Remove(int amount)
-        {
-            int remove = Math.Min(amount, Count);
-            Count -= remove;
-            return remove;
-        }
-
-
     }
 }
