@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,94 +10,89 @@ namespace RpgGame.Scripts.InventorySystem
 {
     public class Inventory
     {
-        private readonly Dictionary<string, List<ItemInstance>> IdInstListMap = new Dictionary<string, List<ItemInstance>>();
-
-        public event Action<ItemInstance> ItemAdded;
-        public event Action<ItemInstance> ItemRemoved;
-        public event Action<ItemInstance> ItemChanged;
-
-
-        public bool AddItem(ItemData data, int count)
+        public List<ItemInstance> ItemList = new List<ItemInstance>();
+        public int Capacity = 30;
+        public event Action<int, ItemInstance> ItemChanged;//索引+格子
+        
+        public Inventory() 
         {
-            if (count <= 0)
-                return false;
-
-            if (!IdInstListMap.TryGetValue(data.Id, out var list))
+            for(int i = 0; i < Capacity; i++)
             {
-                list = new List<ItemInstance>();
-                IdInstListMap.Add(data.Id, list);
+                ItemList.Add(null);
+            }
+        }
+
+        public bool AddItem(ItemInstance item)
+        {
+            if (item == null) return false;
+
+            // 先找可堆叠的格子
+            for (int i = 0; i < Capacity; i++)
+            {
+                ItemInstance curItem = ItemList[i];
+                if (curItem == null) continue;
+                if (curItem.Data.Id !=  item.Data.Id) continue;
+                if (curItem.Count >= curItem.Data.MaxStack) continue;
+               
+                int addCount = Math.Min(curItem.Data.MaxStack - curItem.Count, item.Count);
+
+                curItem.Count += addCount;
+                item.Count -= addCount;
+                ItemChanged?.Invoke(i, curItem);
+
+                if (item.Count <= 0) return true;
             }
 
-            int remain = count;
-
-            // 填已有栈
-            foreach (var inst in list)
+            // 再找空槽
+            for (int i = 0; i < Capacity; i++)
             {
-                if (remain <= 0)
-                    break;
+                if (ItemList[i] != null) continue;
 
-                int before = inst.Count;
-                int added = inst.Add(remain);
-                remain -= added;
-
-                if (added > 0)
-                    ItemChanged?.Invoke(inst);
+                int putCount = Math.Min(item.Count, item.Data.MaxStack);
+                ItemList[i] = new ItemInstance(item.Data, putCount);
+                item.Count -= putCount;
+                ItemChanged?.Invoke(i, ItemList[i]);
+                if (item.Count <= 0) return true;
             }
 
-            // 新栈
-            while (remain > 0)
+            // 背包满了，还有剩余
+            return false;
+        }
+        
+        public bool RemoveItem(int index, int count)
+        {
+            if (index < 0 || index >= ItemList.Count) return false;
+            ItemInstance item = ItemList[index];
+            if (item == null) return false;
+            if (count <= 0) return false;
+            if (count > item.Count) return false;
+            item.Count -= count;
+            if (item.Count == 0)
             {
-                int stackCount = data.MaxStack > 0
-                    ? Math.Min(remain, data.MaxStack)
-                    : remain;
-
-                var inst = new ItemInstance(data, stackCount);
-                list.Add(inst);
-                remain -= stackCount;
-
-                ItemAdded?.Invoke(inst);
+                ItemList[index] = null;
+                ItemChanged?.Invoke(index, null);
             }
-
+            else
+            {
+                ItemChanged?.Invoke(index, item);
+            }
             return true;
         }
-
-        public bool RemoveItem(string itemId, int count)
+        
+        public bool SwapItem(int indexA, int indexB)
         {
-            if (count <= 0)
-                return false;
+            if (indexA == indexB) return false;
 
-            if (!IdInstListMap.TryGetValue(itemId, out var list))
-                return false;
+            if (indexA < 0 || indexA >= ItemList.Count) return false;
 
-            int remain = count;
-
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                if (remain <= 0)
-                    break;
-
-                var inst = list[i];
-                int before = inst.Count;
-                int removed = inst.Remove(remain);
-                remain -= removed;
-
-                if (removed > 0)
-                    ItemChanged?.Invoke(inst);
-
-                if (inst.IsEmpty)
-                {
-                    list.RemoveAt(i);
-                    ItemRemoved?.Invoke(inst);
-                }
-            }
-
-            if (list.Count == 0)
-                IdInstListMap.Remove(itemId);
-
-            return remain == 0;
+            if (indexB < 0 || indexB >= ItemList.Count) return false;
+            ItemInstance temp = ItemList[indexA];
+            ItemList[indexA] = ItemList[indexB];
+            ItemList[indexB] = temp;
+            ItemChanged?.Invoke(indexA, ItemList[indexA]);
+            ItemChanged?.Invoke(indexB, ItemList[indexB]);
+            return true;
         }
-
-
     }
 
 
@@ -124,7 +120,7 @@ namespace RpgGame.Scripts.InventorySystem
             foreach (var slot in SlotList)
             {
                 if (slot.Item == null) continue;
-                if (slot.Item.ItemData.Id != itemId) continue;
+                if (slot.Item.Data.Id != itemId) continue;
 
                 int added = slot.AddItem(countToAdd);
                 if (added > 0) OnSlotChanged?.Invoke(slot);
@@ -156,7 +152,7 @@ namespace RpgGame.Scripts.InventorySystem
             foreach (var slot in SlotList)
             {
                 if (slot.Item == null) continue;
-                if (slot.Item.ItemData.Id != itemId) continue;
+                if (slot.Item.Data.Id != itemId) continue;
 
                 int removed = slot.DelItemCount(countToRemove);
                 if (removed > 0) OnSlotChanged?.Invoke(slot);

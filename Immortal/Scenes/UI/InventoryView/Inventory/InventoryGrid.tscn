@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cid36k1d8ctq0"]
+
+[ext_resource type="Script" uid="uid://7eyytn4i8kgn" path="res://Scripts/UI/InventoryView/Inventory/InventoryGrid.cs" id="1_14ejx"]
+[ext_resource type="PackedScene" uid="uid://cp81ydoy3gg3n" path="res://Scenes/UI/InventoryView/Inventory/ItemSlotPanel.tscn" id="2_wr5f0"]
+
+[node name="InventoryGrid" type="GridContainer"]
+anchors_preset = -1
+anchor_right = 0.056
+anchor_bottom = 0.09900001
+offset_right = -0.51200104
+offset_bottom = -0.15200806
+columns = 5
+script = ExtResource("1_14ejx")
+ItemSlotScene = ExtResource("2_wr5f0")

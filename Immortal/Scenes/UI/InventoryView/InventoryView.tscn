@@ -1,9 +1,62 @@
-[gd_scene format=3 uid="uid://bbomrqar5pqt1"]
+[gd_scene load_steps=4 format=3 uid="uid://bbomrqar5pqt1"]
 
-[node name="InventoryView" type="Control"]
+[ext_resource type="PackedScene" uid="uid://cid36k1d8ctq0" path="res://Scenes/UI/InventoryView/Inventory/InventoryGrid.tscn" id="1_sbdbk"]
+[ext_resource type="Script" uid="uid://dhh0ra0t15or3" path="res://Scripts/UI/InventoryView/InventoryView.cs" id="1_w8yry"]
+[ext_resource type="PackedScene" uid="uid://crg3yqjd1h7ps" path="res://Scenes/UI/InventoryView/Equipment/EquipControl.tscn" id="3_cabfc"]
+
+[node name="InventoryView" type="Control" node_paths=PackedStringArray("InventoryGrid")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w8yry")
+InventoryGrid = NodePath("BgCr/ColorRect/ScrollContainer/InventoryGrid")
+
+[node name="BgCr" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09985284, 0.09985284, 0.09985284, 0.73200005)
+
+[node name="ColorRect" type="ColorRect" parent="BgCr"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41000003
+anchor_top = 0.012
+anchor_right = 1.0
+anchor_bottom = 0.98800004
+offset_left = -0.32003784
+offset_top = 96.224
+offset_right = -64.0
+offset_bottom = -80.224
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.21508199, 0.21508199, 0.21508199, 0.8)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BgCr/ColorRect" node_paths=PackedStringArray("InventoryGrid")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w8yry")
+InventoryGrid = NodePath("InventoryGrid")
+
+[node name="InventoryGrid" parent="BgCr/ColorRect/ScrollContainer" instance=ExtResource("1_sbdbk")]
+layout_mode = 2
+
+[node name="EquipContorl" parent="BgCr/ColorRect" instance=ExtResource("3_cabfc")]
+layout_mode = 1
+offset_left = -376.0
+offset_right = -299.312
+offset_bottom = 21.471985

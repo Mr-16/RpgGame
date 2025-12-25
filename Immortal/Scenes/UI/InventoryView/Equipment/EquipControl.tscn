@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://crg3yqjd1h7ps"]
+
+[ext_resource type="PackedScene" uid="uid://bbb4jjxt20pt1" path="res://Scenes/UI/InventoryView/Equipment/EquipSlotPanel.tscn" id="1_58bmc"]
+
+[node name="EquipContorl" type="Control"]
+layout_mode = 3
+anchor_right = 0.38200003
+anchor_bottom = 0.98800004
+offset_right = -0.06402588
+offset_bottom = -0.22399902
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21508199, 0.21508199, 0.21508199, 0.8)
+
+[node name="PanelContainer" parent="ColorRect" instance=ExtResource("1_58bmc")]
+layout_mode = 1
+anchor_left = 0.38200003
+anchor_top = 0.26200002
+anchor_right = 0.609
+anchor_bottom = 0.41900003
+offset_left = -0.08001709
+offset_top = 0.3199768
+offset_right = 0.039978027
+offset_bottom = -0.16003418
+
+[node name="PanelContainer2" parent="ColorRect" instance=ExtResource("1_58bmc")]
+layout_mode = 1
+anchor_left = 0.38200003
+anchor_top = 0.637
+anchor_right = 0.609
+anchor_bottom = 0.794
+offset_left = -0.08001709
+offset_top = 0.3199768
+offset_right = 0.039978027
+offset_bottom = -0.16003418
+
+[node name="PanelContainer3" parent="ColorRect" instance=ExtResource("1_58bmc")]
+layout_mode = 1
+anchor_left = 0.65500003
+anchor_top = 0.45000002
+anchor_right = 0.882
+anchor_bottom = 0.606
+offset_left = -0.2000122
+offset_right = -0.08001709
+offset_bottom = 0.16000366
+
+[node name="PanelContainer4" parent="ColorRect" instance=ExtResource("1_58bmc")]
+layout_mode = 1
+anchor_left = 0.109000005
+anchor_top = 0.45000002
+anchor_right = 0.32700002
+anchor_bottom = 0.6
+offset_left = 0.0399971
+offset_right = 4.119995
+offset_bottom = 4.0
+
+[node name="PanelContainer5" parent="ColorRect" instance=ExtResource("1_58bmc")]
+layout_mode = 1
+anchor_left = 0.38200003
+anchor_top = 0.45000002
+anchor_right = 0.61800003
+anchor_bottom = 0.61200005
+offset_left = -0.08001709
+offset_right = 0.07998657
+offset_bottom = 0.3199768
+grow_horizontal = 2
+grow_vertical = 2

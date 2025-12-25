@@ -49,9 +49,10 @@ namespace RpgGame.Scripts.Characters.Players
         //[Export]
         //public ItemView ItemView;
         [Export]
-        public Control InventoryView;
-        [Export]
-        public InventoryGrid InventoryGrid;
+        public InventoryView InventoryView;
+        //public InventoryGrid InventoryGrid;
+        public Inventory Inventory;
+        //public VeryGoodInventory Inventory;
 
         //[Export]
         //public InventoryView InventoryView;
@@ -59,7 +60,6 @@ namespace RpgGame.Scripts.Characters.Players
         [Export] public Button DelBtn;
 
         //public Inventory Inventory;
-        public VeryGoodInventory Inventory;
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -70,18 +70,22 @@ namespace RpgGame.Scripts.Characters.Players
             //InitInventory();//初始化库存
             AtkRangeSq = AtkRange * AtkRange;
 
-            Inventory = new VeryGoodInventory();
-            //InventoryGrid = InventoryView.GetNode<InventoryGrid>("ColorRect/InventoryGrid");
-            InventoryGrid.BuildInventoryGrid(Inventory);
-            Inventory.AddItem(ItemIds.Arrow, 1);
-            Inventory.AddItem(ItemIds.Stone, 1);
-            Inventory.AddItem(ItemIds.Stone2, 1);
-            Inventory.AddItem(ItemIds.Arrow, 1);
-            Inventory.AddItem(ItemIds.Stone, 1);
-            Inventory.AddItem(ItemIds.Stone2, 1);
-            Inventory.AddItem(ItemIds.Arrow, 1);
-            Inventory.AddItem(ItemIds.Stone, 1);
-            Inventory.AddItem(ItemIds.Stone2, 1);
+            //Inventory = new VeryGoodInventory();
+            ////InventoryGrid = InventoryView.GetNode<InventoryGrid>("ColorRect/InventoryGrid");
+            //InventoryGrid.BuildInventoryGrid(Inventory);
+
+            Inventory = new Inventory();
+            InventoryView.InventoryGrid.Init(Inventory);
+            InventoryView.Visible = false;
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
         }
 
         public override void _Process(double delta)

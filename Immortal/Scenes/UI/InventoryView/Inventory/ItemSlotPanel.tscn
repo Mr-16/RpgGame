@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp81ydoy3gg3n"]
+
+[ext_resource type="Script" uid="uid://1w2kaf0heuoq" path="res://Scripts/UI/InventoryView/Inventory/ItemSlotPanel.cs" id="1_kkes5"]
+
+[node name="ItemSlotPanel" type="PanelContainer" node_paths=PackedStringArray("IconTr", "CountLb")]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = -1
+anchor_right = 0.083000004
+anchor_bottom = 0.148
+offset_right = -7.616005
+offset_bottom = -7.9039993
+script = ExtResource("1_kkes5")
+IconTr = NodePath("ColorRect/IconTr")
+CountLb = NodePath("ColorRect/CountLb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+mouse_filter = 1
+color = Color(0.12835406, 0.12835406, 0.12835406, 0.574)
+
+[node name="IconTr" type="TextureRect" parent="ColorRect"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="CountLb" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -8,23 +8,23 @@ namespace RpgGame.Scripts.InventorySystem
 {
     public class ItemInstance
     {
-        public ItemData ItemData;
+        public ItemData Data;
         public int Count;
         public bool IsEmpty => Count <= 0;
-        public bool IsFull => ItemData.MaxStack > 0 && Count >= ItemData.MaxStack;
+        public bool IsFull => Data.MaxStack > 0 && Count >= Data.MaxStack;
 
         public ItemInstance(ItemData data, int count)
         {
-            ItemData = data;
+            Data = data;
             Count = count;
         }
 
         public int CanAdd()
         {
-            if (ItemData.MaxStack <= 1)
+            if (Data.MaxStack <= 1)
                 return 0;
 
-            return ItemData.MaxStack - Count;
+            return Data.MaxStack - Count;
         }
 
         public int Add(int amount)

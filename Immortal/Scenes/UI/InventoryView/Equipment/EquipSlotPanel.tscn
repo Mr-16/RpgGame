@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bbb4jjxt20pt1"]
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.062000003
+offset_right = -0.3199997
+offset_bottom = -0.1760025
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.13335153, 0.13335153, 0.13335153, 0.5)
+
+[node name="IconTr" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

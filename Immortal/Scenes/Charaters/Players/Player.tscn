@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=75 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
 [ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="5_y3o16"]
 [ext_resource type="PackedScene" uid="uid://bbomrqar5pqt1" path="res://Scenes/UI/InventoryView/InventoryView.tscn" id="12_r364p"]
-[ext_resource type="PackedScene" uid="uid://cid36k1d8ctq0" path="res://Scenes/UI/InventoryView/InventoryGrid.tscn" id="13_tp737"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7en5"]
 radius = 35.0
@@ -455,13 +454,7 @@ bg_color = Color(0.07058824, 0.05490196, 0.1882353, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3o16"]
 bg_color = Color(0.07058824, 0.12156863, 0.41960785, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dvs2d"]
-bg_color = Color(0, 0, 0, 0.36400002)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw1su"]
-bg_color = Color(0, 0, 0, 0.37300003)
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb", "InventoryView", "InventoryGrid")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb", "InventoryView")]
 script = ExtResource("1_uq38h")
 StamPb = NodePath("StaminaProgressBar")
 Anim = NodePath("AnimatedSprite2D")
@@ -472,7 +465,6 @@ ExpPb = NodePath("CanvasLayer/PanelContainer/ExpBp")
 ExpLb = NodePath("CanvasLayer/ExpLb")
 LevelLb = NodePath("CanvasLayer/LevelLb")
 InventoryView = NodePath("CanvasLayer/InventoryView")
-InventoryGrid = NodePath("CanvasLayer/InventoryView/ColorRect2/InventoryPc/InventoryGrid")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
 LightningScene = ExtResource("4_i7an1")
@@ -603,157 +595,3 @@ value = 26.71
 show_percentage = false
 
 [node name="InventoryView" parent="CanvasLayer" instance=ExtResource("12_r364p")]
-mouse_filter = 1
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/InventoryView"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-color = Color(0, 0, 0, 0.832)
-
-[node name="InventoryPc" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.44000003
-anchor_top = 0.20500001
-anchor_right = 0.96400005
-anchor_bottom = 0.90900004
-offset_left = 17.119965
-offset_top = 0.1599884
-offset_right = 0.47192383
-offset_bottom = 17.967957
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_dvs2d")
-
-[node name="InventoryGrid" parent="CanvasLayer/InventoryView/ColorRect2/InventoryPc" instance=ExtResource("13_tp737")]
-layout_mode = 2
-
-[node name="EquipmentPc" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.049000002
-anchor_top = 0.185
-anchor_right = 0.395
-anchor_bottom = 0.92300004
-offset_left = -5.448002
-offset_top = 0.11999512
-offset_right = -0.040008545
-offset_bottom = -0.104003906
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_pw1su")
-
-[node name="Control" type="Control" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc"]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc/Control"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40600002
-anchor_top = 0.22600001
-anchor_right = 0.731
-anchor_bottom = 0.49600002
-offset_left = -20.588013
-offset_top = -43.882004
-offset_right = -29.937988
-offset_bottom = -74.272
-mouse_filter = 1
-
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc/Control"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40600002
-anchor_top = 0.22600001
-anchor_right = 0.731
-anchor_bottom = 0.49600002
-offset_left = -20.588013
-offset_top = 226.118
-offset_right = -29.937988
-offset_bottom = 195.728
-mouse_filter = 1
-
-[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc/Control"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40600002
-anchor_top = 0.22600001
-anchor_right = 0.731
-anchor_bottom = 0.49600002
-offset_left = 107.41199
-offset_top = 92.118
-offset_right = 98.06201
-offset_bottom = 61.727997
-mouse_filter = 1
-
-[node name="PanelContainer4" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc/Control"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40600002
-anchor_top = 0.22600001
-anchor_right = 0.731
-anchor_bottom = 0.49600002
-offset_left = -150.58801
-offset_top = 88.118
-offset_right = -159.93799
-offset_bottom = 57.727997
-mouse_filter = 1
-
-[node name="PanelContainer5" type="PanelContainer" parent="CanvasLayer/InventoryView/ColorRect2/EquipmentPc/Control"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40600002
-anchor_top = 0.22600001
-anchor_right = 0.731
-anchor_bottom = 0.49600002
-offset_left = -22.588013
-offset_top = 90.118
-offset_right = -31.937988
-offset_bottom = 59.727997
-mouse_filter = 1
-
-[node name="EquipmentLb" type="Label" parent="CanvasLayer/InventoryView"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.148
-anchor_top = 0.008
-anchor_right = 0.279
-anchor_bottom = 0.14400001
-offset_left = 0.5039978
-offset_top = -0.18400002
-offset_right = -0.40802002
-offset_bottom = -0.3120041
-mouse_filter = 1
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 50
-text = "装备栏"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InventoryLb" type="Label" parent="CanvasLayer/InventoryView"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.57600003
-anchor_top = 0.037
-anchor_right = 0.892
-anchor_bottom = 0.14400001
-offset_left = -3.552063
-offset_top = 0.024000168
-offset_right = 0.41601563
-offset_bottom = -0.3120041
-mouse_filter = 1
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 50
-text = "背包"
-horizontal_alignment = 1
-vertical_alignment = 1

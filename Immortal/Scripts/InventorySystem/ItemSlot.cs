@@ -14,7 +14,7 @@ namespace RpgGame.Scripts.InventorySystem
         public int AddItem(int count)
         {
             if (Item == null) return 0;
-            int canAdd = Item.ItemData.MaxStack - Item.Count; // 当前槽可增加的数量
+            int canAdd = Item.Data.MaxStack - Item.Count; // 当前槽可增加的数量
             int addCount = Math.Min(canAdd, count);
             Item.Count += addCount;
             return addCount;
