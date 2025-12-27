@@ -1,7 +1,9 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
+using RpgGame.Scripts.Equipments;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.InventorySystem.Old;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,8 +52,10 @@ namespace RpgGame.Scripts.Characters.Players
         //public ItemView ItemView;
         [Export]
         public InventoryView InventoryView;
+        public EquipControl EquipControl;
         //public InventoryGrid InventoryGrid;
         public Inventory Inventory;
+        public Equipment Equipment;
         //public VeryGoodInventory Inventory;
 
         //[Export]
@@ -75,7 +79,9 @@ namespace RpgGame.Scripts.Characters.Players
             //InventoryGrid.BuildInventoryGrid(Inventory);
 
             Inventory = new Inventory();
-            InventoryView.InventoryGrid.Init(Inventory);
+            Equipment = new Equipment();
+            InventoryView.InventoryGrid.Init(Inventory, Equipment);
+            InventoryView.EquipControl.Init(Equipment);
             InventoryView.Visible = false;
             Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
             Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
@@ -86,6 +92,16 @@ namespace RpgGame.Scripts.Characters.Players
             Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
             Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
             Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
+            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
+            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
         }
 
         public override void _Process(double delta)
@@ -152,29 +168,29 @@ namespace RpgGame.Scripts.Characters.Players
             //特殊属性
             BaseAttr.LifeSteal = 0;
 
-            FinalAttr.MaxHealth = BaseAttr.MaxHealth + Weapon.BonusAttr.MaxHealth + Helmet.BonusAttr.MaxHealth + Armor.BonusAttr.MaxHealth + Boot.BonusAttr.MaxHealth;
-            FinalAttr.HealthRegen = BaseAttr.HealthRegen + Weapon.BonusAttr.HealthRegen + Helmet.BonusAttr.HealthRegen + Armor.BonusAttr.HealthRegen + Boot.BonusAttr.HealthRegen;
-            FinalAttr.MaxMana = BaseAttr.MaxMana + Weapon.BonusAttr.MaxMana + Helmet.BonusAttr.MaxMana + Armor.BonusAttr.MaxMana + Boot.BonusAttr.MaxMana;
-            FinalAttr.ManaRegen = BaseAttr.ManaRegen + Weapon.BonusAttr.ManaRegen + Helmet.BonusAttr.ManaRegen + Armor.BonusAttr.ManaRegen + Boot.BonusAttr.ManaRegen;
-            FinalAttr.MaxStam = BaseAttr.MaxStam + Weapon.BonusAttr.MaxStam + Helmet.BonusAttr.MaxStam + Armor.BonusAttr.MaxStam + Boot.BonusAttr.MaxStam;
-            FinalAttr.StamRegen = BaseAttr.StamRegen + Weapon.BonusAttr.StamRegen + Helmet.BonusAttr.StamRegen + Armor.BonusAttr.StamRegen + Boot.BonusAttr.StamRegen;
-            FinalAttr.MoveSpeed = BaseAttr.MoveSpeed + Weapon.BonusAttr.MoveSpeed + Helmet.BonusAttr.MoveSpeed + Armor.BonusAttr.MoveSpeed + Boot.BonusAttr.MoveSpeed;
-            FinalAttr.RollSpeed = BaseAttr.RollSpeed + Weapon.BonusAttr.RollSpeed + Helmet.BonusAttr.RollSpeed + Armor.BonusAttr.RollSpeed + Boot.BonusAttr.RollSpeed;
-            //攻击属性
-            FinalAttr.AtkSpeed = BaseAttr.AtkSpeed + Weapon.BonusAttr.AtkSpeed + Helmet.BonusAttr.AtkSpeed + Armor.BonusAttr.AtkSpeed + Boot.BonusAttr.AtkSpeed;
-            FinalAttr.PhyAtk = BaseAttr.PhyAtk + Weapon.BonusAttr.PhyAtk + Helmet.BonusAttr.PhyAtk + Armor.BonusAttr.PhyAtk + Boot.BonusAttr.PhyAtk;
-            FinalAttr.PhyPen = BaseAttr.PhyPen + Weapon.BonusAttr.PhyPen + Helmet.BonusAttr.PhyPen + Armor.BonusAttr.PhyPen + Boot.BonusAttr.PhyPen;
-            FinalAttr.PhyPenFlat = BaseAttr.PhyPenFlat + Weapon.BonusAttr.PhyPenFlat + Helmet.BonusAttr.PhyPenFlat + Armor.BonusAttr.PhyPenFlat + Boot.BonusAttr.PhyPenFlat;
-            FinalAttr.MagAtk = BaseAttr.MagAtk + Weapon.BonusAttr.MagAtk + Helmet.BonusAttr.MagAtk + Armor.BonusAttr.MagAtk + Boot.BonusAttr.MagAtk;
-            FinalAttr.MagPen = BaseAttr.MagPen + Weapon.BonusAttr.MagPen + Helmet.BonusAttr.MagPen + Armor.BonusAttr.MagPen + Boot.BonusAttr.MagPen;
-            FinalAttr.MagPenFlat = BaseAttr.MagPenFlat + Weapon.BonusAttr.MagPenFlat + Helmet.BonusAttr.MagPenFlat + Armor.BonusAttr.MagPenFlat + Boot.BonusAttr.MagPenFlat;
-            FinalAttr.CritRate = BaseAttr.CritRate + Weapon.BonusAttr.CritRate + Helmet.BonusAttr.CritRate + Armor.BonusAttr.CritRate + Boot.BonusAttr.CritRate;
-            FinalAttr.CritMult = BaseAttr.CritMult + Weapon.BonusAttr.CritMult + Helmet.BonusAttr.CritMult + Armor.BonusAttr.CritMult + Boot.BonusAttr.CritMult;
-            //防御属性
-            FinalAttr.PhyDef = BaseAttr.PhyDef + Weapon.BonusAttr.PhyDef + Helmet.BonusAttr.PhyDef + Armor.BonusAttr.PhyDef + Boot.BonusAttr.PhyDef;
-            FinalAttr.MagDef = BaseAttr.MagDef + Weapon.BonusAttr.MagDef + Helmet.BonusAttr.MagDef + Armor.BonusAttr.MagDef + Boot.BonusAttr.MagDef;
-            //特殊属性
-            FinalAttr.LifeSteal = BaseAttr.LifeSteal + Weapon.BonusAttr.LifeSteal + Helmet.BonusAttr.LifeSteal + Armor.BonusAttr.LifeSteal + Boot.BonusAttr.LifeSteal;
+            //FinalAttr.MaxHealth = BaseAttr.MaxHealth + Weapon.BonusAttr.MaxHealth + Helmet.BonusAttr.MaxHealth + Armor.BonusAttr.MaxHealth + Boot.BonusAttr.MaxHealth;
+            //FinalAttr.HealthRegen = BaseAttr.HealthRegen + Weapon.BonusAttr.HealthRegen + Helmet.BonusAttr.HealthRegen + Armor.BonusAttr.HealthRegen + Boot.BonusAttr.HealthRegen;
+            //FinalAttr.MaxMana = BaseAttr.MaxMana + Weapon.BonusAttr.MaxMana + Helmet.BonusAttr.MaxMana + Armor.BonusAttr.MaxMana + Boot.BonusAttr.MaxMana;
+            //FinalAttr.ManaRegen = BaseAttr.ManaRegen + Weapon.BonusAttr.ManaRegen + Helmet.BonusAttr.ManaRegen + Armor.BonusAttr.ManaRegen + Boot.BonusAttr.ManaRegen;
+            //FinalAttr.MaxStam = BaseAttr.MaxStam + Weapon.BonusAttr.MaxStam + Helmet.BonusAttr.MaxStam + Armor.BonusAttr.MaxStam + Boot.BonusAttr.MaxStam;
+            //FinalAttr.StamRegen = BaseAttr.StamRegen + Weapon.BonusAttr.StamRegen + Helmet.BonusAttr.StamRegen + Armor.BonusAttr.StamRegen + Boot.BonusAttr.StamRegen;
+            //FinalAttr.MoveSpeed = BaseAttr.MoveSpeed + Weapon.BonusAttr.MoveSpeed + Helmet.BonusAttr.MoveSpeed + Armor.BonusAttr.MoveSpeed + Boot.BonusAttr.MoveSpeed;
+            //FinalAttr.RollSpeed = BaseAttr.RollSpeed + Weapon.BonusAttr.RollSpeed + Helmet.BonusAttr.RollSpeed + Armor.BonusAttr.RollSpeed + Boot.BonusAttr.RollSpeed;
+            ////攻击属性
+            //FinalAttr.AtkSpeed = BaseAttr.AtkSpeed + Weapon.BonusAttr.AtkSpeed + Helmet.BonusAttr.AtkSpeed + Armor.BonusAttr.AtkSpeed + Boot.BonusAttr.AtkSpeed;
+            //FinalAttr.PhyAtk = BaseAttr.PhyAtk + Weapon.BonusAttr.PhyAtk + Helmet.BonusAttr.PhyAtk + Armor.BonusAttr.PhyAtk + Boot.BonusAttr.PhyAtk;
+            //FinalAttr.PhyPen = BaseAttr.PhyPen + Weapon.BonusAttr.PhyPen + Helmet.BonusAttr.PhyPen + Armor.BonusAttr.PhyPen + Boot.BonusAttr.PhyPen;
+            //FinalAttr.PhyPenFlat = BaseAttr.PhyPenFlat + Weapon.BonusAttr.PhyPenFlat + Helmet.BonusAttr.PhyPenFlat + Armor.BonusAttr.PhyPenFlat + Boot.BonusAttr.PhyPenFlat;
+            //FinalAttr.MagAtk = BaseAttr.MagAtk + Weapon.BonusAttr.MagAtk + Helmet.BonusAttr.MagAtk + Armor.BonusAttr.MagAtk + Boot.BonusAttr.MagAtk;
+            //FinalAttr.MagPen = BaseAttr.MagPen + Weapon.BonusAttr.MagPen + Helmet.BonusAttr.MagPen + Armor.BonusAttr.MagPen + Boot.BonusAttr.MagPen;
+            //FinalAttr.MagPenFlat = BaseAttr.MagPenFlat + Weapon.BonusAttr.MagPenFlat + Helmet.BonusAttr.MagPenFlat + Armor.BonusAttr.MagPenFlat + Boot.BonusAttr.MagPenFlat;
+            //FinalAttr.CritRate = BaseAttr.CritRate + Weapon.BonusAttr.CritRate + Helmet.BonusAttr.CritRate + Armor.BonusAttr.CritRate + Boot.BonusAttr.CritRate;
+            //FinalAttr.CritMult = BaseAttr.CritMult + Weapon.BonusAttr.CritMult + Helmet.BonusAttr.CritMult + Armor.BonusAttr.CritMult + Boot.BonusAttr.CritMult;
+            ////防御属性
+            //FinalAttr.PhyDef = BaseAttr.PhyDef + Weapon.BonusAttr.PhyDef + Helmet.BonusAttr.PhyDef + Armor.BonusAttr.PhyDef + Boot.BonusAttr.PhyDef;
+            //FinalAttr.MagDef = BaseAttr.MagDef + Weapon.BonusAttr.MagDef + Helmet.BonusAttr.MagDef + Armor.BonusAttr.MagDef + Boot.BonusAttr.MagDef;
+            ////特殊属性
+            //FinalAttr.LifeSteal = BaseAttr.LifeSteal + Weapon.BonusAttr.LifeSteal + Helmet.BonusAttr.LifeSteal + Armor.BonusAttr.LifeSteal + Boot.BonusAttr.LifeSteal;
 
             CurHealth = FinalAttr.MaxHealth;
             CurMana = FinalAttr.MaxMana;

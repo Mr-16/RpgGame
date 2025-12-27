@@ -20,10 +20,10 @@ public partial class CharacterBase : CharacterBody2D
     public CharAttribute FinalAttr = new CharAttribute();
     //public EquipmentSystem EquipmentSystem = new EquipmentSystem();
 
-    public Equipment Weapon = new Equipment("新手剑", EquipmentType.Sword, EquipmentGrade.White, 1);
-    public Equipment Helmet = new Equipment("新手头盔", EquipmentType.Helmet, EquipmentGrade.White, 1);
-    public Equipment Armor = new Equipment("新手盔甲", EquipmentType.Armor, EquipmentGrade.White, 1);
-    public Equipment Boot = new Equipment("新手靴", EquipmentType.Boot, EquipmentGrade.White, 1);
+    //public Equipment Weapon = new Equipment("新手剑", EquipmentType.Sword, EquipmentGrade.White, 1);
+    //public Equipment Helmet = new Equipment("新手头盔", EquipmentType.Helmet, EquipmentGrade.White, 1);
+    //public Equipment Armor = new Equipment("新手盔甲", EquipmentType.Armor, EquipmentGrade.White, 1);
+    //public Equipment Boot = new Equipment("新手靴", EquipmentType.Boot, EquipmentGrade.White, 1);
 
     public override void _Ready()
 	{

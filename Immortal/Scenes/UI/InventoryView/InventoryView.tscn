@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dhh0ra0t15or3" path="res://Scripts/UI/InventoryView/InventoryView.cs" id="1_w8yry"]
 [ext_resource type="PackedScene" uid="uid://crg3yqjd1h7ps" path="res://Scenes/UI/InventoryView/Equipment/EquipControl.tscn" id="3_cabfc"]
 
-[node name="InventoryView" type="Control" node_paths=PackedStringArray("InventoryGrid")]
+[node name="InventoryView" type="Control" node_paths=PackedStringArray("InventoryGrid", "EquipControl")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w8yry")
 InventoryGrid = NodePath("BgCr/ColorRect/ScrollContainer/InventoryGrid")
+EquipControl = NodePath("BgCr/ColorRect/EquipContorl")
 
 [node name="BgCr" type="ColorRect" parent="."]
 layout_mode = 1

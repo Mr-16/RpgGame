@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RpgGame.Scripts.InventorySystem
+namespace RpgGame.Scripts.InventorySystem.Old
 {
     public class ItemSlot
     {

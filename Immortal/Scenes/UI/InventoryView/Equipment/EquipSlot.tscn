@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbb4jjxt20pt1"]
+
+[ext_resource type="Script" uid="uid://4brnb5flohnh" path="res://Scripts/UI/InventoryView/Equipment/EquipSlot.cs" id="1_kji5d"]
+
+[node name="EquipSlot" type="Control" node_paths=PackedStringArray("IconTr")]
+layout_mode = 3
+anchor_right = 0.069000006
+anchor_bottom = 0.123
+offset_right = 0.5119934
+offset_bottom = 0.29599762
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kji5d")
+IconTr = NodePath("ColorRect/IconTr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.13335153, 0.13335153, 0.13335153, 0.5)
+
+[node name="IconTr" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

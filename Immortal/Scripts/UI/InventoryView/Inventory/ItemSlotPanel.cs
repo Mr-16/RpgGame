@@ -1,5 +1,5 @@
 using Godot;
-using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.InventorySystem.Old;
 using System;
 
 public partial class ItemSlotPanel : PanelContainer
@@ -10,8 +10,9 @@ public partial class ItemSlotPanel : PanelContainer
     public ItemInstance Item;
     public int Index;
 	public event Action<int, int> ItemSwapped;
+    public event Action<int, EquipInstance> Unequipped;
 
-	public override void _Ready()
+    public override void _Ready()
 	{
 	}
 
@@ -44,43 +45,27 @@ public partial class ItemSlotPanel : PanelContainer
         Control container = new Control();
         container.AddChild(preview);
         SetDragPreview(container);
-
         return this;
     }
     public override bool _CanDropData(Vector2 atPosition, Variant data)
     {
-        ItemSlotPanel slot = data.As<ItemSlotPanel>();
-        if (slot == null) return false;
+        if (data.VariantType != Variant.Type.Object) return false;
+        GodotObject gdObj = data.As<GodotObject>();
+        if (gdObj is not ItemSlotPanel && gdObj is not EquipSlot) return false;
         return true;
     }
     public override void _DropData(Vector2 atPosition, Variant data)
     {
-        ItemSlotPanel dragSlot = data.As<ItemSlotPanel>();
-        if (dragSlot == null) return;
-
-        ItemSwapped?.Invoke(Index, dragSlot.Index);
-        //// 2. 获取被拖拽物品原来的槽位 (也就是它的父节点)
-        //ItemSlotControl sourceSlot = dragSlot.GetParent<ItemSlotControl>();
-
-        //if (this.ItemCtrl == null)
-        //{
-        //    // --- 情况 A: 当前槽位是空的，直接放入 ---
-        //    if (sourceSlot != null) sourceSlot.ItemCtrl = null;
-        //    this.ItemCtrl = dragSlot;
-        //    dragSlot.Reparent(this);
-        //}
-        //else
-        //{
-        //    // --- 情况 B: 当前槽位已有物品，进行交换 ---
-        //    ItemControl existingItem = this.ItemCtrl;
-        //    if (sourceSlot != null)
-        //    {
-        //        existingItem.Reparent(sourceSlot);
-        //        sourceSlot.ItemCtrl = existingItem;
-        //    }
-        //    dragSlot.Reparent(this);
-        //    this.ItemCtrl = dragSlot;
-        //}
-        //GD.Print($"物品已交换/移动到 {this.Name}");
+        if (data.VariantType != Variant.Type.Object) return;
+        GodotObject gdObj = data.As<GodotObject>();
+        if(gdObj is ItemSlotPanel itemSlot)//背包内部换
+        {
+            ItemSwapped?.Invoke(Index, itemSlot.Index);
+        }
+        else if(gdObj is EquipSlot equipSlot)//装备槽拖到背包
+        {
+            //通知装备unequip, 通知grid, grid调用addEquip
+            Unequipped?.Invoke(Index, equipSlot.Equip);
+        }
     }
 }

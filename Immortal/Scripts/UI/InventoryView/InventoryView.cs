@@ -6,6 +6,9 @@ public partial class InventoryView : Control
 	[Export]
 	public InventoryGrid InventoryGrid;
 
+	[Export]
+	public EquipControl EquipControl;
+
 	public override void _Ready()
 	{
 	}
