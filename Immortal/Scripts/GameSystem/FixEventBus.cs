@@ -1,4 +1,3 @@
-using RpgGame.Scripts.InventorySystem.Old;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +13,8 @@ namespace RpgGame.Scripts.GameSystem
         public static FixEventBus Instance() => instance;
 
         //穿戴了某装备
-        public event Action<EquipInstance> EquipmentEquipped;
-        public void PublishEquipmentEquipped(EquipInstance equipInst) => EquipmentEquipped?.Invoke(equipInst);
+        //public event Action<EquipInstance> EquipmentEquipped;
+        //public void PublishEquipmentEquipped(EquipInstance equipInst) => EquipmentEquipped?.Invoke(equipInst);
     
         
     }

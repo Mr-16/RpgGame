@@ -1,9 +1,8 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
-using RpgGame.Scripts.Equipments;
+using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.InventorySystem;
-using RpgGame.Scripts.InventorySystem.Old;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,22 +47,11 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public Label LevelLb;
 
-        //[Export]
-        //public ItemView ItemView;
-        [Export]
-        public InventoryView InventoryView;
-        public EquipControl EquipControl;
-        //public InventoryGrid InventoryGrid;
+
+
         public Inventory Inventory;
         public Equipment Equipment;
-        //public VeryGoodInventory Inventory;
-
-        //[Export]
-        //public InventoryView InventoryView;
-        [Export] public Button AddBtn;
-        [Export] public Button DelBtn;
-
-        //public Inventory Inventory;
+        public ItemManager ItemManager;
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -71,37 +59,24 @@ namespace RpgGame.Scripts.Characters.Players
             InitAttribute();//属性
             InitSkillData();//技能
             InitLevel();//初始化等级
-            //InitInventory();//初始化库存
             AtkRangeSq = AtkRange * AtkRange;
 
-            //Inventory = new VeryGoodInventory();
-            ////InventoryGrid = InventoryView.GetNode<InventoryGrid>("ColorRect/InventoryGrid");
-            //InventoryGrid.BuildInventoryGrid(Inventory);
-
-            Inventory = new Inventory();
             Equipment = new Equipment();
-            InventoryView.InventoryGrid.Init(Inventory, Equipment);
-            InventoryView.EquipControl.Init(Equipment);
-            InventoryView.Visible = false;
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Arrow), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Stone2), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
-            Inventory.AddItem(new ItemInstance(ItemDataBase.Instance().GetData(ItemIds.Wd40), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Sword), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
-            Inventory.AddItem(new EquipInstance((EquipDataOld)ItemDataBase.Instance().GetData(ItemIds.Bow), 1));
+            Inventory = new Inventory(30);
+            ItemManager = new ItemManager(Equipment, Inventory);
+            
+            Inventory.ItemList[0] = new ItemInstance(ItemDatabase.Instance().GetItemData(ItemId.ManaPotion), 100); 
+            Inventory.ItemList[5] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Sword), 1, 1);
+            Inventory.ItemList[10] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Bow), 1, 3);
+            Inventory.ItemList[15] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Armor), 1, 10);
+
+            ItemManager.EquipFromInv(5);//穿戴剑
+            ItemManager.EquipFromInv(10);//弓->剑
+            ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
+            ItemManager.EquipFromInv(15);//穿戴甲
+            ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
+
+
         }
 
         public override void _Process(double delta)
@@ -111,17 +86,17 @@ namespace RpgGame.Scripts.Characters.Players
 
             if (Input.IsActionJustPressed("Inventory"))
             {
-                if (InventoryView.Visible == false)
-                {
-                    GD.Print("pause");
-                    InventoryView.Visible = true;
-                }
-                else
-                {
-                    //恢复游戏
-                    GD.Print("restart");
-                    InventoryView.Visible = false;
-                }
+                //if (InventoryView.Visible == false)
+                //{
+                //    GD.Print("pause");
+                //    InventoryView.Visible = true;
+                //}
+                //else
+                //{
+                //    //恢复游戏
+                //    GD.Print("restart");
+                //    InventoryView.Visible = false;
+                //}
             }
         }
         public override void _PhysicsProcess(double delta)

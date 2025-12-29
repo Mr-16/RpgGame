@@ -9,14 +9,19 @@ namespace RpgGame.Scripts.Datas
     public enum EffectType
     {
         Heal,
+        AddMana,
         Damage,
         AddSpeed,
         AddAtk,
-
+        AddBuff,
     }
 
     public class EffectData
     {
-        public EffectType Type;
+        public EffectType EffectType;
+        public float Health;
+        public float AddMana;
+        public float Damage;
+        public float AddSpeed;
     }
 }
