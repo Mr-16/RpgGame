@@ -1,36 +1,14 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RpgGame.Scripts.Datas
 {
-    public enum ItemType
-    {
-        Equipment,
-        Consumable,
-        Material,
-    }
-
-    public enum MaterialType
-    {
-        Gold,
-        Wood,
-        Water,
-        Fire,
-        Earth,
-    }
-
-
-    public enum Rarity
-    {
-        Common,     //普通(白)
-        Rare,       //稀有(蓝)
-        Epic,       //史诗(紫)
-        Legendary,  //传说(金)
-    }
+    public interface IItemComponent {}
 
     public enum EquipType
     {
@@ -39,6 +17,38 @@ namespace RpgGame.Scripts.Datas
         Armor,
         Ring,
         Boot,
+    }
+    public class EquippableComponent : IItemComponent
+    {
+        public EquipType EquipType;
+        public int Level = 1;
+        public EquippableComponent(EquipType equipType)
+        {
+            EquipType = equipType;
+        }
+
+        public void Equip()
+        {
+            Debug.WriteLine("[EquipmentComponent] Equip");
+        }
+
+        public void Unequip()
+        {
+            Debug.WriteLine("[EquipmentComponent] Unequip");
+        }
+
+        public void GetExp(float exp)
+        {
+            Debug.WriteLine("[EquipmentComponent] GetExp + " + exp);
+        }
+    }
+
+    public class ConsumableComponent : IItemComponent
+    {
+        public void Use()
+        {
+            Debug.WriteLine("[ConsumableComponent] Use");
+        }
     }
 
     public enum WeaponType
@@ -49,6 +59,12 @@ namespace RpgGame.Scripts.Datas
         Spear,
     }
 
+    public enum ItemComponentType
+    {
+        EquippableComponent,
+        ConsumableComponent,
+    }
+
     public class ItemData
     {
         public string Id;
@@ -56,72 +72,19 @@ namespace RpgGame.Scripts.Datas
         public Texture2D Icon;
         public string Description;
         public int MaxStack;
-        public ItemType ItemType;
 
-        //消耗品 ItemType == ItemType.Consumable
-        public List<EffectData> EffectDataList;
+        public EquipType EquipType;//装备类型
 
-        //材料 ItemType == ItemType.Material
-        public MaterialType MaterialType;
+        //组件映射表, 用于创建实例时找到对应的Component
+        public HashSet<ItemComponentType> CompSet;
 
-        //装备 ItemType == ItemType.Equipment
-        public Rarity Rarity;
-        public EquipType EquipType;
-
-        //武器 ItemType == ItemType.Equipment && EquipType == EquipType.Weapon
-        public WeaponType WeaponType;
-
-        public ItemData(string id, string name, int maxStack, ItemType itemType, Texture2D icon, string description)
-        {
-            Id = id;
-            Name = name;
-            MaxStack = maxStack;
-            ItemType = itemType;
-            Icon = icon;
-            Description = description;
-        }
-        public ItemData(string id, string name, int maxStack, ItemType itemType, Texture2D icon, string description, MaterialType materialType)
-        {
-            Id = id;
-            Name = name;
-            MaxStack = maxStack;
-            ItemType = itemType;
-            Icon = icon;
-            Description = description;
-            MaterialType = materialType;
-        }
-        public ItemData(string id, string name, int maxStack, ItemType itemType, Texture2D icon, string description, List<EffectData> effectDataList)
-        {
-            Id = id;
-            Name = name;
-            MaxStack = maxStack;
-            ItemType = itemType;
-            Icon = icon;
-            Description = description;
-            EffectDataList = effectDataList;
-        }
-        public ItemData(string id, string name, int maxStack, ItemType itemType, Texture2D icon, string description, Rarity rarity, EquipType equipType)
-        {
-            Id = id;
-            Name = name;
-            MaxStack = maxStack;
-            ItemType = itemType;
-            Icon = icon;
-            Description = description;
-            Rarity = rarity;
-            EquipType = equipType;
-        }
-        public ItemData(string id, string name, int maxStack, ItemType itemType, Texture2D icon, string description, Rarity rarity, EquipType equipType, WeaponType weaponType)
-        {
-            Id = id;
-            Name = name;
-            MaxStack = maxStack;
-            ItemType = itemType;
-            Icon = icon;
-            Description = description;
-            Rarity = rarity;
-            EquipType = equipType;
-            WeaponType = weaponType;
-        }
+        //public ItemData(string id, string name, int maxStack, Texture2D icon, string description)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Icon = icon;
+        //    Description = description;
+        //    MaxStack = maxStack;
+        //}
     }
 }

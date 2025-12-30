@@ -64,18 +64,16 @@ namespace RpgGame.Scripts.Characters.Players
             Equipment = new Equipment();
             Inventory = new Inventory(30);
             ItemManager = new ItemManager(Equipment, Inventory);
-            
-            Inventory.ItemList[0] = new ItemInstance(ItemDatabase.Instance().GetItemData(ItemId.ManaPotion), 100); 
-            Inventory.ItemList[5] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Sword), 1, 1);
-            Inventory.ItemList[10] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Bow), 1, 3);
-            Inventory.ItemList[15] = new EquipInstance(ItemDatabase.Instance().GetItemData(ItemId.Armor), 1, 10);
 
-            ItemManager.EquipFromInv(5);//穿戴剑
-            ItemManager.EquipFromInv(10);//弓->剑
-            ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
-            ItemManager.EquipFromInv(15);//穿戴甲
-            ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
-
+            //ItemManager.EquipFromInv(5);//穿戴剑
+            //ItemManager.EquipFromInv(10);//弓->剑
+            //ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
+            //ItemManager.EquipFromInv(15);//穿戴甲
+            //ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
+            Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
+            Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
+            Inventory.RemoveItem(1, 100);
+            Inventory.RemoveItem(2, 100);
 
         }
 

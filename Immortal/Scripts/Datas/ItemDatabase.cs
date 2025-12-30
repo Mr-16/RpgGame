@@ -24,17 +24,59 @@ namespace RpgGame.Scripts.Datas
         public static ItemDatabase Instance() => instance;
         private ItemDatabase() 
         {
-            Register(new ItemData(ItemId.HealthPotion, "生命药水", 16, ItemType.Consumable, GD.Load<Texture2D>(""), "回血", new List<EffectData> { EffectDatabase.Instance().GetEffectData(EffectId.HealEffect) }));
+            Register(new ItemData()
+            {
+                Id = ItemId.HealthPotion,
+                Name = "生命药水",
+                MaxStack = 16,
+                Icon = GD.Load<Texture2D>("res://Assets/NinjaAssets/Items/Potion/LifePot.png"),
+                Description = "回血",
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.ConsumableComponent },
+            });
 
-            Register(new ItemData(ItemId.ManaPotion, "法力药水", 16, ItemType.Consumable, GD.Load<Texture2D>(""), "回蓝", new List<EffectData> { EffectDatabase.Instance().GetEffectData(EffectId.AddManaEffect) }));
+            Register(new ItemData()
+            {
+                Id = ItemId.ManaPotion,
+                Name = "法力药水",
+                MaxStack = 16,
+                Icon = GD.Load<Texture2D>("res://Assets/NinjaAssets/Items/Potion/WaterPot.png"),
+                Description = "回血",
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.ConsumableComponent },
+            });
 
-            Register(new ItemData(ItemId.Sword, "新手之剑", 1, ItemType.Equipment, GD.Load<Texture2D>(""), "这是一把新手之剑, 意味着一切的开始.", Rarity.Common, EquipType.Weapon));
+            Register(new ItemData()
+            {
+                Id = ItemId.Sword,
+                Name = "新手之剑",
+                MaxStack = 1,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
+                Description = "这是一把新手之剑, 意味着一切的开始.",
+                EquipType = EquipType.Weapon,
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
+            });
 
-            Register(new ItemData(ItemId.Bow, "新手之弓", 1, ItemType.Equipment, GD.Load<Texture2D>(""), "这是一把新手之弓, 意味着一切的开始.", Rarity.Common, EquipType.Weapon));
+            Register(new ItemData()
+            {
+                Id = ItemId.Bow,
+                Name = "新手之弓",
+                MaxStack = 1,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Bow.png"),
+                Description = "这是一把新手之弓, 意味着一切的开始.",
+                EquipType = EquipType.Weapon,
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
+            });
 
-            Register(new ItemData(ItemId.Armor, "新手盔甲", 1, ItemType.Equipment, GD.Load<Texture2D>(""), "这是一把新手盔甲, 意味着一切的开始.", Rarity.Common, EquipType.Armor));
+            Register(new ItemData()
+            {
+                Id = ItemId.Armor,
+                Name = "新手盔甲",
+                MaxStack = 1,
+                Icon = GD.Load<Texture2D>("res://Assets/NinjaAssets/Items/Weapons/Axe/Sprite.png"),
+                Description = "这是一把新手盔甲, 意味着一切的开始.",
+                EquipType = EquipType.Armor,
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
+            });
         }
-
 
         public void Register(ItemData data)
         {
@@ -43,7 +85,6 @@ namespace RpgGame.Scripts.Datas
 
         public ItemData GetItemData(string id)
         {
-            //idItemMap.TryGetValue(id, out var item);
             return idItemMap[id];
         }
     }

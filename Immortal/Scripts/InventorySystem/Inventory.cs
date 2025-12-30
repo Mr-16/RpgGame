@@ -1,3 +1,4 @@
+using RpgGame.Scripts.Datas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace RpgGame.Scripts.InventorySystem
     {
         public int Capacity;
         public List<ItemInstance> ItemList = new List<ItemInstance>();
+        public event Action<int, ItemInstance> ItemChanged;
         public Inventory(int capacity)
         {
             Capacity = capacity;
@@ -20,6 +22,7 @@ namespace RpgGame.Scripts.InventorySystem
         }
         public bool AddItem(ItemInstance item)
         {
+            if (item.Count > item.Data.MaxStack) return false;
             for(int i = 0; i < Capacity; i++)
             { 
                 ItemInstance curItem = ItemList[i];
@@ -31,13 +34,15 @@ namespace RpgGame.Scripts.InventorySystem
                 int addCount = Math.Min(item.Count, canAddCount);
                 item.Count -= addCount;
                 curItem.Count += addCount;
+                ItemChanged?.Invoke(i, curItem);
                 if (item.Count <= 0) return true;
             }
             for(int i = 0; i < Capacity; i++)
             {
                 if (ItemList[i] != null) continue;
-                item.Count -= item.Data.MaxStack;
-                if(item.Count <= 0) return true;
+                ItemList[i] = item;
+                ItemChanged?.Invoke(i, ItemList[i]);
+                return true;
             }
             return false;
         }
@@ -47,6 +52,7 @@ namespace RpgGame.Scripts.InventorySystem
             if (item == null) return false;
             item.Count -= count;
             if (item.Count <= 0) ItemList.RemoveAt(itemIndex);
+            ItemChanged?.Invoke(itemIndex, item);
             return true;
         }
     }

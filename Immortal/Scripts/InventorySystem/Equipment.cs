@@ -9,27 +9,30 @@ namespace RpgGame.Scripts.InventorySystem
 {
     public class Equipment
     {
-        public Dictionary<EquipType, EquipInstance> TypeEquipMap = new Dictionary<EquipType, EquipInstance>();
-        public EquipInstance Equip(EquipInstance equip)
+        public Dictionary<EquipType, ItemInstance> TypeEquipMap = new Dictionary<EquipType, ItemInstance>();
+        public event Action<EquipType> EquipChange;
+        public ItemInstance Equip(ItemInstance equip)
         {
-            TypeEquipMap.TryGetValue(equip.Data.EquipType, out EquipInstance oldEquip);
+            TypeEquipMap.TryGetValue(equip.Data.EquipType, out ItemInstance oldEquip);
             TypeEquipMap[equip.Data.EquipType] = equip;
+            EquipChange?.Invoke(equip.Data.EquipType);
             return oldEquip;
         }
 
-        public EquipInstance Unequip(EquipType type)
+        public ItemInstance Unequip(EquipType type)
         {
-            if (TypeEquipMap.TryGetValue(type, out EquipInstance equip))
+            if (TypeEquipMap.TryGetValue(type, out ItemInstance equip))
             {
                 TypeEquipMap.Remove(type);
+                EquipChange?.Invoke(type);
                 return equip;
             }
             return null;
         }
 
-        public EquipInstance GetEquip(EquipType type)
+        public ItemInstance GetEquip(EquipType type)
         {
-            TypeEquipMap.TryGetValue(type, out EquipInstance equip);
+            TypeEquipMap.TryGetValue(type, out ItemInstance equip);
             return equip;
         }
     }
