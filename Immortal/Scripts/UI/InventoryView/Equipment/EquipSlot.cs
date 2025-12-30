@@ -2,16 +2,7 @@ using Godot;
 using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
 using System;
-
-
-public enum EquipSlotType
-{
-	WeaponSlot,
-	HelmetSlot,
-	ArmorSlot,
-	RingSlot,
-	BootSlot,
-}
+using System.Diagnostics.Metrics;
 
 public partial class EquipSlot : Control
 {
@@ -36,6 +27,11 @@ public partial class EquipSlot : Control
     public void SetEquip(ItemInstance equip)
     {
         Equip = equip;
+        if(equip == null)
+        {
+            IconTr.Texture = null;
+            return;
+        }
         IconTr.Texture = equip.Data.Icon;
     }
 

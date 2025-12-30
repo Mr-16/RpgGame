@@ -10,6 +10,7 @@ public partial class ItemSlotPanel : PanelContainer
     public ItemInstance Item;
     public int Index;
 	public event Action<int, int> ItemSwapped;
+    public event Action<EquipType, int> UnequipToInv;
 
     public override void _Ready()
 	{
@@ -60,6 +61,11 @@ public partial class ItemSlotPanel : PanelContainer
         if(gdObj is ItemSlotPanel itemSlot)//背包内部换
         {
             ItemSwapped?.Invoke(Index, itemSlot.Index);
+            return;
+        }
+        if(gdObj is EquipSlot slot)//从装备槽卸到背包上
+        {
+            UnequipToInv?.Invoke(slot.SlotType, Index);
         }
 
     }

@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.InventorySystem;
 using System;
 
@@ -17,11 +18,23 @@ public partial class InventoryView : Control
 		this.itemManager = itemManager;
 		InventoryGrid.Init(itemManager.Inventory);
 		EquipControl.Init(itemManager.Equipment);
+
         EquipControl.WeaponSlot.EquipFromInv += EquipFromInv;
         EquipControl.HelmetSlot.EquipFromInv += EquipFromInv;
         EquipControl.RingSlot.EquipFromInv += EquipFromInv;
         EquipControl.ArmorSlot.EquipFromInv += EquipFromInv;
         EquipControl.BootSlot.EquipFromInv += EquipFromInv;
+
+		for(int i = 0; i < InventoryGrid.SlotList.Count; i++)
+		{
+            InventoryGrid.SlotList[i].UnequipToInv += UnequipToInv;
+
+        }
+    }
+
+    private void UnequipToInv(EquipType equipType, int invIndex)
+    {
+        itemManager.UnequipToInv(equipType, invIndex);
     }
 
     private void EquipFromInv(int invIndex)

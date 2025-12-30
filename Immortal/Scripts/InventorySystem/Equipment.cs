@@ -23,7 +23,7 @@ namespace RpgGame.Scripts.InventorySystem
         {
             if (TypeEquipMap.TryGetValue(type, out ItemInstance equip))
             {
-                TypeEquipMap.Remove(type);
+                TypeEquipMap[type] = null;
                 EquipChange?.Invoke(type);
                 return equip;
             }
