@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bbb4jjxt20pt1" path="res://Scenes/UI/InventoryView/Equipment/EquipSlot.tscn" id="1_58bmc"]
 [ext_resource type="Script" uid="uid://ccu6cqrswgcfg" path="res://Scripts/UI/InventoryView/Equipment/EquipControl.cs" id="1_xng7o"]
 
-[node name="EquipContorl" type="Control" node_paths=PackedStringArray("WeaponSlot", "HelmetSlot", "ArmorSlot", "RingSlot", "BootSlot")]
+[node name="EquipContorl" type="Control" node_paths=PackedStringArray("WeaponSlot", "HelmetSlot", "RingSlot", "ArmorSlot", "BootSlot")]
 layout_mode = 3
 anchor_right = 0.38200003
 anchor_bottom = 0.98800004
@@ -14,8 +14,8 @@ grow_vertical = 2
 script = ExtResource("1_xng7o")
 WeaponSlot = NodePath("ColorRect/WeaponSlot")
 HelmetSlot = NodePath("ColorRect/HelmetSlot")
-ArmorSlot = NodePath("ColorRect/ArmorSlot")
 RingSlot = NodePath("ColorRect/RingSlot")
+ArmorSlot = NodePath("ColorRect/ArmorSlot")
 BootSlot = NodePath("ColorRect/BootSlot")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -37,6 +37,7 @@ offset_left = -0.08001709
 offset_top = 8.319977
 offset_right = 0.0
 offset_bottom = 0.0
+SlotType = 1
 
 [node name="WeaponSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
 layout_mode = 1
@@ -47,7 +48,6 @@ anchor_bottom = 0.6
 offset_left = 0.0399971
 offset_right = 4.119995
 offset_bottom = 4.0
-SlotType = 1
 
 [node name="ArmorSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
 layout_mode = 1

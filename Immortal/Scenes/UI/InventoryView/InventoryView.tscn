@@ -39,7 +39,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.21508199, 0.21508199, 0.21508199, 0.8)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="BgCr/ColorRect" node_paths=PackedStringArray("InventoryGrid")]
+[node name="ScrollContainer" type="ScrollContainer" parent="BgCr/ColorRect" node_paths=PackedStringArray("InventoryGrid", "EquipControl")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,6 +52,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w8yry")
 InventoryGrid = NodePath("InventoryGrid")
+EquipControl = NodePath("../EquipContorl")
 
 [node name="InventoryGrid" parent="BgCr/ColorRect/ScrollContainer" instance=ExtResource("1_sbdbk")]
 layout_mode = 2

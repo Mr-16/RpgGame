@@ -74,6 +74,8 @@ namespace RpgGame.Scripts.Characters.Players
             ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
             ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
             ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            ItemManager.Equipment.Equip(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            ItemManager.Equipment.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
             //ItemManager.Inventory.RemoveItem(1, 100);
             //ItemManager.Inventory.RemoveItem(2, 100);
 
