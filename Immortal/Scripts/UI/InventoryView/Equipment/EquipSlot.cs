@@ -14,7 +14,6 @@ public partial class EquipSlot : Control
 
     public ItemInstance Equip;
 
-    //public event Action<EquipInstance> Equipped;
     public event Action<int> EquipFromInv;
 
     public override void _Ready()

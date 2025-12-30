@@ -77,14 +77,5 @@ namespace RpgGame.Scripts.Datas
 
         //组件映射表, 用于创建实例时找到对应的Component
         public HashSet<ItemComponentType> CompSet;
-
-        //public ItemData(string id, string name, int maxStack, Texture2D icon, string description)
-        //{
-        //    Id = id;
-        //    Name = name;
-        //    Icon = icon;
-        //    Description = description;
-        //    MaxStack = maxStack;
-        //}
     }
 }
