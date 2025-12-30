@@ -48,10 +48,8 @@ namespace RpgGame.Scripts.Characters.Players
         public Label LevelLb;
 
 
-
-        public Inventory Inventory;
-        public Equipment Equipment;
         public ItemManager ItemManager;
+        [Export] InventoryView InventoryView;//背包系统的大UI面板
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -61,19 +59,23 @@ namespace RpgGame.Scripts.Characters.Players
             InitLevel();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
 
-            Equipment = new Equipment();
-            Inventory = new Inventory(30);
-            ItemManager = new ItemManager(Equipment, Inventory);
-
+            
+            
+            ItemManager = new ItemManager(new Equipment(), new Inventory(30));
+            InventoryView.Init(ItemManager);
             //ItemManager.EquipFromInv(5);//穿戴剑
             //ItemManager.EquipFromInv(10);//弓->剑
             //ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
             //ItemManager.EquipFromInv(15);//穿戴甲
             //ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
-            Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
-            Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
-            Inventory.RemoveItem(1, 100);
-            Inventory.RemoveItem(2, 100);
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.HealthPotion, 15));
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Bow, 1));
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            //ItemManager.Inventory.RemoveItem(1, 100);
+            //ItemManager.Inventory.RemoveItem(2, 100);
 
         }
 

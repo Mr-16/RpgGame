@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.InventorySystem
         public Inventory(int capacity)
         {
             Capacity = capacity;
-            for(int i = 0; i< Capacity; i++)
+            for (int i = 0; i < Capacity; i++)
             {
                 ItemList.Add(null);
             }
@@ -23,8 +23,8 @@ namespace RpgGame.Scripts.InventorySystem
         public bool AddItem(ItemInstance item)
         {
             if (item.Count > item.Data.MaxStack) return false;
-            for(int i = 0; i < Capacity; i++)
-            { 
+            for (int i = 0; i < Capacity; i++)
+            {
                 ItemInstance curItem = ItemList[i];
                 if (curItem == null) continue;//空格子
                 if (curItem.Data.Id != item.Data.Id) continue;//不同类
@@ -37,7 +37,7 @@ namespace RpgGame.Scripts.InventorySystem
                 ItemChanged?.Invoke(i, curItem);
                 if (item.Count <= 0) return true;
             }
-            for(int i = 0; i < Capacity; i++)
+            for (int i = 0; i < Capacity; i++)
             {
                 if (ItemList[i] != null) continue;
                 ItemList[i] = item;
@@ -60,6 +60,16 @@ namespace RpgGame.Scripts.InventorySystem
             item.Count -= count;
             if (item.Count <= 0) ItemList.RemoveAt(itemIndex);
             ItemChanged?.Invoke(itemIndex, item);
+            return true;
+        }
+        public bool SwapItem(int index1, int index2)
+        {
+            //if (ItemList[index1] == null || ItemList[index2] == null) return false;
+            ItemInstance tempItem = ItemList[index1];
+            ItemList[index1] = ItemList[index2];
+            ItemList[index2] = tempItem;
+            ItemChanged?.Invoke(index1, ItemList[index1]);
+            ItemChanged?.Invoke(index2, ItemList[index2]);
             return true;
         }
     }

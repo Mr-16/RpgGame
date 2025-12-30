@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.InventorySystem;
 using System;
 
 public partial class InventoryView : Control
@@ -8,6 +9,15 @@ public partial class InventoryView : Control
 
 	[Export]
 	public EquipControl EquipControl;
+
+	private ItemManager itemManager;
+
+	public void Init(ItemManager itemManager)
+	{
+		this.itemManager = itemManager;
+		InventoryGrid.Init(itemManager.Inventory);
+		EquipControl.Init(itemManager.Equipment);
+    }
 
 	public override void _Ready()
 	{

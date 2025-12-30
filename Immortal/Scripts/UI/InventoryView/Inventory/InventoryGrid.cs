@@ -1,50 +1,39 @@
 using Godot;
+using RpgGame.Scripts.InventorySystem;
 using System;
 using System.Collections.Generic;
 
 public partial class InventoryGrid : GridContainer
 {
+	public Inventory Inventory;
+	[Export] public PackedScene ItemSlotScene;
+	public List<ItemSlotPanel> SlotList = new List<ItemSlotPanel>();
+	public void Init(Inventory inventory)
+	{
+		Inventory = inventory;
+		for (int i = 0; i < Inventory.Capacity; i++)
+		{
+			ItemSlotPanel slot = ItemSlotScene.Instantiate<ItemSlotPanel>();
+			slot.ItemSwapped += (index1, index2) =>
+			{
+				Inventory.SwapItem(index1, index2);
+			};
+            slot.Item = inventory.ItemList[i];
+			slot.Index = i;
+            AddChild(slot);
+			SlotList.Add(slot);
+		}
+		Inventory.ItemChanged += (index, item) =>
+		{
+			SlotList[index].SetItem(item);
+		};
+	}
 
- //   public Inventory Inventory;
- //   public Equipment Equipment;
- //   public List<ItemSlotPanel> SlotList = new List<ItemSlotPanel>();
- //   [Export] public PackedScene ItemSlotScene;
+    public override void _Ready()
+	{
+	}
 
-
- //   public override void _Ready()
-	//{
-	//}
-
-	//public override void _Process(double delta)
-	//{
-	//}
-	
-	//public void Init(Inventory inventory, Equipment equipment)
-	//{
-	//	Inventory = inventory;
- //       Equipment = equipment;
-
- //       for (int i = 0; i < Inventory.Capacity; i++)
-	//	{
- //           ItemSlotPanel slot = ItemSlotScene.Instantiate<ItemSlotPanel>();
- //           slot.ItemSwapped += (indexA, indexB) =>
- //           {
- //               Inventory.SwapItem(indexA, indexB);
- //           };
- //           slot.Unequipped += (index, equip) =>
- //           {
- //               //Equipment.Equip(equip);
- //               //Inventory.AddEquip()
- //           };
- //           slot.Index = i;
- //           AddChild(slot);
- //           SlotList.Add(slot);
- //       }
- //       Inventory.ItemChanged += (index, item) =>
- //       {
- //           SlotList[index].SetItem(item);
- //       };
-
-	//}
-    
+	public override void _Process(double delta)
+	{
+	}
 }

@@ -9,45 +9,45 @@ namespace RpgGame.Scripts.InventorySystem
 {
     public class ItemManager
     {
-        private Equipment equipment;
-        private Inventory inventory;
+        public Equipment Equipment;
+        public Inventory Inventory;
         public ItemManager(Equipment equipment, Inventory inventory)
         {
-            this.equipment = equipment;
-            this.inventory = inventory;
+            Equipment = equipment;
+            Inventory = inventory;
         }
 
         public void EquipFromInv(int invIndex)
         {
-            if (invIndex < 0 || invIndex >= inventory.ItemList.Count) return;
+            if (invIndex < 0 || invIndex >= Inventory.ItemList.Count) return;
 
-            ItemInstance equip = inventory.ItemList[invIndex];
+            ItemInstance equip = Inventory.ItemList[invIndex];
             if (equip == null) return;
             if (!equip.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
-            ItemInstance oldEquip = equipment.GetEquip(equip.Data.EquipType);
+            ItemInstance oldEquip = Equipment.GetEquip(equip.Data.EquipType);
 
-            equipment.Equip(equip);
+            Equipment.Equip(equip);
 
             if (oldEquip != null)
             {
-                inventory.SetItem(oldEquip, invIndex);
+                Inventory.SetItem(oldEquip, invIndex);
             }
             else
             {
-                inventory.SetItem(null, invIndex);
+                Inventory.SetItem(null, invIndex);
             }
         }
 
         //卸下后自动在背包找空格子(右键卸下)
         public void UnequipToInv(EquipType equipType)
         {
-            ItemInstance equip = equipment.GetEquip(equipType);
+            ItemInstance equip = Equipment.GetEquip(equipType);
             if (equip == null) return;
-            for(int i = 0; i < inventory.Capacity; i++)
+            for(int i = 0; i < Inventory.Capacity; i++)
             {
-                if (inventory.ItemList[i] != null) continue;
-                inventory.SetItem(equip, i);
-                equipment.Unequip(equipType);
+                if (Inventory.ItemList[i] != null) continue;
+                Inventory.SetItem(equip, i);
+                Equipment.Unequip(equipType);
                 break;
             }
         }
@@ -55,12 +55,12 @@ namespace RpgGame.Scripts.InventorySystem
         //卸下后去指定格子(拖动卸下)
         public bool UnequipToInv(EquipType equipType, int invIndex)
         {
-            ItemInstance equip = equipment.GetEquip(equipType);
+            ItemInstance equip = Equipment.GetEquip(equipType);
             if (equip == null) return false;
 
-            if (inventory.ItemList[invIndex] != null) return false;
-            equipment.Unequip(equipType);
-            inventory.SetItem(equip, invIndex);
+            if (Inventory.ItemList[invIndex] != null) return false;
+            Equipment.Unequip(equipType);
+            Inventory.SetItem(equip, invIndex);
             return true;
         }
 
