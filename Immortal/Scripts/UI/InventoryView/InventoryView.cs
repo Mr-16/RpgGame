@@ -17,9 +17,19 @@ public partial class InventoryView : Control
 		this.itemManager = itemManager;
 		InventoryGrid.Init(itemManager.Inventory);
 		EquipControl.Init(itemManager.Equipment);
+        EquipControl.WeaponSlot.EquipFromInv += EquipFromInv;
+        EquipControl.HelmetSlot.EquipFromInv += EquipFromInv;
+        EquipControl.RingSlot.EquipFromInv += EquipFromInv;
+        EquipControl.ArmorSlot.EquipFromInv += EquipFromInv;
+        EquipControl.BootSlot.EquipFromInv += EquipFromInv;
     }
 
-	public override void _Ready()
+    private void EquipFromInv(int invIndex)
+    {
+        itemManager.EquipFromInv(invIndex);
+    }
+
+    public override void _Ready()
 	{
 	}
 

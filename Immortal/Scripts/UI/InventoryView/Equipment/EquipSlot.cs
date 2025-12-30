@@ -24,6 +24,7 @@ public partial class EquipSlot : Control
     public ItemInstance Equip;
 
     //public event Action<EquipInstance> Equipped;
+    public event Action<int> EquipFromInv;
 
     public override void _Ready()
     {
@@ -64,7 +65,6 @@ public partial class EquipSlot : Control
         ItemSlotPanel itemSlot = data.As<ItemSlotPanel>();
         if (itemSlot == null) return;
         if (!itemSlot.Item.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
-        //EquipInstance equip = (EquipInstance)itemSlot.Item;
-        //Equipped?.Invoke(equip);
+        EquipFromInv?.Invoke(itemSlot.Index);
     }
 }
