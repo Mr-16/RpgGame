@@ -46,6 +46,13 @@ namespace RpgGame.Scripts.InventorySystem
             }
             return false;
         }
+        public bool SetItem(ItemInstance item, int itemIndex)
+        {
+            if (item.Count > item.Data.MaxStack) return false;
+            ItemList[itemIndex] = item;
+            ItemChanged?.Invoke(itemIndex, item);
+            return true;
+        }
         public bool RemoveItem(int itemIndex, int count)
         {
             ItemInstance item = ItemList[itemIndex];

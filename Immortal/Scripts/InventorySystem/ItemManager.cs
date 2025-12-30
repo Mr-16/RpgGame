@@ -30,11 +30,11 @@ namespace RpgGame.Scripts.InventorySystem
 
             if (oldEquip != null)
             {
-                inventory.ItemList[invIndex] = oldEquip;
+                inventory.SetItem(oldEquip, invIndex);
             }
             else
             {
-                inventory.ItemList[invIndex] = null;
+                inventory.SetItem(null, invIndex);
             }
         }
 
@@ -46,8 +46,8 @@ namespace RpgGame.Scripts.InventorySystem
             for(int i = 0; i < inventory.Capacity; i++)
             {
                 if (inventory.ItemList[i] != null) continue;
-                inventory.ItemList[i] = equip;
-                equipment.TypeEquipMap.Remove(equipType);
+                inventory.SetItem(equip, i);
+                equipment.Unequip(equipType);
                 break;
             }
         }
@@ -60,7 +60,7 @@ namespace RpgGame.Scripts.InventorySystem
 
             if (inventory.ItemList[invIndex] != null) return false;
             equipment.Unequip(equipType);
-            inventory.ItemList[invIndex] = equip;
+            inventory.SetItem(equip, invIndex);
             return true;
         }
 
