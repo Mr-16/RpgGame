@@ -46,6 +46,16 @@ namespace RpgGame.Scripts.Datas
 
             Register(new ItemData()
             {
+                Id = ItemId.Wd40,
+                Name = "WD40",
+                MaxStack = 16,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Wd40.png"),
+                Description = "回所有",
+                CompSet = new HashSet<ItemComponentType>() { ItemComponentType.ConsumableComponent },
+            });
+
+            Register(new ItemData()
+            {
                 Id = ItemId.Sword,
                 Name = "新手之剑",
                 MaxStack = 1,

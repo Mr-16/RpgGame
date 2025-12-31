@@ -5,80 +5,87 @@
 
 [node name="EquipContorl" type="Control" node_paths=PackedStringArray("WeaponSlot", "HelmetSlot", "RingSlot", "ArmorSlot", "BootSlot")]
 layout_mode = 3
-anchor_right = 0.38200003
-anchor_bottom = 0.98800004
-offset_right = -0.06402588
-offset_bottom = -0.22399902
+anchor_left = 0.042000003
+anchor_top = 0.22200002
+anchor_right = 0.36100003
+anchor_bottom = 0.827
+offset_left = -0.3840027
+offset_top = 0.14398193
+offset_right = 120.12796
+offset_bottom = 96.104004
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xng7o")
-WeaponSlot = NodePath("ColorRect/WeaponSlot")
-HelmetSlot = NodePath("ColorRect/HelmetSlot")
-RingSlot = NodePath("ColorRect/RingSlot")
-ArmorSlot = NodePath("ColorRect/ArmorSlot")
-BootSlot = NodePath("ColorRect/BootSlot")
+WeaponSlot = NodePath("WeaponSlot")
+HelmetSlot = NodePath("HelmetSlot")
+RingSlot = NodePath("RingSlot")
+ArmorSlot = NodePath("ArmorSlot")
+BootSlot = NodePath("BootSlot")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="HelmetSlot" parent="." instance=ExtResource("1_58bmc")]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.21508199, 0.21508199, 0.21508199, 0.8)
-
-[node name="HelmetSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
-layout_mode = 1
-anchor_left = 0.38200003
-anchor_top = 0.26200002
-anchor_right = 0.6
-anchor_bottom = 0.425
-offset_left = -0.08001709
-offset_top = 8.319977
-offset_right = 0.0
-offset_bottom = 0.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -60.0
+offset_right = 60.0
+offset_bottom = 120.0
+grow_vertical = 1
 SlotType = 1
 
-[node name="WeaponSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
+[node name="WeaponSlot" parent="." instance=ExtResource("1_58bmc")]
 layout_mode = 1
-anchor_left = 0.109000005
-anchor_top = 0.45000002
-anchor_right = 0.32700002
-anchor_bottom = 0.6
-offset_left = 0.0399971
-offset_right = 4.119995
-offset_bottom = 4.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_top = -75.0
+offset_right = 150.0
+offset_bottom = 75.0
+grow_horizontal = 1
 
-[node name="ArmorSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
+[node name="ArmorSlot" parent="." instance=ExtResource("1_58bmc")]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
-anchor_left = 0.38200003
-anchor_top = 0.45000002
-anchor_right = 0.6
-anchor_bottom = 0.61200005
-offset_left = -0.08001709
-offset_right = 0.0
-offset_bottom = 0.3199768
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
 SlotType = 2
 
-[node name="RingSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
+[node name="RingSlot" parent="." instance=ExtResource("1_58bmc")]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
-anchor_left = 0.65500003
-anchor_top = 0.45000002
-anchor_right = 0.882
-anchor_bottom = 0.606
-offset_left = -0.2000122
-offset_right = -0.08001709
-offset_bottom = 0.16000366
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 0.0
+offset_bottom = 60.0
+grow_horizontal = 0
 SlotType = 3
 
-[node name="BootSlot" parent="ColorRect" instance=ExtResource("1_58bmc")]
+[node name="BootSlot" parent="." instance=ExtResource("1_58bmc")]
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
-anchor_left = 0.38200003
-anchor_top = 0.637
-anchor_right = 0.609
-anchor_bottom = 0.794
-offset_left = -0.08001709
-offset_top = 0.3199768
-offset_right = 0.039978027
-offset_bottom = -0.16003418
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -120.0
+offset_right = 60.0
+offset_bottom = 0.0
+grow_vertical = 0
 SlotType = 4
