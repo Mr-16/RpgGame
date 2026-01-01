@@ -16,8 +16,14 @@ namespace RpgGame.Scripts.AttributeSystem
         
         //Secondary
         MaxHp,
+        HpRegen,
+        MaxMp,
+        MpRegen,
+        DodgeChance,
         PhysicalAttackMin,
         PhysicalAttackMax,
+        MagicAttack,             //吃智力, 技能伤害加成
+        MagicResistance,         //吃智力, 技能伤害抗性
         Armor,
         CritChance,
         CritDamage,
