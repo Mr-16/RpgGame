@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.GameSystem;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace RpgGame.Scripts.Characters.Enemies
         [Export]
         public PackedScene ExpBall;
 
+
         public override void _Ready()
         {
             base._Ready();
@@ -23,7 +25,7 @@ namespace RpgGame.Scripts.Characters.Enemies
             //DmgParticles.Visible = false;
             //DmgParticles.Emitting = false;
             Random rd = new Random();
-            Level = rd.Next(1, 30);
+            //Level = rd.Next(1, 30);
         }
 
         public override void _Process(double delta)
@@ -65,20 +67,41 @@ namespace RpgGame.Scripts.Characters.Enemies
             //DmgParticles.QueueFree();
         }
 
-
         public void SpawnExpBall()
         {
-            int exp = LevelToExp();
-
-            ExpBall expBall = ExpBall.Instantiate<ExpBall>();
-            expBall.GlobalPosition = GlobalPosition;
-            expBall.Exp = exp;
-            //expBall.Init(dmg.ToString(), new Color(1, 0, 0, 1));
-            GetTree().CurrentScene.AddChild(expBall);
+            foreach (KeyValuePair<WuXingType, int> pair in LevelMap)
+            {
+                //todo 遍历五个灵根的等级, 获取可掉落的属性经验生成经验球
+                if(pair.Value == 0) continue;
+                int exp = LevelToExp(pair.Value);
+                ExpBall expBall = ExpBall.Instantiate<ExpBall>();
+                expBall.Init(pair.Key, exp, GlobalPosition);
+                GetTree().CurrentScene.AddChild(expBall);
+            }
         }
-        private int LevelToExp()
+        private int LevelToExp(int level) => 10 * level;
+        public Dictionary<WuXingType, int> LevelMap = new Dictionary<WuXingType, int>();
+        protected float GetAttr(AttributeType type)
         {
-            return Level * 10;
+            switch(type)
+            {
+                case AttributeType.Def:
+                    return 5 + LevelMap[WuXingType.Metal] * 1;
+                case AttributeType.HpRegen:
+                    return 1 + LevelMap[WuXingType.Wood] * 0.1f;
+                case AttributeType.EnergyRegen:
+                    return 0.5f + LevelMap[WuXingType.Wood] * 0.05f;
+                case AttributeType.MoveSpeed:
+                    return 100 + LevelMap[WuXingType.Wood] * 0.01f;
+                case AttributeType.MaxEnergy:
+                    return 50 + LevelMap[WuXingType.Water] * 2;
+                case AttributeType.Atk:
+                    return 10 + LevelMap[WuXingType.Fire] * 2;
+                case AttributeType.MaxHp:
+                    return 100 + LevelMap[WuXingType.Earth] * 4;
+            }
+            return -1;
         }
+
     }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            speedScale = player.Anim.SpeedScale;
-            player.Anim.SpeedScale = 1 + player.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.AttackSpeed);
+            //speedScale = player.Anim.SpeedScale;
+            //player.Anim.SpeedScale = 1 + player.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.AttackSpeed);
             player.Anim.Play("Atk");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
@@ -51,7 +52,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             {
                 Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
                 player.CurDir = moveDir;
-                player.Velocity = player.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.MoveSpeed) * moveDir;
+                player.Velocity = player.AttrContainer.GetAttrValue(AttributeType.MoveSpeed).FinalValue * moveDir;
                 player.MoveAndSlide();
             }
             //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
@@ -75,7 +76,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             player.Anim.AnimationFinished -= Anim_AnimationFinished;
             player.Anim.FrameChanged -= Anim_FrameChanged;
-            player.Anim.SpeedScale = speedScale;
+            //player.Anim.SpeedScale = speedScale;
         }
     }
 }

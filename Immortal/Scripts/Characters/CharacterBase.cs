@@ -7,10 +7,9 @@ using System.Formats.Tar;
 public partial class CharacterBase : CharacterBody2D
 {
     public float CurHealth;
-    public float CurMana;
-    public float CurStam;
+    public float CurEnergy;
+    //public float CurStam;
     public Vector2 CurDir = Vector2.Right;
-    public int Level;
 
     [Export]
     public PackedScene FloatTextLabel;

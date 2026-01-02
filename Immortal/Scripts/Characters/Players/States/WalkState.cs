@@ -29,7 +29,7 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.Sm.ChangeState(player.Sm.IdleState);
             }
 
-            player.RegenStam(delta);
+            //player.RegenStam(delta);
 
 
             Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");

@@ -20,13 +20,13 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            if(player.CurStam < rollCost)
+            if(player.CurEnergy < rollCost)
             {
                 player.Sm.ChangeState(player.Sm.IdleState);
                 return;
             }
             timer = 0;
-            player.CurStam -= rollCost;
+            player.CurEnergy -= rollCost;
             player.Anim.Play("Roll");
             if (player.Sm.CurState == player.Sm.RtkState)
             {

@@ -19,8 +19,8 @@ namespace RpgGame.Scripts.Characters.Players.States
         }
         public override void Update(float delta)
         {
-            player.CurStam -= 0.1f;
-            if (player.CurStam <= 0)//没力了, 回去走路
+            player.CurEnergy -= 0.1f;
+            if (player.CurEnergy <= 0)//没力了, 回去走路
             {
                 player.Sm.ChangeState(player.Sm.WalkState);
                 return;

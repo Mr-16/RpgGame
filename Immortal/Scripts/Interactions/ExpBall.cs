@@ -5,9 +5,12 @@ using System;
 
 public partial class ExpBall : Node2D
 {
-	public int Exp = 1;
+	private int exp;
+    private WuXingType type;
+    [Export]
+    public ColorRect ColorRect;
 
-	private Player player;
+    private Player player;
 	private float chaseRange = 300;
 	private float chaseRangeSq;
 	private float catchRange = 50;
@@ -17,15 +20,40 @@ public partial class ExpBall : Node2D
 
 	private float timer = 0;
 	private float duration = 0.1f;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+
+    public void Init(WuXingType type, int exp, Vector2 gPos)
+    {
+        this.exp = exp;
+        this.type = type;
+        this.GlobalPosition = gPos;
+
+        switch (type)
+        {
+            case WuXingType.Metal:
+                ColorRect.Color = new Color(1.0f, 0.84f, 0.0f);// 金色
+                break;
+            case WuXingType.Wood:
+                ColorRect.Color = new Color(0.0f, 0.8f, 0.0f);// 绿色
+                break;
+            case WuXingType.Water:
+                ColorRect.Color = new Color(0.0f, 0.5f, 1.0f);// 蓝色
+                break;
+            case WuXingType.Fire:
+                ColorRect.Color = new Color(1.0f, 0.0f, 0.0f);// 红色
+                break;
+            case WuXingType.Earth:
+                ColorRect.Color = new Color(0.0f, 0.0f, 0.0f);// 黑色
+                break;
+        }
+    }
+
+    public override void _Ready()
 	{
 		player = GameManager.Instance().Player;
         chaseRangeSq = chaseRange * chaseRange;
 		catchRangeSq = catchRange * catchRange;
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
         if (!IsInstanceValid(player))
@@ -46,7 +74,7 @@ public partial class ExpBall : Node2D
         float disSq = GlobalPosition.DistanceSquaredTo(player.GlobalPosition);
         if (disSq < catchRangeSq)
         {
-            player.AddExp(Exp);
+            player.LevelSystem.TakeExp(type, exp);
             QueueFree();
             return;
         }
@@ -55,9 +83,4 @@ public partial class ExpBall : Node2D
             isChasing = true;
         }
     }
-    //public override void _PhysicsProcess(double delta)
-    //{
-    //    base._PhysicsProcess(delta);
-
-    //}
 }

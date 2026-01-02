@@ -24,12 +24,12 @@ namespace RpgGame.Scripts.Characters.Players.States
             //GD.Print("curSkillIndex : " + player.curSkillTypeIndex);
             SkillType skillType = player.SkillTypeList[player.curSkillTypeIndex];
             curSkillData = GameManager.Instance().SkillDataMap[skillType];
-            if (player.CurMana < curSkillData.ManaCost)
+            if (player.CurEnergy < curSkillData.ManaCost)
             {
                 player.Sm.ChangeState(player.Sm.IdleState);
                 return;
             }
-            player.CurMana -= curSkillData.ManaCost;
+            player.CurEnergy -= curSkillData.ManaCost;
             speedScale = player.Anim.SpeedScale;
             player.Anim.SpeedScale = 1 + curSkillData.AnimSpeedScale;
 

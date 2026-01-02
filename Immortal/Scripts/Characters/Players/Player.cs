@@ -6,13 +6,8 @@ using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.InventorySystem;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
+using RpgGame.Scripts.LevelSystems;
 
 
 namespace RpgGame.Scripts.Characters.Players
@@ -57,7 +52,7 @@ namespace RpgGame.Scripts.Characters.Players
             Sm = new StateMachine(this);
             InitAttr();//属性
             InitSkillData();//技能
-            InitLevel();//初始化等级
+            InitLevelSytem();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
 
             
@@ -110,43 +105,29 @@ namespace RpgGame.Scripts.Characters.Players
             Sm.CurState.FixedUpdate((float)delta);
             //GD.Print("Stamina" + curStamina);
             RegenHealth((float)delta);
-            RegenMana((float)delta);
+            RegenEnergy((float)delta);
 
             UpdateUi((float)delta);
         }
 
         protected override void InitAttr()
         {
-            AttrContainer.SetAttrBaseValue(AttributeType.Strength, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.Dexterity, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.Intelligence, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.Vitality, 10);
+            AttrContainer.GetAttrValue(AttributeType.Def).BaseValue = 5;
 
-            AttrContainer.SetAttrBaseValue(AttributeType.MaxHp, 200);
-            AttrContainer.SetAttrBaseValue(AttributeType.HpRegen, 1);
-            AttrContainer.SetAttrBaseValue(AttributeType.MaxMp, 100);
-            AttrContainer.SetAttrBaseValue(AttributeType.MpRegen, 1);
-            AttrContainer.SetAttrBaseValue(AttributeType.MaxStam, 100);
-            AttrContainer.SetAttrBaseValue(AttributeType.StamRegen, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.DodgeChance, 0.1f);
-            AttrContainer.SetAttrBaseValue(AttributeType.PhysicalAttackMin, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.PhysicalAttackMax, 15);
-            AttrContainer.SetAttrBaseValue(AttributeType.Armor, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.MagicAttack, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.MagicResistance, 10);
-            AttrContainer.SetAttrBaseValue(AttributeType.CritChance, 0.1f);
-            AttrContainer.SetAttrBaseValue(AttributeType.CritDamage, 1.5f);
-            AttrContainer.SetAttrBaseValue(AttributeType.AttackSpeed, 1.0f);
-            AttrContainer.SetAttrBaseValue(AttributeType.MoveSpeed, 500);
+            AttrContainer.GetAttrValue(AttributeType.HpRegen).BaseValue = 10;
+            AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue = 10;
+            AttrContainer.GetAttrValue(AttributeType.MoveSpeed).BaseValue = 300;
 
-            AttrContainer.SetAttrBaseValue(AttributeType.DamageRate, 1);
-            AttrContainer.SetAttrBaseValue(AttributeType.DamageReductionRate, 0);
+            AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue = 50;
+
+            AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue = 10;
+
+            AttrContainer.GetAttrValue(AttributeType.MaxHp).BaseValue = 100;
 
             AttrContainer.RecalculateAllAttributes();
 
-            CurHealth = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
-            CurMana = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
-            CurStam = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
+            CurHealth = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
+            CurEnergy = AttrContainer.GetAttrValue(AttributeType.EnergyRegen).FinalValue;
         }
 
         public void Walk(Vector2 moveDir)
@@ -155,7 +136,7 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if (CurDir.X > 0) Anim.FlipH = false;
-            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * moveDir;
+            Velocity = AttrContainer.GetAttrValue(AttributeType.MoveSpeed).FinalValue * moveDir;
             MoveAndSlide();
         }
         public void Run(Vector2 moveDir)
@@ -164,48 +145,38 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if(CurDir.X > 0) Anim.FlipH = false;
-            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * 2 * moveDir;
+            Velocity = AttrContainer.GetAttrValue(AttributeType.MoveSpeed).FinalValue * 2 * moveDir;
             MoveAndSlide();
         }
         public void Roll()
         {
-            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * 4 * CurDir;
+            Velocity = AttrContainer.GetAttrValue(AttributeType.MoveSpeed).FinalValue * 4 * CurDir;
             MoveAndSlide();
         }
 
         public void RegenHealth(float delta)
         {
-            if (CurHealth < AttrContainer.GetAttrFinalValue(AttributeType.MaxHp))
+            if (CurHealth < AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue)
             {
-                CurHealth += AttrContainer.GetAttrFinalValue(AttributeType.HpRegen) * delta;
+                CurHealth += AttrContainer.GetAttrValue(AttributeType.HpRegen).FinalValue * delta;
             }
             else
             {
-                CurHealth = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
+                CurHealth = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
             }
         }
-        public void RegenMana(float delta)
+        public void RegenEnergy(float delta)
         {
-            if (CurMana < AttrContainer.GetAttrFinalValue(AttributeType.MaxMp))
+            if (CurEnergy < AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue)
             {
-                CurMana += AttrContainer.GetAttrFinalValue(AttributeType.MpRegen) * delta;
+                CurEnergy += AttrContainer.GetAttrValue(AttributeType.EnergyRegen).FinalValue * delta;
             }
             else
             {
-                CurMana = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
+                CurEnergy = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue;
             }
         }
-        public void RegenStam(float delta)
-        {
-            if (CurStam < AttrContainer.GetAttrFinalValue(AttributeType.MaxStam))
-            {
-                CurStam += AttrContainer.GetAttrFinalValue(AttributeType.StamRegen) * delta;
-            }
-            else
-            {
-                CurStam = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
-            }
-        }
+
         public void Atk()
         {
             List<Enemy> enemyList = GameManager.Instance().EnemyList;
@@ -221,7 +192,7 @@ namespace RpgGame.Scripts.Characters.Players
                     continue;
 
                 //enemy.TakeDmg(CalcPhyDamage(enemy.FinalAttr));
-                enemy.TakeDmg(DamageCalculator.CalculateDamage(AttrContainer, enemy.AttrContainer, 10, 20, DamageType.Physical));
+                enemy.TakeDmg(DamageCalculator.CalculateDamage(AttrContainer, enemy.AttrContainer));
             }
         }
         private float uiUpdateTimer = 0;
@@ -231,18 +202,16 @@ namespace RpgGame.Scripts.Characters.Players
             if (uiUpdateTimer < 0.1f) return;
             uiUpdateTimer = 0;
             //TODO : 更新ui
-            StamPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
-            StamPb.Value = CurStam;
-            HealthPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
+            HealthPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
             HealthPb.Value = CurHealth;
-            ManaPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
-            ManaPb.Value = CurMana;
+            ManaPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue;
+            ManaPb.Value = CurEnergy;
 
             //经验
-            ExpLb.Text = $"{CurExp} / {ExpToNextLevel}";
-            ExpPb.Value = CurExp;
-            ExpPb.MaxValue = ExpToNextLevel;
-            LevelLb.Text = $"等级 : {Level}";
+            //ExpLb.Text = $"{CurExp} / {ExpToNextLevel}";
+            //ExpPb.Value = CurExp;
+            //ExpPb.MaxValue = ExpToNextLevel;
+            //LevelLb.Text = $"等级 : {Level}";
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
@@ -269,6 +238,7 @@ namespace RpgGame.Scripts.Characters.Players
             Sm.ChangeState(Sm.DeathState);
         }
 
+        #region 技能系统
         public void CastSkill(SkillType skillType)
         {
             //TODO : 根据技能类型和技能数据释放技能
@@ -301,7 +271,7 @@ namespace RpgGame.Scripts.Characters.Players
             SkillData data = GameManager.Instance().SkillDataMap[SkillType.FireBall];
             //范围内找到目标然后生成火球射过去
             Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
-            FireBall fireBall =  FireBallScene.Instantiate<FireBall>();
+            FireBall fireBall = FireBallScene.Instantiate<FireBall>();
             fireBall.GlobalPosition = GlobalPosition;
             if (tarEnmey == null) fireBall.Dir = CurDir;
             else
@@ -369,43 +339,58 @@ namespace RpgGame.Scripts.Characters.Players
         public PackedScene LightningScene;
 
 
-
+        #endregion
 
         #region 等级系统
-        public int CurExp;
-        public int ExpToNextLevel;
-        public event Action<int> LevelUped;
-        public void AddExp(int exp)
+        public LevelSystem LevelSystem;
+        private void InitLevelSytem()
         {
-            CurExp += exp;
+            LevelSystem = new LevelSystem();
+            LevelSystem.TakeExped += LevelSystem_TakeExped;
+            LevelSystem.LevelUped += LevelSystem_LevelUped;
+        }
+        private void LevelSystem_TakeExped(WuXingType type, int exp)
+        {
             FloatText expText = FloatTextLabel.Instantiate<FloatText>();
             expText.GlobalPosition = GlobalPosition;
             expText.Init(exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
             GetTree().CurrentScene.AddChild(expText);
-            while (CurExp >= ExpToNextLevel)
-            {
-                CurExp -= ExpToNextLevel;
-                Level++;
-                ExpToNextLevel = NeedExp(Level);
-                LevelUped?.Invoke(Level);
-                GD.Print("Level : " + Level);
-                FloatText levelText = FloatTextLabel.Instantiate<FloatText>();
-                levelText.GlobalPosition = GlobalPosition;
-                levelText.Init($"LEVEL UP!! 当前等级 : {Level}", new Color(0, 0, 1, 1), 2);
-                levelText.ZIndex = 120;
-                GetTree().CurrentScene.AddChild(levelText);
+        }
+        private void LevelSystem_LevelUped(WuXingType type, int level)
+        {
+            FloatText levelText = FloatTextLabel.Instantiate<FloatText>();
+            levelText.GlobalPosition = GlobalPosition;
+            string str = "";
+            switch(type)
+            { 
+                case WuXingType.Metal:
+                    str = "[金灵根]";
+                    AttrContainer.GetAttrValue(AttributeType.Def).BaseValue += 2;
+                    break;
+                case WuXingType.Wood:
+                    str = "[木灵根]";
+                    AttrContainer.GetAttrValue(AttributeType.HpRegen).BaseValue += 1;
+                    AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue += 1;
+                    AttrContainer.GetAttrValue(AttributeType.MoveSpeed).BaseValue += 0.01f;
+                    break;
+                case WuXingType.Water:
+                    str = "[水灵根]";
+                    AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue += 10f;
+                    break;
+                case WuXingType.Fire:
+                    str = "[火灵根]";
+                    AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue += 3f;
+                    break;
+                case WuXingType.Earth:
+                    str = "[土灵根]";
+                    AttrContainer.GetAttrValue(AttributeType.MaxHp).BaseValue += 20f;
+                    break;
             }
-        }
-        public static int NeedExp(int level)
-        {
-            return (int)(100 * Math.Pow(level, 1.5));
-        }
-        private void InitLevel()
-        {
-            //Json序列化出来
-            Level = 1;
-            ExpToNextLevel = NeedExp(Level);
-            CurExp = 0;
+            levelText.Init(str + "升至" + level + "级!!", new Color(0, 0, 1, 1), 2);
+            levelText.ZIndex = 120;
+            GetTree().CurrentScene.AddChild(levelText);
+
+
         }
         #endregion
 

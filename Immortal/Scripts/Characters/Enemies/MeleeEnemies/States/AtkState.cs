@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             enemy.CurDir = (enemy.Player.GlobalPosition - enemy.GlobalPosition).Normalized();
             if (enemy.CurDir.X < 0) enemy.Anim.FlipH = true;
             else if (enemy.CurDir.X > 0) enemy.Anim.FlipH = false;
-            speedScale = enemy.Anim.SpeedScale;
-            enemy.Anim.SpeedScale = 1 + enemy.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.AttackSpeed);
+            //speedScale = enemy.Anim.SpeedScale;
+            //enemy.Anim.SpeedScale = 1 + enemy.AttrContainer.GetAttrValue(AttributeType.AttackSpeed);
             enemy.Anim.Play("Atk");
             enemy.Anim.AnimationFinished += Anim_AnimationFinished;
             enemy.Anim.FrameChanged += Anim_FrameChanged;
@@ -54,7 +55,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             //enemy.DmgArea.Monitoring = false;
             enemy.Anim.FrameChanged -= Anim_FrameChanged;
             enemy.Anim.AnimationFinished -= Anim_AnimationFinished;
-            enemy.Anim.SpeedScale = speedScale;
+            //enemy.Anim.SpeedScale = speedScale;
         }
 
     }
