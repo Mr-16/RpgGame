@@ -22,7 +22,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         public override void Enter()
         {
             speedScale = player.Anim.SpeedScale;
-            player.Anim.SpeedScale = 1 + player.FinalAttr.AtkSpeed;
+            player.Anim.SpeedScale = 1 + player.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.AttackSpeed);
             player.Anim.Play("Atk");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
@@ -51,7 +51,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             {
                 Vector2 moveDir = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
                 player.CurDir = moveDir;
-                player.Velocity = player.FinalAttr.MoveSpeed * moveDir;
+                player.Velocity = player.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.MoveSpeed) * moveDir;
                 player.MoveAndSlide();
             }
             //攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他

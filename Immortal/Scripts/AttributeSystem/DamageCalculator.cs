@@ -30,13 +30,13 @@ namespace RpgGame.Scripts.AttributeSystem
             switch (damageType)
             {
                 case DamageType.Physical:
-                    float physMin = attacker.GetAttributeFinalValue(AttributeType.PhysicalAttackMin);
-                    float physMax = attacker.GetAttributeFinalValue(AttributeType.PhysicalAttackMax);
+                    float physMin = attacker.GetAttrFinalValue(AttributeType.PhysicalAttackMin);
+                    float physMax = attacker.GetAttrFinalValue(AttributeType.PhysicalAttackMax);
                     attributeDamage = (float)random.NextDouble() * (physMax - physMin) + physMin;
                     break;
 
                 case DamageType.Magical:
-                    attributeDamage = attacker.GetAttributeFinalValue(AttributeType.MagicAttack);
+                    attributeDamage = attacker.GetAttrFinalValue(AttributeType.MagicAttack);
                     break;
 
                 case DamageType.True:
@@ -49,14 +49,14 @@ namespace RpgGame.Scripts.AttributeSystem
             // 3. 暴击
             if (damageType == DamageType.Physical)
             {
-                float critChance = attacker.GetAttributeFinalValue(AttributeType.CritChance);
-                float critDamage = attacker.GetAttributeFinalValue(AttributeType.CritDamage);
+                float critChance = attacker.GetAttrFinalValue(AttributeType.CritChance);
+                float critDamage = attacker.GetAttrFinalValue(AttributeType.CritDamage);
                 if (random.NextDouble() < critChance)
                     damage *= (1 + critDamage);
             }
 
             // 4. 攻击者增伤百分比
-            float damagePercent = attacker.GetAttributeFinalValue(AttributeType.DamagePercent);
+            float damagePercent = attacker.GetAttrFinalValue(AttributeType.DamageRate);
             damage *= (1 + damagePercent);
 
             // 5. 防御减伤
@@ -64,11 +64,11 @@ namespace RpgGame.Scripts.AttributeSystem
             switch (damageType)
             {
                 case DamageType.Physical:
-                    float armor = defender.GetAttributeFinalValue(AttributeType.Armor);
+                    float armor = defender.GetAttrFinalValue(AttributeType.Armor);
                     reductionMultiplier = 100f / (100f + armor);
                     break;
                 case DamageType.Magical:
-                    float magicResist = defender.GetAttributeFinalValue(AttributeType.MagicResistance);
+                    float magicResist = defender.GetAttrFinalValue(AttributeType.MagicResistance);
                     reductionMultiplier = 100f / (100f + magicResist);
                     break;
                 case DamageType.True:
@@ -76,8 +76,12 @@ namespace RpgGame.Scripts.AttributeSystem
                     break;
             }
 
-            float damageReductionPercent = defender.GetAttributeFinalValue(AttributeType.DamageReductionPercent);
+            float damageReductionPercent = defender.GetAttrFinalValue(AttributeType.DamageReductionRate);
             damage *= reductionMultiplier * (1 - damageReductionPercent);
+
+            // 闪避
+            if (defender.GetAttrFinalValue(AttributeType.DodgeChance) > random.NextDouble())
+                damage = 0;
 
             // 6. 最低伤害保护
             return MathF.Max(damage, 0f);

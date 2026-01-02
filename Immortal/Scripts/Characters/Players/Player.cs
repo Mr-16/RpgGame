@@ -1,4 +1,5 @@
 using Godot;
+using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
@@ -54,7 +55,7 @@ namespace RpgGame.Scripts.Characters.Players
         {
             GameManager.Instance().Player = this;
             Sm = new StateMachine(this);
-            InitAttribute();//属性
+            InitAttr();//属性
             InitSkillData();//技能
             InitLevel();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
@@ -91,17 +92,17 @@ namespace RpgGame.Scripts.Characters.Players
 
             if (Input.IsActionJustPressed("Inventory"))
             {
-                //if (InventoryView.Visible == false)
-                //{
-                //    GD.Print("pause");
-                //    InventoryView.Visible = true;
-                //}
-                //else
-                //{
-                //    //恢复游戏
-                //    GD.Print("restart");
-                //    InventoryView.Visible = false;
-                //}
+                if (InventoryView.Visible == false)
+                {
+                    GD.Print("pause");
+                    InventoryView.Visible = true;
+                }
+                else
+                {
+                    //恢复游戏
+                    GD.Print("restart");
+                    InventoryView.Visible = false;
+                }
             }
         }
         public override void _PhysicsProcess(double delta)
@@ -114,67 +115,38 @@ namespace RpgGame.Scripts.Characters.Players
             UpdateUi((float)delta);
         }
 
-        //public override void _Input(InputEvent e)
-        //{
-            
-        //}
-
-        private void InitAttribute()
+        protected override void InitAttr()
         {
-            //初始化玩家的属性
-            //基础属性直接赋值(后面有存档了改成在json里读)
-            //最终属性根据装备等加成计算
-            BaseAttr.MaxHealth = 100;
-            BaseAttr.HealthRegen = 3;
-            BaseAttr.MaxMana = 1000;
-            BaseAttr.ManaRegen = 3;
-            BaseAttr.MaxStam = 200;
-            BaseAttr.StamRegen = 300;//每秒恢复量
-            BaseAttr.MoveSpeed = 300;
-            BaseAttr.RollSpeed = 1000;
-            //攻击属性
-            BaseAttr.AtkSpeed = 0.5f;
-            BaseAttr.PhyAtk = 50;
-            BaseAttr.PhyPen = 0.2f;
-            BaseAttr.PhyPenFlat = 500;
-            BaseAttr.MagAtk = 10;
-            BaseAttr.MagPen = 0.1f;
-            BaseAttr.MagPenFlat = 10;
-            BaseAttr.CritRate = 0.1f;
-            BaseAttr.CritMult = 2;
-            //防御属性
-            BaseAttr.PhyDef = 200;
-            BaseAttr.MagDef = 200;
-            //特殊属性
-            BaseAttr.LifeSteal = 0;
+            AttrContainer.SetAttrBaseValue(AttributeType.Strength, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.Dexterity, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.Intelligence, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.Vitality, 10);
 
-            //FinalAttr.MaxHealth = BaseAttr.MaxHealth + Weapon.BonusAttr.MaxHealth + Helmet.BonusAttr.MaxHealth + Armor.BonusAttr.MaxHealth + Boot.BonusAttr.MaxHealth;
-            //FinalAttr.HealthRegen = BaseAttr.HealthRegen + Weapon.BonusAttr.HealthRegen + Helmet.BonusAttr.HealthRegen + Armor.BonusAttr.HealthRegen + Boot.BonusAttr.HealthRegen;
-            //FinalAttr.MaxMana = BaseAttr.MaxMana + Weapon.BonusAttr.MaxMana + Helmet.BonusAttr.MaxMana + Armor.BonusAttr.MaxMana + Boot.BonusAttr.MaxMana;
-            //FinalAttr.ManaRegen = BaseAttr.ManaRegen + Weapon.BonusAttr.ManaRegen + Helmet.BonusAttr.ManaRegen + Armor.BonusAttr.ManaRegen + Boot.BonusAttr.ManaRegen;
-            //FinalAttr.MaxStam = BaseAttr.MaxStam + Weapon.BonusAttr.MaxStam + Helmet.BonusAttr.MaxStam + Armor.BonusAttr.MaxStam + Boot.BonusAttr.MaxStam;
-            //FinalAttr.StamRegen = BaseAttr.StamRegen + Weapon.BonusAttr.StamRegen + Helmet.BonusAttr.StamRegen + Armor.BonusAttr.StamRegen + Boot.BonusAttr.StamRegen;
-            //FinalAttr.MoveSpeed = BaseAttr.MoveSpeed + Weapon.BonusAttr.MoveSpeed + Helmet.BonusAttr.MoveSpeed + Armor.BonusAttr.MoveSpeed + Boot.BonusAttr.MoveSpeed;
-            //FinalAttr.RollSpeed = BaseAttr.RollSpeed + Weapon.BonusAttr.RollSpeed + Helmet.BonusAttr.RollSpeed + Armor.BonusAttr.RollSpeed + Boot.BonusAttr.RollSpeed;
-            ////攻击属性
-            //FinalAttr.AtkSpeed = BaseAttr.AtkSpeed + Weapon.BonusAttr.AtkSpeed + Helmet.BonusAttr.AtkSpeed + Armor.BonusAttr.AtkSpeed + Boot.BonusAttr.AtkSpeed;
-            //FinalAttr.PhyAtk = BaseAttr.PhyAtk + Weapon.BonusAttr.PhyAtk + Helmet.BonusAttr.PhyAtk + Armor.BonusAttr.PhyAtk + Boot.BonusAttr.PhyAtk;
-            //FinalAttr.PhyPen = BaseAttr.PhyPen + Weapon.BonusAttr.PhyPen + Helmet.BonusAttr.PhyPen + Armor.BonusAttr.PhyPen + Boot.BonusAttr.PhyPen;
-            //FinalAttr.PhyPenFlat = BaseAttr.PhyPenFlat + Weapon.BonusAttr.PhyPenFlat + Helmet.BonusAttr.PhyPenFlat + Armor.BonusAttr.PhyPenFlat + Boot.BonusAttr.PhyPenFlat;
-            //FinalAttr.MagAtk = BaseAttr.MagAtk + Weapon.BonusAttr.MagAtk + Helmet.BonusAttr.MagAtk + Armor.BonusAttr.MagAtk + Boot.BonusAttr.MagAtk;
-            //FinalAttr.MagPen = BaseAttr.MagPen + Weapon.BonusAttr.MagPen + Helmet.BonusAttr.MagPen + Armor.BonusAttr.MagPen + Boot.BonusAttr.MagPen;
-            //FinalAttr.MagPenFlat = BaseAttr.MagPenFlat + Weapon.BonusAttr.MagPenFlat + Helmet.BonusAttr.MagPenFlat + Armor.BonusAttr.MagPenFlat + Boot.BonusAttr.MagPenFlat;
-            //FinalAttr.CritRate = BaseAttr.CritRate + Weapon.BonusAttr.CritRate + Helmet.BonusAttr.CritRate + Armor.BonusAttr.CritRate + Boot.BonusAttr.CritRate;
-            //FinalAttr.CritMult = BaseAttr.CritMult + Weapon.BonusAttr.CritMult + Helmet.BonusAttr.CritMult + Armor.BonusAttr.CritMult + Boot.BonusAttr.CritMult;
-            ////防御属性
-            //FinalAttr.PhyDef = BaseAttr.PhyDef + Weapon.BonusAttr.PhyDef + Helmet.BonusAttr.PhyDef + Armor.BonusAttr.PhyDef + Boot.BonusAttr.PhyDef;
-            //FinalAttr.MagDef = BaseAttr.MagDef + Weapon.BonusAttr.MagDef + Helmet.BonusAttr.MagDef + Armor.BonusAttr.MagDef + Boot.BonusAttr.MagDef;
-            ////特殊属性
-            //FinalAttr.LifeSteal = BaseAttr.LifeSteal + Weapon.BonusAttr.LifeSteal + Helmet.BonusAttr.LifeSteal + Armor.BonusAttr.LifeSteal + Boot.BonusAttr.LifeSteal;
+            AttrContainer.SetAttrBaseValue(AttributeType.MaxHp, 200);
+            AttrContainer.SetAttrBaseValue(AttributeType.HpRegen, 1);
+            AttrContainer.SetAttrBaseValue(AttributeType.MaxMp, 100);
+            AttrContainer.SetAttrBaseValue(AttributeType.MpRegen, 1);
+            AttrContainer.SetAttrBaseValue(AttributeType.MaxStam, 100);
+            AttrContainer.SetAttrBaseValue(AttributeType.StamRegen, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.DodgeChance, 0.1f);
+            AttrContainer.SetAttrBaseValue(AttributeType.PhysicalAttackMin, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.PhysicalAttackMax, 15);
+            AttrContainer.SetAttrBaseValue(AttributeType.Armor, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.MagicAttack, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.MagicResistance, 10);
+            AttrContainer.SetAttrBaseValue(AttributeType.CritChance, 0.1f);
+            AttrContainer.SetAttrBaseValue(AttributeType.CritDamage, 1.5f);
+            AttrContainer.SetAttrBaseValue(AttributeType.AttackSpeed, 1.0f);
+            AttrContainer.SetAttrBaseValue(AttributeType.MoveSpeed, 500);
 
-            CurHealth = FinalAttr.MaxHealth;
-            CurMana = FinalAttr.MaxMana;
-            CurStam = FinalAttr.MaxStam;
+            AttrContainer.SetAttrBaseValue(AttributeType.DamageRate, 1);
+            AttrContainer.SetAttrBaseValue(AttributeType.DamageReductionRate, 0);
+
+            AttrContainer.RecalculateAllAttributes();
+
+            CurHealth = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
+            CurMana = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
+            CurStam = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
         }
 
         public void Walk(Vector2 moveDir)
@@ -183,7 +155,7 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if (CurDir.X > 0) Anim.FlipH = false;
-            Velocity = FinalAttr.MoveSpeed * moveDir;
+            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * moveDir;
             MoveAndSlide();
         }
         public void Run(Vector2 moveDir)
@@ -192,46 +164,46 @@ namespace RpgGame.Scripts.Characters.Players
             CurDir = moveDir;
             if (CurDir.X < 0) Anim.FlipH = true;
             else if(CurDir.X > 0) Anim.FlipH = false;
-            Velocity = 2 * FinalAttr.MoveSpeed * moveDir;
+            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * 2 * moveDir;
             MoveAndSlide();
         }
         public void Roll()
         {
-            Velocity = FinalAttr.RollSpeed * CurDir;
+            Velocity = AttrContainer.GetAttrFinalValue(AttributeType.MoveSpeed) * 4 * CurDir;
             MoveAndSlide();
         }
 
         public void RegenHealth(float delta)
         {
-            if (CurHealth < FinalAttr.MaxHealth)
+            if (CurHealth < AttrContainer.GetAttrFinalValue(AttributeType.MaxHp))
             {
-                CurHealth += FinalAttr.HealthRegen * delta;
+                CurHealth += AttrContainer.GetAttrFinalValue(AttributeType.HpRegen) * delta;
             }
             else
             {
-                CurHealth = FinalAttr.MaxHealth;
+                CurHealth = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
             }
         }
         public void RegenMana(float delta)
         {
-            if (CurMana < FinalAttr.MaxMana)
+            if (CurMana < AttrContainer.GetAttrFinalValue(AttributeType.MaxMp))
             {
-                CurMana += FinalAttr.ManaRegen * delta;
+                CurMana += AttrContainer.GetAttrFinalValue(AttributeType.MpRegen) * delta;
             }
             else
             {
-                CurMana = FinalAttr.MaxMana;
+                CurMana = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
             }
         }
         public void RegenStam(float delta)
         {
-            if (CurStam < FinalAttr.MaxStam)
+            if (CurStam < AttrContainer.GetAttrFinalValue(AttributeType.MaxStam))
             {
-                CurStam += FinalAttr.StamRegen * delta;
+                CurStam += AttrContainer.GetAttrFinalValue(AttributeType.StamRegen) * delta;
             }
             else
             {
-                CurStam = FinalAttr.MaxStam;
+                CurStam = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
             }
         }
         public void Atk()
@@ -248,7 +220,8 @@ namespace RpgGame.Scripts.Characters.Players
                 if (dirToEnemy.AngleTo(CurDir) > AtkAngle / 2)
                     continue;
 
-                enemy.TakeDmg(CalcPhyDamage(enemy.FinalAttr));
+                //enemy.TakeDmg(CalcPhyDamage(enemy.FinalAttr));
+                enemy.TakeDmg(DamageCalculator.CalculateDamage(AttrContainer, enemy.AttrContainer, 10, 20, DamageType.Physical));
             }
         }
         private float uiUpdateTimer = 0;
@@ -258,11 +231,11 @@ namespace RpgGame.Scripts.Characters.Players
             if (uiUpdateTimer < 0.1f) return;
             uiUpdateTimer = 0;
             //TODO : 更新ui
-            StamPb.MaxValue = FinalAttr.MaxStam;
+            StamPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxStam);
             StamPb.Value = CurStam;
-            HealthPb.MaxValue = FinalAttr.MaxHealth;
+            HealthPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxHp);
             HealthPb.Value = CurHealth;
-            ManaPb.MaxValue = FinalAttr.MaxMana;
+            ManaPb.MaxValue = AttrContainer.GetAttrFinalValue(AttributeType.MaxMp);
             ManaPb.Value = CurMana;
 
             //经验
@@ -270,14 +243,6 @@ namespace RpgGame.Scripts.Characters.Players
             ExpPb.Value = CurExp;
             ExpPb.MaxValue = ExpToNextLevel;
             LevelLb.Text = $"等级 : {Level}";
-
-            //for(int i = 0; i < InventoryCapacity; i++)
-            //{
-            //    ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
-            //    slot.IconTr.Texture = null;
-            //    slot.CountLb.Text = "";
-            //    //ItemView.InventoryGc.AddChild(slot);
-            //}
         }
 
         public Enemy GetClosestEnemy(float rangeSq)
@@ -442,85 +407,6 @@ namespace RpgGame.Scripts.Characters.Players
             ExpToNextLevel = NeedExp(Level);
             CurExp = 0;
         }
-        #endregion
-
-
-        #region 库存系统
-        //ItemInstance item1;
-        //ItemInstance item2;
-        //ItemInstance item3;
-        //[Export] public PackedScene ItemSlot;
-
-        //public List<ItemInstance> ItemInstanceList = new List<ItemInstance>();
-        //public Dictionary<ItemInstance, ItemSlot> InstanceSlotMap = new Dictionary<ItemInstance, ItemSlot>();
-        //public int InventoryCapacity = 30;
-
-        //public bool AddItem(ItemData data, int quantity = 1)
-        //{
-        //    if (data.MaxStack > 1)
-        //    {
-        //        // 尝试堆叠
-        //        ItemInstance existedItemInstance = ItemInstanceList.Find(i => i.ItemData.Id == data.Id && i.Count < data.MaxStack);
-        //        if(existedItemInstance != null)
-        //        {
-        //            int space = data.MaxStack - existedItemInstance.Count;
-        //            int toAdd = Mathf.Min(space, quantity);
-        //            existedItemInstance.Count += toAdd;
-        //            quantity -= toAdd;
-        //            InstanceSlotMap[existedItemInstance].CountLb.Text = existedItemInstance.Count.ToString();
-        //        }
-               
-        //    }
-        //    while (quantity > 0)
-        //    {
-        //        if (ItemInstanceList.Count >= InventoryCapacity)
-        //            return false; // 背包已满
-        //        int toAdd = Mathf.Min(data.MaxStack, quantity);
-        //        ItemInstance newItemInstance = new ItemInstance(data, toAdd);
-        //        ItemInstanceList.Add(newItemInstance);
-        //        quantity -= toAdd;
-        //        //ui放入槽中
-        //        ItemSlot slot = ItemSlot.Instantiate<ItemSlot>();
-        //        slot.IconTr.Texture = GD.Load<Texture2D>(data.IconPath);
-        //        slot.CountLb.Text = newItemInstance.Count.ToString();
-        //        //ItemView.InventoryGc.AddChild(slot);
-        //        InstanceSlotMap[newItemInstance] = slot;
-        //    }
-        //    return true;
-        //}
-
-        // 移除物品
-        //public bool RemoveItem(int itemId, int quantity = 1)
-        //{
-        //    ItemInstance instance = ItemInstanceList.Find(i => i.ItemData.Id == itemId);
-        //    if (instance == null)
-        //        return false;
-
-        //    if (instance.Count > quantity)
-        //    {
-        //        instance.Count -= quantity;
-        //        InstanceSlotMap[instance].CountLb.Text = instance.Count.ToString();
-        //    }
-        //    else
-        //    {
-        //        ItemInstanceList.Remove(instance);
-        //        //ui放入槽中
-        //        //ItemView.InventoryGc.RemoveChild(InstanceSlotMap[instance]);
-        //    }
-
-        //    return true;
-        //}
-        
-
-        //private void InitInventory()
-        //{
-        //    AddItem(ItemDataBase.Instance().IdItemMap[0], 1);
-        //    AddItem(ItemDataBase.Instance().IdItemMap[0], 11);
-        //    AddItem(ItemDataBase.Instance().IdItemMap[1], 1);
-        //    AddItem(ItemDataBase.Instance().IdItemMap[1], 11);
-        //    AddItem(ItemDataBase.Instance().IdItemMap[2], 1);
-        //    AddItem(ItemDataBase.Instance().IdItemMap[2], 11);
-        //}
         #endregion
 
 

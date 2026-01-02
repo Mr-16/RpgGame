@@ -21,7 +21,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             if (enemy.CurDir.X < 0) enemy.Anim.FlipH = true;
             else if (enemy.CurDir.X > 0) enemy.Anim.FlipH = false;
             speedScale = enemy.Anim.SpeedScale;
-            enemy.Anim.SpeedScale = 1 + enemy.FinalAttr.AtkSpeed;
+            enemy.Anim.SpeedScale = 1 + enemy.AttrContainer.GetAttrFinalValue(AttributeSystem.AttributeType.AttackSpeed);
             enemy.Anim.Play("Atk");
             enemy.Anim.AnimationFinished += Anim_AnimationFinished;
             enemy.Anim.FrameChanged += Anim_FrameChanged;

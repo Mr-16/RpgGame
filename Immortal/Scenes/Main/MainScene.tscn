@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://dtkh8030dvaay"]
+[gd_scene load_steps=8 format=4 uid="uid://dtkh8030dvaay"]
 
 [ext_resource type="Texture2D" uid="uid://d120xglayjjgp" path="res://icon.svg" id="1_wgfuq"]
 [ext_resource type="Texture2D" uid="uid://bn5geogr5qlhn" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Terrain/Tilemap_color1.png" id="2_8vlop"]
 [ext_resource type="PackedScene" uid="uid://do7ba1r70tslw" path="res://Scenes/Charaters/Players/Player.tscn" id="3_36m08"]
+[ext_resource type="PackedScene" uid="uid://7p5ygkkuunr2" path="res://Scenes/Charaters/Enemies/MeleeEnemies/MeleeEnemy.tscn" id="4_8vlop"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mg2r4"]
 texture = ExtResource("1_wgfuq")
@@ -779,3 +780,243 @@ tile_set = SubResource("TileSet_5y2uu")
 
 [node name="Player" parent="." instance=ExtResource("3_36m08")]
 position = Vector2(57, 56)
+
+[node name="MeleeEnemy" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(80, -264)
+
+[node name="MeleeEnemy2" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-152, -264)
+
+[node name="MeleeEnemy3" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-360, -256)
+
+[node name="MeleeEnemy4" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-568, 16)
+
+[node name="MeleeEnemy5" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-504, -168)
+
+[node name="MeleeEnemy6" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1000, -408)
+
+[node name="MeleeEnemy7" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(768, -408)
+
+[node name="MeleeEnemy8" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(560, -400)
+
+[node name="MeleeEnemy9" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(352, -128)
+
+[node name="MeleeEnemy10" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(416, -312)
+
+[node name="MeleeEnemy11" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-24, 368)
+
+[node name="MeleeEnemy12" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-256, 368)
+
+[node name="MeleeEnemy13" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-464, 376)
+
+[node name="MeleeEnemy14" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-672, 648)
+
+[node name="MeleeEnemy15" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-608, 464)
+
+[node name="MeleeEnemy16" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1160, 320)
+
+[node name="MeleeEnemy17" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(928, 320)
+
+[node name="MeleeEnemy18" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(720, 328)
+
+[node name="MeleeEnemy19" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(512, 600)
+
+[node name="MeleeEnemy20" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(576, 416)
+
+[node name="MeleeEnemy21" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-24, -488)
+
+[node name="MeleeEnemy22" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-256, -488)
+
+[node name="MeleeEnemy23" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-464, -480)
+
+[node name="MeleeEnemy24" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-672, -208)
+
+[node name="MeleeEnemy25" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-608, -392)
+
+[node name="MeleeEnemy26" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(896, -632)
+
+[node name="MeleeEnemy27" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(664, -632)
+
+[node name="MeleeEnemy28" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(456, -624)
+
+[node name="MeleeEnemy29" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(248, -352)
+
+[node name="MeleeEnemy30" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(312, -536)
+
+[node name="MeleeEnemy31" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-128, 144)
+
+[node name="MeleeEnemy32" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-360, 144)
+
+[node name="MeleeEnemy33" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-568, 152)
+
+[node name="MeleeEnemy34" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-776, 424)
+
+[node name="MeleeEnemy35" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-712, 240)
+
+[node name="MeleeEnemy36" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1056, 96)
+
+[node name="MeleeEnemy37" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(824, 96)
+
+[node name="MeleeEnemy38" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(616, 104)
+
+[node name="MeleeEnemy39" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(408, 376)
+
+[node name="MeleeEnemy40" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(472, 192)
+
+[node name="MeleeEnemy41" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(208, -168)
+
+[node name="MeleeEnemy42" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-24, -168)
+
+[node name="MeleeEnemy43" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-232, -160)
+
+[node name="MeleeEnemy44" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-440, 112)
+
+[node name="MeleeEnemy45" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-376, -72)
+
+[node name="MeleeEnemy46" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1128, -312)
+
+[node name="MeleeEnemy47" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(896, -312)
+
+[node name="MeleeEnemy48" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(688, -304)
+
+[node name="MeleeEnemy49" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(480, -32)
+
+[node name="MeleeEnemy50" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(544, -216)
+
+[node name="MeleeEnemy51" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(104, 464)
+
+[node name="MeleeEnemy52" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-128, 464)
+
+[node name="MeleeEnemy53" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-336, 472)
+
+[node name="MeleeEnemy54" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-544, 744)
+
+[node name="MeleeEnemy55" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-480, 560)
+
+[node name="MeleeEnemy56" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1288, 416)
+
+[node name="MeleeEnemy57" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1056, 416)
+
+[node name="MeleeEnemy58" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(848, 424)
+
+[node name="MeleeEnemy59" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(640, 696)
+
+[node name="MeleeEnemy60" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(704, 512)
+
+[node name="MeleeEnemy61" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(104, -392)
+
+[node name="MeleeEnemy62" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-128, -392)
+
+[node name="MeleeEnemy63" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-336, -384)
+
+[node name="MeleeEnemy64" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-544, -112)
+
+[node name="MeleeEnemy65" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-480, -296)
+
+[node name="MeleeEnemy66" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1024, -536)
+
+[node name="MeleeEnemy67" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(792, -536)
+
+[node name="MeleeEnemy68" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(584, -528)
+
+[node name="MeleeEnemy69" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(376, -256)
+
+[node name="MeleeEnemy70" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(440, -440)
+
+[node name="MeleeEnemy71" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(0, 240)
+
+[node name="MeleeEnemy72" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-232, 240)
+
+[node name="MeleeEnemy73" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-440, 248)
+
+[node name="MeleeEnemy74" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-648, 520)
+
+[node name="MeleeEnemy75" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(-584, 336)
+
+[node name="MeleeEnemy76" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(1184, 192)
+
+[node name="MeleeEnemy77" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(952, 192)
+
+[node name="MeleeEnemy78" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(744, 200)
+
+[node name="MeleeEnemy79" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(536, 472)
+
+[node name="MeleeEnemy80" parent="." instance=ExtResource("4_8vlop")]
+position = Vector2(600, 288)

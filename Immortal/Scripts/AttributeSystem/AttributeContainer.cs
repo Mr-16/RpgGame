@@ -35,6 +35,8 @@ namespace RpgGame.Scripts.AttributeSystem
 
             ConversionList.Add(new AttributeConversion() { From = AttributeType.Vitality, To = AttributeType.Armor, Ratio = 0.5f });
             ConversionList.Add(new AttributeConversion() { From = AttributeType.Vitality, To = AttributeType.HpRegen, Ratio = 1f });
+            ConversionList.Add(new AttributeConversion() { From = AttributeType.Vitality, To = AttributeType.MaxStam, Ratio = 1f });
+            ConversionList.Add(new AttributeConversion() { From = AttributeType.Vitality, To = AttributeType.StamRegen, Ratio = 1f });
 
         }
 
@@ -82,24 +84,31 @@ namespace RpgGame.Scripts.AttributeSystem
             AttributeValueMap[AttributeType.Vitality].Recalculate();
 
             // 4. 主属性 -> 二级属性转换
-            foreach (var conv in ConversionList)
+            foreach (AttributeConversion conv in ConversionList)
             {
-                if (AttributeValueMap.TryGetValue(conv.From, out var fromAttr) && AttributeValueMap.TryGetValue(conv.To, out var toAttr))
+                if (AttributeValueMap.TryGetValue(conv.From, out AttributeValue fromAttr) && AttributeValueMap.TryGetValue(conv.To, out AttributeValue toAttr))
                 {
                     toAttr.FlatBonus += fromAttr.FinalValue * conv.Ratio;
                 }
             }
 
-            // 5. 最后计算所有属性最终值
-            foreach (var attr in AttributeValueMap.Values)
-                attr.Recalculate();
+            // 5. 最后计算主属性之外的所有属性最终值
+            foreach (var pair in AttributeValueMap)
+            {
+                if (pair.Key == AttributeType.Strength || pair.Key == AttributeType.Dexterity || pair.Key == AttributeType.Intelligence || pair.Key == AttributeType.Vitality) continue;
+                pair.Value.Recalculate();
+            }
         }
 
 
         public void AddModifier(Modifier modifier) => ModifierList.Add(modifier);
         public void RemoveModifiersBySource(ModifierSource source) => ModifierList.RemoveAll(m => m.ModifierSource == source);
         public void RemoveModifierBySourceRef(object sourceRef) => ModifierList.RemoveAll(m => m.SourceRef == sourceRef);
-        public float GetAttributeFinalValue(AttributeType type) => AttributeValueMap.TryGetValue(type, out var attr) ? attr.FinalValue : 0f;
+        public void SetAttrBaseValue(AttributeType attrType, float baseValue)
+        {
+            AttributeValueMap[attrType].BaseValue = baseValue;
+        }
+        public float GetAttrFinalValue(AttributeType type) => AttributeValueMap.TryGetValue(type, out AttributeValue attr) ? attr.FinalValue : 0f;
     }
 
 
