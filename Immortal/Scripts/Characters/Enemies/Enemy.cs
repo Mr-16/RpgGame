@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace RpgGame.Scripts.Characters.Enemies
         [Export]
         public PackedScene ExpBall;
 
+        private Random rd = new Random();
 
         public override void _Ready()
         {
@@ -24,7 +26,6 @@ namespace RpgGame.Scripts.Characters.Enemies
             GameManager.Instance().EnemyList.Add(this);
             //DmgParticles.Visible = false;
             //DmgParticles.Emitting = false;
-            Random rd = new Random();
             //Level = rd.Next(1, 30);
         }
 
@@ -75,6 +76,10 @@ namespace RpgGame.Scripts.Characters.Enemies
                 if(pair.Value == 0) continue;
                 int exp = LevelToExp(pair.Value);
                 ExpBall expBall = ExpBall.Instantiate<ExpBall>();
+                float force = (float)rd.NextDouble() * (2000 - 1000) + 1000;
+                float angle = (float)rd.NextDouble() * MathF.PI * 2f;
+                Vector2 forceDir = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+                expBall.ApplyImpulse(force * forceDir);
                 expBall.Init(pair.Key, exp, GlobalPosition);
                 GetTree().CurrentScene.AddChild(expBall);
             }

@@ -3,7 +3,7 @@ using RpgGame.Scripts.Characters.Players;
 using RpgGame.Scripts.GameSystem;
 using System;
 
-public partial class ExpBall : Node2D
+public partial class ExpBall : RigidBody2D
 {
 	private int exp;
     private WuXingType type;
@@ -39,10 +39,10 @@ public partial class ExpBall : Node2D
                 ColorRect.Color = new Color(0.0f, 0.5f, 1.0f);// 蓝色
                 break;
             case WuXingType.Fire:
-                ColorRect.Color = new Color(1.0f, 0.0f, 0.0f);// 红色
+                ColorRect.Color = new Color(1.0f, 0.75f, 0.2f);// 橙色
                 break;
             case WuXingType.Earth:
-                ColorRect.Color = new Color(0.0f, 0.0f, 0.0f);// 黑色
+                ColorRect.Color = new Color(1f, 0.0f, 0.0f);// 红色
                 break;
         }
     }

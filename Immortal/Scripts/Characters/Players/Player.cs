@@ -4,10 +4,11 @@ using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.LevelSystems;
 using System;
 using System.Collections.Generic;
-
-using RpgGame.Scripts.LevelSystems;
+using System.Reflection.Emit;
+using System.Xml.Linq;
 
 
 namespace RpgGame.Scripts.Characters.Players
@@ -16,36 +17,21 @@ namespace RpgGame.Scripts.Characters.Players
     {
         public StateMachine Sm;
 
-        
-        [Export] 
-        public ProgressBar StamPb;
-
         [Export]
         public AnimatedSprite2D Anim;
-
 
         [Export] float AtkRange = 50;
         public float AtkRangeSq;
         [Export] float AtkAngle = 160;
 
-
         [Export]
         public bool isMoveAtkEnable = true;
 
-        [Export]
-        public ProgressBar HealthPb;
-        [Export]
-        public ProgressBar ManaPb;
-        [Export]
-        public ProgressBar ExpPb;
-        [Export]
-        public Label ExpLb;
-        [Export]
-        public Label LevelLb;
-
+        [Export] public PlayerView PlayerView;
+        [Export] public InventoryView InventoryView;
 
         public ItemManager ItemManager;
-        [Export] InventoryView InventoryView;//背包系统的大UI面板
+
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -87,19 +73,11 @@ namespace RpgGame.Scripts.Characters.Players
 
             if (Input.IsActionJustPressed("Inventory"))
             {
-                if (InventoryView.Visible == false)
-                {
-                    GD.Print("pause");
-                    InventoryView.Visible = true;
-                }
-                else
-                {
-                    //恢复游戏
-                    GD.Print("restart");
-                    InventoryView.Visible = false;
-                }
+                InventoryView.Visible = !InventoryView.Visible;
             }
+            
         }
+
         public override void _PhysicsProcess(double delta)
         {
             Sm.CurState.FixedUpdate((float)delta);
@@ -115,7 +93,7 @@ namespace RpgGame.Scripts.Characters.Players
             AttrContainer.GetAttrValue(AttributeType.Def).BaseValue = 5;
 
             AttrContainer.GetAttrValue(AttributeType.HpRegen).BaseValue = 10;
-            AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue = 10;
+            AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue = 20;
             AttrContainer.GetAttrValue(AttributeType.MoveSpeed).BaseValue = 300;
 
             AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue = 50;
@@ -127,7 +105,7 @@ namespace RpgGame.Scripts.Characters.Players
             AttrContainer.RecalculateAllAttributes();
 
             CurHealth = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
-            CurEnergy = AttrContainer.GetAttrValue(AttributeType.EnergyRegen).FinalValue;
+            CurEnergy = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue;
         }
 
         public void Walk(Vector2 moveDir)
@@ -202,10 +180,14 @@ namespace RpgGame.Scripts.Characters.Players
             if (uiUpdateTimer < 0.1f) return;
             uiUpdateTimer = 0;
             //TODO : 更新ui
-            HealthPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
-            HealthPb.Value = CurHealth;
-            ManaPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue;
-            ManaPb.Value = CurEnergy;
+            PlayerView.HpPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
+            PlayerView.HpPb.Value = CurHealth;
+            PlayerView.EnergyPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue; ;
+            PlayerView.EnergyPb.Value = CurEnergy;
+            //HealthPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxHp).FinalValue;
+            //HealthPb.Value = CurHealth;
+            //ManaPb.MaxValue = AttrContainer.GetAttrValue(AttributeType.MaxEnergy).FinalValue;
+            //ManaPb.Value = CurEnergy;
 
             //经验
             //ExpLb.Text = $"{CurExp} / {ExpToNextLevel}";
@@ -348,49 +330,130 @@ namespace RpgGame.Scripts.Characters.Players
             LevelSystem = new LevelSystem();
             LevelSystem.TakeExped += LevelSystem_TakeExped;
             LevelSystem.LevelUped += LevelSystem_LevelUped;
+            LevelSystem.CurExpChanged += LevelSystem_CurExpChanged;
+            LevelSystem.NeedExpChanged += LevelSystem_NeedExpChanged;
+            LevelSystem.LevelChanged += LevelSystem_LevelChanged; ;
+            LevelSystem.Init();
         }
         private void LevelSystem_TakeExped(WuXingType type, int exp)
         {
             FloatText expText = FloatTextLabel.Instantiate<FloatText>();
             expText.GlobalPosition = GlobalPosition;
-            expText.Init(exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
+            switch (type)
+            {
+                case WuXingType.Metal:
+                    expText.Init("[金]修为+" + exp.ToString(), new Color(1, 1, 0, 1), 0.5f);
+                    break;
+                case WuXingType.Wood:
+                    expText.Init("[木]修为+" + exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
+                    break;
+                case WuXingType.Water:
+                    expText.Init("[水]修为+" + exp.ToString(), new Color(0, 0, 1, 1), 0.5f);
+                    break;
+                case WuXingType.Fire:
+                    expText.Init("[火]修为+" + exp.ToString(), new Color(1.0f, 0.75f, 0.2f), 0.5f);
+                    break;
+                case WuXingType.Earth:
+                    expText.Init("[土]修为+" + exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
+                    break;
+            }
             GetTree().CurrentScene.AddChild(expText);
         }
         private void LevelSystem_LevelUped(WuXingType type, int level)
         {
             FloatText levelText = FloatTextLabel.Instantiate<FloatText>();
             levelText.GlobalPosition = GlobalPosition;
-            string str = "";
-            switch(type)
-            { 
+            switch (type)
+            {
                 case WuXingType.Metal:
-                    str = "[金灵根]";
+                    levelText.Init("[金灵根" + "升至" + level + "级!!", new Color(1, 1, 0, 1), 2);
                     AttrContainer.GetAttrValue(AttributeType.Def).BaseValue += 2;
                     break;
                 case WuXingType.Wood:
-                    str = "[木灵根]";
+                    levelText.Init("[木灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 1), 2);
                     AttrContainer.GetAttrValue(AttributeType.HpRegen).BaseValue += 1;
                     AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue += 1;
                     AttrContainer.GetAttrValue(AttributeType.MoveSpeed).BaseValue += 0.01f;
                     break;
                 case WuXingType.Water:
-                    str = "[水灵根]";
+                    levelText.Init("[水灵根" + "升至" + level + "级!!", new Color(0, 0, 1, 1), 2);
                     AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue += 10f;
                     break;
                 case WuXingType.Fire:
-                    str = "[火灵根]";
+                    levelText.Init("[火灵根" + "升至" + level + "级!!", new Color(1.0f, 0.75f, 0.2f), 2);
                     AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue += 3f;
                     break;
                 case WuXingType.Earth:
-                    str = "[土灵根]";
+                    levelText.Init("[土灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 1), 2);
                     AttrContainer.GetAttrValue(AttributeType.MaxHp).BaseValue += 20f;
                     break;
             }
-            levelText.Init(str + "升至" + level + "级!!", new Color(0, 0, 1, 1), 2);
+            
             levelText.ZIndex = 120;
             GetTree().CurrentScene.AddChild(levelText);
-
-
+        }
+        private void LevelSystem_CurExpChanged(WuXingType type, int curExp)
+        {
+            switch (type)
+            {
+                case WuXingType.Metal:
+                    PlayerView.MetalLevelPb.Value = curExp;
+                    break;
+                case WuXingType.Wood:
+                    PlayerView.WoodLevelPb.Value = curExp;
+                    break;
+                case WuXingType.Water:
+                    PlayerView.WaterLevelPb.Value = curExp;
+                    break;
+                case WuXingType.Fire:
+                    PlayerView.FireLevelPb.Value = curExp;
+                    break;
+                case WuXingType.Earth:
+                    PlayerView.EarthLevelPb.Value = curExp;
+                    break;
+            }
+        }
+        private void LevelSystem_NeedExpChanged(WuXingType type, int needExp)
+        {
+            switch (type)
+            {
+                case WuXingType.Metal:
+                    PlayerView.MetalLevelPb.MaxValue = needExp;
+                    break;
+                case WuXingType.Wood:
+                    PlayerView.WoodLevelPb.MaxValue = needExp;
+                    break;
+                case WuXingType.Water:
+                    PlayerView.WaterLevelPb.MaxValue = needExp;
+                    break;
+                case WuXingType.Fire:
+                    PlayerView.FireLevelPb.MaxValue = needExp;
+                    break;
+                case WuXingType.Earth:
+                    PlayerView.EarthLevelPb.MaxValue = needExp;
+                    break;
+            }
+        }
+        private void LevelSystem_LevelChanged(WuXingType type, int level)
+        {
+            switch (type)
+            {
+                case WuXingType.Metal:
+                    PlayerView.MetalLevelLb.Text = "Lv." + level;
+                    break;
+                case WuXingType.Wood:
+                    PlayerView.WoodLevelLb.Text = "Lv." + level;
+                    break;
+                case WuXingType.Water:
+                    PlayerView.WaterLevelLb.Text = "Lv." + level;
+                    break;
+                case WuXingType.Fire:
+                    PlayerView.FireLevelLb.Text = "Lv." + level;
+                    break;
+                case WuXingType.Earth:
+                    PlayerView.EarthLevelLb.Text = "Lv." + level;
+                    break;
+            }
         }
         #endregion
 

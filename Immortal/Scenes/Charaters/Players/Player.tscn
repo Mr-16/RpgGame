@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=66 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
 [ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="5_y3o16"]
 [ext_resource type="PackedScene" uid="uid://bbomrqar5pqt1" path="res://Scenes/UI/InventoryView/InventoryView.tscn" id="12_r364p"]
+[ext_resource type="PackedScene" uid="uid://c6hwl6irkxyn2" path="res://Scenes/UI/PlayerView.tscn" id="13_tp737"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7en5"]
 radius = 35.0
@@ -415,49 +416,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r364p"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp737"]
-bg_color = Color(0.101032026, 0.16291168, 0.012003292, 1)
-border_color = Color(0, 0.8, 0.8, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4du0"]
-bg_color = Color(0, 0.4565437, 0.17558163, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ires"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3tor"]
-bg_color = Color(0.26147327, 0, 0.00930306, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_621qp"]
-bg_color = Color(0.7475232, 0.07432025, 0.06564945, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7an1"]
-bg_color = Color(0.07058824, 0.05490196, 0.1882353, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3o16"]
-bg_color = Color(0.07058824, 0.12156863, 0.41960785, 1)
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StamPb", "Anim", "HealthPb", "ManaPb", "ExpPb", "ExpLb", "LevelLb", "InventoryView")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "PlayerView", "InventoryView")]
 script = ExtResource("1_uq38h")
-StamPb = NodePath("")
 Anim = NodePath("AnimatedSprite2D")
 AtkRange = 120.0
-HealthPb = NodePath("CanvasLayer/PanelContainer2/HealthBp")
-ManaPb = NodePath("CanvasLayer/PanelContainer3/ManaBp")
-ExpPb = NodePath("CanvasLayer/PanelContainer/ExpBp")
-ExpLb = NodePath("CanvasLayer/ExpLb")
-LevelLb = NodePath("CanvasLayer/LevelLb")
+PlayerView = NodePath("CanvasLayer/PlayerView")
 InventoryView = NodePath("CanvasLayer/InventoryView")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
@@ -477,103 +440,7 @@ zoom = Vector2(0.715, 0.715)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HealthLb" type="Label" parent="CanvasLayer"]
-offset_left = 29.0
-offset_top = 19.0
-offset_right = 70.0
-offset_bottom = 61.0
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "HP"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ManaLb" type="Label" parent="CanvasLayer"]
-offset_left = 26.0
-offset_top = 61.0
-offset_right = 72.0
-offset_bottom = 103.0
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "MP"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LevelLb" type="Label" parent="CanvasLayer"]
-offset_left = 7.0
-offset_top = 581.0
-offset_right = 202.0
-offset_bottom = 623.0
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "等级 : 999"
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
-offset_left = 153.0
-offset_top = 589.0
-offset_right = 1129.0
-offset_bottom = 619.16003
-theme_override_styles/panel = SubResource("StyleBoxFlat_r364p")
-
-[node name="ExpBp" type="ProgressBar" parent="CanvasLayer/PanelContainer"]
-custom_minimum_size = Vector2(0, 26.16)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_tp737")
-theme_override_styles/fill = SubResource("StyleBoxFlat_t4du0")
-value = 40.17
-show_percentage = false
-
-[node name="ExpLb" type="Label" parent="CanvasLayer"]
-offset_left = 503.0
-offset_top = 581.0
-offset_right = 652.0
-offset_bottom = 623.0
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 20
-text = "999/99999"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.076000005
-anchor_top = 0.051
-anchor_right = 0.5663959
-anchor_bottom = 0.08802006
-offset_left = -0.55200195
-offset_top = -0.048000336
-offset_right = -0.4880371
-offset_bottom = -0.03699875
-theme_override_styles/panel = SubResource("StyleBoxFlat_4ires")
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthBp" type="ProgressBar" parent="CanvasLayer/PanelContainer2"]
-custom_minimum_size = Vector2(22.895, 20)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_p3tor")
-theme_override_styles/fill = SubResource("StyleBoxFlat_621qp")
-value = 37.93
-show_percentage = false
-
-[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.076000005
-anchor_top = 0.1127284
-anchor_right = 0.568
-anchor_bottom = 0.15137038
-offset_left = 0.44799805
-offset_top = 0.95199585
-offset_right = -0.33599854
-offset_bottom = -0.088005066
-theme_override_styles/panel = SubResource("StyleBoxFlat_4ires")
-metadata/_edit_use_anchors_ = true
-
-[node name="ManaBp" type="ProgressBar" parent="CanvasLayer/PanelContainer3"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_i7an1")
-theme_override_styles/fill = SubResource("StyleBoxFlat_y3o16")
-value = 26.71
-show_percentage = false
+[node name="PlayerView" parent="CanvasLayer" instance=ExtResource("13_tp737")]
 
 [node name="InventoryView" parent="CanvasLayer" instance=ExtResource("12_r364p")]
+visible = false
