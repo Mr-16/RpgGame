@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dluw3ewu68edx"]
+
+[ext_resource type="Shader" uid="uid://d2pk7nyyhsmiu" path="res://Scenes/Projectiles/Projectile.gdshader" id="1_dqbtj"]
+[ext_resource type="Script" uid="uid://cbpi6igh1yoed" path="res://Scripts/Projectiles/Projectile.cs" id="1_qupxw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qupxw"]
+shader = ExtResource("1_dqbtj")
+shader_parameter/fire_color = Color(1, 1.33, 10.068, 1)
+shader_parameter/fire_power_factor = 2.0
+shader_parameter/fire_intensity = 3.0
+shader_parameter/fire_start = 1.0
+shader_parameter/ball_size = 1.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 6
+shader_parameter/scale = 4.0
+shader_parameter/lacunarity = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vku8s"]
+radius = 20.024984
+
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("Area")]
+script = ExtResource("1_qupxw")
+Area = NodePath("Area2D")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 20
+material = SubResource("ShaderMaterial_qupxw")
+offset_left = -180.0
+offset_top = -101.0
+offset_right = 20.0
+offset_bottom = 99.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4, 0)
+shape = SubResource("CircleShape2D_vku8s")

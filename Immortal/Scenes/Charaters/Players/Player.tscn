@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://do7ba1r70tslw"]
+[gd_scene load_steps=68 format=3 uid="uid://do7ba1r70tslw"]
 
 [ext_resource type="Script" uid="uid://dyubbl5l4mt3x" path="res://Scripts/Characters/Players/Player.cs" id="1_uq38h"]
 [ext_resource type="Texture2D" uid="uid://doear615osmmv" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="2_cq5ir"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cprsxrodfrxku" path="res://Scripts/Skills/Lightning/Lightning.tscn" id="4_i7an1"]
 [ext_resource type="Texture2D" uid="uid://bgvt87nwrxdd0" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Attack2.png" id="4_oivwb"]
 [ext_resource type="Texture2D" uid="uid://ce7c83dt2cptg" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Run.png" id="4_onnvg"]
+[ext_resource type="PackedScene" uid="uid://dluw3ewu68edx" path="res://Scenes/Projectiles/Projectile.tscn" id="5_t4du0"]
 [ext_resource type="PackedScene" uid="uid://bq0r636grhy7f" path="res://Scenes/UI/float_text.tscn" id="5_y3o16"]
 [ext_resource type="PackedScene" uid="uid://bbomrqar5pqt1" path="res://Scenes/UI/InventoryView/InventoryView.tscn" id="12_r364p"]
 [ext_resource type="PackedScene" uid="uid://c6hwl6irkxyn2" path="res://Scenes/UI/PlayerView.tscn" id="13_tp737"]
@@ -416,7 +417,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "PlayerView", "InventoryView")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ires"]
+radius = 1073.4617
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Anim", "PlayerView", "InventoryView", "PerceptionArea")]
 script = ExtResource("1_uq38h")
 Anim = NodePath("AnimatedSprite2D")
 AtkRange = 120.0
@@ -425,6 +429,8 @@ InventoryView = NodePath("CanvasLayer/InventoryView")
 FireBallScene = ExtResource("2_p3tor")
 IceSpikeScene = ExtResource("3_621qp")
 LightningScene = ExtResource("4_i7an1")
+ProjectileScene = ExtResource("5_t4du0")
+PerceptionArea = NodePath("PerceptionArea")
 FloatTextLabel = ExtResource("5_y3o16")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -444,3 +450,10 @@ zoom = Vector2(0.715, 0.715)
 
 [node name="InventoryView" parent="CanvasLayer" instance=ExtResource("12_r364p")]
 visible = false
+
+[node name="PerceptionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PerceptionArea"]
+shape = SubResource("CircleShape2D_4ires")

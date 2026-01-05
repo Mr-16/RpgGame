@@ -5,6 +5,7 @@ using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.InventorySystem;
 using RpgGame.Scripts.LevelSystems;
+using RpgGame.Scripts.Skills;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -32,6 +33,8 @@ namespace RpgGame.Scripts.Characters.Players
 
         public ItemManager ItemManager;
 
+
+
         public override void _Ready()
         {
             GameManager.Instance().Player = this;
@@ -40,9 +43,10 @@ namespace RpgGame.Scripts.Characters.Players
             InitSkillData();//技能
             InitLevelSytem();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
+            PerceptionArea.BodyEntered += PerceptionArea_BodyEntered;
+            PerceptionArea.BodyExited += PerceptionArea_BodyExited;
 
-            
-            
+
             ItemManager = new ItemManager(new Equipment(), new Inventory(30));
             InventoryView.Init(ItemManager);
             //ItemManager.EquipFromInv(5);//穿戴剑
@@ -65,6 +69,8 @@ namespace RpgGame.Scripts.Characters.Players
             //ItemManager.Inventory.RemoveItem(2, 100);
 
         }
+
+
 
         public override void _Process(double delta)
         {
@@ -98,7 +104,7 @@ namespace RpgGame.Scripts.Characters.Players
 
             AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue = 50;
 
-            AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue = 10;
+            AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue = 100;
 
             AttrContainer.GetAttrValue(AttributeType.MaxHp).BaseValue = 100;
 
@@ -196,23 +202,7 @@ namespace RpgGame.Scripts.Characters.Players
             //LevelLb.Text = $"等级 : {Level}";
         }
 
-        public Enemy GetClosestEnemy(float rangeSq)
-        {
-            Enemy tarEnmey = null;
-            List<Enemy> enemyList = GameManager.Instance().EnemyList;
-            float minDisSq = float.MaxValue;
-            foreach (Enemy enmey in enemyList)
-            {
-                float curDisSq = GlobalPosition.DistanceSquaredTo(enmey.GlobalPosition);
-                if (curDisSq > rangeSq) continue;
-                if(curDisSq < minDisSq)
-                {
-                    minDisSq = curDisSq;
-                    tarEnmey = enmey;
-                }
-            }
-            return tarEnmey;
-        }
+        
 
         protected override void Die()
         {
@@ -457,6 +447,66 @@ namespace RpgGame.Scripts.Characters.Players
         }
         #endregion
 
+        [Export]
+        public PackedScene ProjectileScene;
+        public List<SpellData> SpellDataList = new List<SpellData>()
+        {
+            new SpellData{AtkRadiusSq = 1000*1000, MaxFlyDisSq = 1000*1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6, WuXingType = WuXingType.Metal},
+            new SpellData{AtkRadiusSq = 900*900, MaxFlyDisSq = 900*900, AngleRange = MathF.PI / 3, FlySpeed = 700,ProjectileCount = 3, EnergyCost = 2, CastSpeed = 4, WuXingType = WuXingType.Wood},
+            new SpellData{AtkRadiusSq = 800*80, MaxFlyDisSq = 800*800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600,ProjectileCount = 9, EnergyCost = 3, CastSpeed = 3, WuXingType = WuXingType.Water},
+            new SpellData{AtkRadiusSq = 600*600, MaxFlyDisSq = 600*600, AngleRange = MathF.PI, FlySpeed = 400,ProjectileCount = 15, EnergyCost = 4, CastSpeed = 2, WuXingType = WuXingType.Fire},
+            new SpellData{AtkRadiusSq = 300*300, MaxFlyDisSq = 300*300, AngleRange = MathF.PI * 2, FlySpeed = 200,ProjectileCount = 30, EnergyCost = 5, CastSpeed = 1f, WuXingType = WuXingType.Earth},
+        };
+
+        [Export] public Area2D PerceptionArea;
+        public List<Enemy> EnemyList = new List<Enemy>();
+        private void PerceptionArea_BodyEntered(Node2D body)
+        {
+            if (body is not Enemy enemy) return;
+            GD.Print("enemy entered");
+            EnemyList.Add(enemy);
+        }
+        private void PerceptionArea_BodyExited(Node2D body)
+        {
+            if (body is not Enemy enemy) return;
+            GD.Print("enemy exited");
+            EnemyList.Remove(enemy);
+        }
+        public Enemy GetClosestEnemy(float radiusSq)
+        {
+            Enemy tarEnemy = null;
+            float minDisSq = float.MaxValue;
+            foreach (Enemy enmey in EnemyList)
+            {
+                float curDisSq = GlobalPosition.DistanceSquaredTo(enmey.GlobalPosition);
+                if (curDisSq > radiusSq) continue;
+                if (curDisSq < minDisSq)
+                {
+                    minDisSq = curDisSq;
+                    tarEnemy = enmey;
+                }
+            }
+            return tarEnemy;
+        }
+        public void CastSpell(SpellData data)
+        {
+            Enemy targetEnemy = GetClosestEnemy(data.AtkRadiusSq);
+            Vector2 targetDir = CurDir;//默认curDir, 有目标则以目标为方向
+            if (targetEnemy != null) targetDir = (targetEnemy.GlobalPosition - GlobalPosition).Normalized();
+
+            float targetAngle = targetDir.Angle();
+            float halfAngle = data.AngleRange * 0.5f;
+            float angleStep = data.ProjectileCount == 1 ? 0 : data.AngleRange / (data.ProjectileCount - 1);
+            for (int i = 0; i < data.ProjectileCount; i++)
+            {
+                float angle = targetAngle - halfAngle + angleStep * i;
+                Vector2 dir = Vector2.FromAngle(angle);
+                //todo : 生成发射物
+                Projectile projectile = ProjectileScene.Instantiate<Projectile>();
+                projectile.Init(this, data.WuXingType, GlobalPosition, dir, data.MaxFlyDisSq, data.FlySpeed);
+                GetTree().CurrentScene.AddChild(projectile);
+            }
+        }
 
         public override void _Draw()
         {
