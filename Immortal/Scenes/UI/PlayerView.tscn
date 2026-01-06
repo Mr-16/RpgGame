@@ -193,7 +193,6 @@ layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ihrtb")
 theme_override_styles/fill = SubResource("StyleBoxFlat_x7ke5")
 value = 30.0
-show_percentage = false
 
 [node name="Label" type="Label" parent="HBoxContainer/Control"]
 layout_mode = 1
@@ -248,7 +247,6 @@ size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_h4gel")
 theme_override_styles/fill = SubResource("StyleBoxFlat_acs7n")
 value = 30.0
-show_percentage = false
 
 [node name="Label" type="Label" parent="HBoxContainer/Control2"]
 layout_mode = 1
@@ -303,7 +301,6 @@ size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_5eg4p")
 theme_override_styles/fill = SubResource("StyleBoxFlat_5v8ut")
 value = 30.0
-show_percentage = false
 
 [node name="Label" type="Label" parent="HBoxContainer/Control3"]
 layout_mode = 1
@@ -358,7 +355,6 @@ size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_ewrwj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_o5hb0")
 value = 30.0
-show_percentage = false
 
 [node name="Label" type="Label" parent="HBoxContainer/Control4"]
 layout_mode = 1
@@ -413,7 +409,6 @@ size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_f8gii")
 theme_override_styles/fill = SubResource("StyleBoxFlat_8f2oe")
 value = 30.0
-show_percentage = false
 
 [node name="Label" type="Label" parent="HBoxContainer/Control5"]
 layout_mode = 1

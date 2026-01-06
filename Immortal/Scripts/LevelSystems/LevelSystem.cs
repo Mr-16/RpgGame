@@ -48,15 +48,15 @@ namespace RpgGame.Scripts.LevelSystems
             CurExpChanged?.Invoke(WuXingType.Earth, 0);
 
             NeedExpMap.Add(WuXingType.Metal, NeedExp(1));
-            NeedExpChanged?.Invoke(WuXingType.Metal, 1);
+            NeedExpChanged?.Invoke(WuXingType.Metal, NeedExp(1));
             NeedExpMap.Add(WuXingType.Wood, NeedExp(1));
-            NeedExpChanged?.Invoke(WuXingType.Wood, 1);
+            NeedExpChanged?.Invoke(WuXingType.Wood, NeedExp(1));
             NeedExpMap.Add(WuXingType.Water, NeedExp(1));
-            NeedExpChanged?.Invoke(WuXingType.Water, 1);
+            NeedExpChanged?.Invoke(WuXingType.Water, NeedExp(1));
             NeedExpMap.Add(WuXingType.Fire, NeedExp(1));
-            NeedExpChanged?.Invoke(WuXingType.Fire, 1);
+            NeedExpChanged?.Invoke(WuXingType.Fire, NeedExp(1));
             NeedExpMap.Add(WuXingType.Earth, NeedExp(1));
-            NeedExpChanged?.Invoke(WuXingType.Earth, 1);
+            NeedExpChanged?.Invoke(WuXingType.Earth, NeedExp(1));
         }
         public static int NeedExp(int level)
         {

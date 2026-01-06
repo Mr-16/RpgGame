@@ -209,7 +209,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Death",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -307,7 +307,9 @@ shape = SubResource("CapsuleShape2D_r2bah")
 self_modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
-animation = &"Atk"
+animation = &"Death"
+frame = 7
+frame_progress = 1.0
 
 [node name="HealthPb" type="ProgressBar" parent="."]
 z_index = 10

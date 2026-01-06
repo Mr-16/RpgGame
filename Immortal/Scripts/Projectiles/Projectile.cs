@@ -3,6 +3,7 @@ using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Characters.Players;
 using RpgGame.Scripts.GameSystem;
+using RpgGame.Scripts.Global;
 using System;
 
 public partial class Projectile : Node2D
@@ -10,6 +11,8 @@ public partial class Projectile : Node2D
 
 	[Export]
 	public Area2D Area;
+    [Export]
+    public ColorRect ColorRect;
 
     //伤害/属性/额外效果
     private Player attacker;		//用来算伤害
@@ -24,6 +27,7 @@ public partial class Projectile : Node2D
 
     public override void _Ready()
 	{
+        
         Area.BodyEntered += Area_BodyEntered;
         
     }
@@ -53,5 +57,11 @@ public partial class Projectile : Node2D
         Rotation = this.dir.Angle();
         this.maxFlyDisSq = maxFlyDisSq;
 		this.speed = speed;
-	}
+
+        ShaderMaterial mat = ColorRect.Material as ShaderMaterial;
+        mat = (ShaderMaterial)mat.Duplicate();
+        ColorRect.Material = mat;
+        mat.SetShaderParameter("fire_color", WuXingHelper.GetColor(wuXingType));
+
+    }
 }

@@ -34,7 +34,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             player.CurEnergy -= curSpellData.EnergyCost;
 
             speedScale = player.Anim.SpeedScale;
-            player.Anim.SpeedScale = curSpellData.CastSpeed;
+            player.Anim.SpeedScale = curSpellData.CastSpeed * 2;
             player.Anim.Play("Atk");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
@@ -65,7 +65,7 @@ namespace RpgGame.Scripts.Characters.Players.States
             //    player.MoveAndSlide();
             //}
             ////攻击状态期间, 在攻击范围内, 若有目标, 找到最近目标, 朝向他
-            //Enemy target = player.GetClosestEnemy(player.AtkRangeSq);
+            //Enemy target = player.GetClosestEnemy(curSpellData.AtkRadiusSq);
             //if (target != null)
             //{
             //    //GD.Print(target);

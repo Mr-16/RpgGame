@@ -44,7 +44,7 @@ public partial class CharacterBase : CharacterBody2D
         label.GlobalPosition = GlobalPosition;
         if(dmg != 0)
         {
-            label.Init(dmg.ToString(), new Color(1, 0, 0, 1));
+            label.Init(dmg.ToString("F1"), new Color(1, 0, 0, 1));
         }
         else
         {

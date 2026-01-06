@@ -3,6 +3,7 @@ using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
+using RpgGame.Scripts.Global;
 using RpgGame.Scripts.InventorySystem;
 using RpgGame.Scripts.LevelSystems;
 using RpgGame.Scripts.Skills;
@@ -329,24 +330,7 @@ namespace RpgGame.Scripts.Characters.Players
         {
             FloatText expText = FloatTextLabel.Instantiate<FloatText>();
             expText.GlobalPosition = GlobalPosition;
-            switch (type)
-            {
-                case WuXingType.Metal:
-                    expText.Init("[金]修为+" + exp.ToString(), new Color(1, 1, 0, 1), 0.5f);
-                    break;
-                case WuXingType.Wood:
-                    expText.Init("[木]修为+" + exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
-                    break;
-                case WuXingType.Water:
-                    expText.Init("[水]修为+" + exp.ToString(), new Color(0, 0, 1, 1), 0.5f);
-                    break;
-                case WuXingType.Fire:
-                    expText.Init("[火]修为+" + exp.ToString(), new Color(1.0f, 0.75f, 0.2f), 0.5f);
-                    break;
-                case WuXingType.Earth:
-                    expText.Init("[土]修为+" + exp.ToString(), new Color(0, 1, 0, 1), 0.5f);
-                    break;
-            }
+            expText.Init($"[{WuXingHelper.GetChineseStr(type)}]修为+" + exp.ToString(), WuXingHelper.GetColor(type), 0.5f);
             GetTree().CurrentScene.AddChild(expText);
         }
         private void LevelSystem_LevelUped(WuXingType type, int level)
@@ -356,25 +340,25 @@ namespace RpgGame.Scripts.Characters.Players
             switch (type)
             {
                 case WuXingType.Metal:
-                    levelText.Init("[金灵根" + "升至" + level + "级!!", new Color(1, 1, 0, 1), 2);
+                    levelText.Init("[金灵根" + "升至" + level + "级!!", new Color(1, 1, 0, 0.5f), 2);
                     AttrContainer.GetAttrValue(AttributeType.Def).BaseValue += 2;
                     break;
                 case WuXingType.Wood:
-                    levelText.Init("[木灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 1), 2);
+                    levelText.Init("[木灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 0.5f), 2);
                     AttrContainer.GetAttrValue(AttributeType.HpRegen).BaseValue += 1;
                     AttrContainer.GetAttrValue(AttributeType.EnergyRegen).BaseValue += 1;
                     AttrContainer.GetAttrValue(AttributeType.MoveSpeed).BaseValue += 0.01f;
                     break;
                 case WuXingType.Water:
-                    levelText.Init("[水灵根" + "升至" + level + "级!!", new Color(0, 0, 1, 1), 2);
+                    levelText.Init("[水灵根" + "升至" + level + "级!!", new Color(0, 0, 1, 0.5f), 2);
                     AttrContainer.GetAttrValue(AttributeType.MaxEnergy).BaseValue += 10f;
                     break;
                 case WuXingType.Fire:
-                    levelText.Init("[火灵根" + "升至" + level + "级!!", new Color(1.0f, 0.75f, 0.2f), 2);
+                    levelText.Init("[火灵根" + "升至" + level + "级!!", new Color(1.0f, 0.75f, 0.2f, 0.5f), 2);
                     AttrContainer.GetAttrValue(AttributeType.Atk).BaseValue += 3f;
                     break;
                 case WuXingType.Earth:
-                    levelText.Init("[土灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 1), 2);
+                    levelText.Init("[土灵根" + "升至" + level + "级!!", new Color(0, 1, 0, 0.5f), 2);
                     AttrContainer.GetAttrValue(AttributeType.MaxHp).BaseValue += 20f;
                     break;
             }
@@ -451,11 +435,11 @@ namespace RpgGame.Scripts.Characters.Players
         public PackedScene ProjectileScene;
         public List<SpellData> SpellDataList = new List<SpellData>()
         {
-            new SpellData{AtkRadiusSq = 1000*1000, MaxFlyDisSq = 1000*1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6, WuXingType = WuXingType.Metal},
-            new SpellData{AtkRadiusSq = 900*900, MaxFlyDisSq = 900*900, AngleRange = MathF.PI / 3, FlySpeed = 700,ProjectileCount = 3, EnergyCost = 2, CastSpeed = 4, WuXingType = WuXingType.Wood},
-            new SpellData{AtkRadiusSq = 800*80, MaxFlyDisSq = 800*800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600,ProjectileCount = 9, EnergyCost = 3, CastSpeed = 3, WuXingType = WuXingType.Water},
-            new SpellData{AtkRadiusSq = 600*600, MaxFlyDisSq = 600*600, AngleRange = MathF.PI, FlySpeed = 400,ProjectileCount = 15, EnergyCost = 4, CastSpeed = 2, WuXingType = WuXingType.Fire},
-            new SpellData{AtkRadiusSq = 300*300, MaxFlyDisSq = 300*300, AngleRange = MathF.PI * 2, FlySpeed = 200,ProjectileCount = 30, EnergyCost = 5, CastSpeed = 1f, WuXingType = WuXingType.Earth},
+            //new SpellData{AtkRadiusSq = 1000*1000, MaxFlyDisSq = 1000*1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6, WuXingType = WuXingType.Metal},
+            //new SpellData{AtkRadiusSq = 900*900, MaxFlyDisSq = 900*900, AngleRange = MathF.PI / 3, FlySpeed = 700,ProjectileCount = 3, EnergyCost = 2, CastSpeed = 5, WuXingType = WuXingType.Wood},
+            //new SpellData{AtkRadiusSq = 800*80, MaxFlyDisSq = 800*800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600,ProjectileCount = 9, EnergyCost = 3, CastSpeed = 4, WuXingType = WuXingType.Water},
+            //new SpellData{AtkRadiusSq = 200*200, MaxFlyDisSq = 200*200, AngleRange = MathF.PI, FlySpeed = 500,ProjectileCount = 15, EnergyCost = 4, CastSpeed = 3, WuXingType = WuXingType.Fire},
+            new SpellData{AtkRadiusSq = 120*120, MaxFlyDisSq = 100*100, AngleRange = MathF.PI * 2, FlySpeed = 200,ProjectileCount = 20, EnergyCost = 5, CastSpeed = 2f, WuXingType = WuXingType.Earth},
         };
 
         [Export] public Area2D PerceptionArea;
@@ -491,22 +475,33 @@ namespace RpgGame.Scripts.Characters.Players
         public void CastSpell(SpellData data)
         {
             Enemy targetEnemy = GetClosestEnemy(data.AtkRadiusSq);
-            Vector2 targetDir = CurDir;//默认curDir, 有目标则以目标为方向
-            if (targetEnemy != null) targetDir = (targetEnemy.GlobalPosition - GlobalPosition).Normalized();
-
+            Vector2 targetDir = CurDir;
+            if (targetEnemy != null)
+                targetDir = (targetEnemy.GlobalPosition - GlobalPosition).Normalized();
+            CurDir = targetDir;
+            if (CurDir.X < 0) Anim.FlipH = true;
+            else if (CurDir.X > 0) Anim.FlipH = false;
             float targetAngle = targetDir.Angle();
-            float halfAngle = data.AngleRange * 0.5f;
-            float angleStep = data.ProjectileCount == 1 ? 0 : data.AngleRange / (data.ProjectileCount - 1);
             for (int i = 0; i < data.ProjectileCount; i++)
             {
-                float angle = targetAngle - halfAngle + angleStep * i;
+                float angle;
+                if (data.ProjectileCount == 1)
+                {
+                    angle = targetAngle;
+                }
+                else
+                {
+                    float halfAngle = data.AngleRange * 0.5f;
+                    float angleStep = data.AngleRange / (data.ProjectileCount - 1);
+                    angle = targetAngle - halfAngle + angleStep * i;
+                }
                 Vector2 dir = Vector2.FromAngle(angle);
-                //todo : 生成发射物
                 Projectile projectile = ProjectileScene.Instantiate<Projectile>();
                 projectile.Init(this, data.WuXingType, GlobalPosition, dir, data.MaxFlyDisSq, data.FlySpeed);
                 GetTree().CurrentScene.AddChild(projectile);
             }
         }
+
 
         public override void _Draw()
         {
