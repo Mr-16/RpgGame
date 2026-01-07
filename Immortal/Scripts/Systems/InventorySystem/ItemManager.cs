@@ -16,50 +16,33 @@ namespace RpgGame.Scripts.Systems.InventorySystem
             InventoryManager = inventory;
         }
 
-        public void EquipFromInv(int invIndex)
+        public void EquipFromInv(int invIndex, int equipIndex)
         {
-            if (invIndex < 0 || invIndex >= InventoryManager.ItemList.Count) return;
-
             ItemInstance equip = InventoryManager.ItemList[invIndex];
             if (equip == null) return;
             if (!equip.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
-            ItemInstance oldEquip = EquipmentManager.GetEquip(equip.Data.EquipType);
-
-            EquipmentManager.Equip(equip);
-
-            if (oldEquip != null)
-            {
-                InventoryManager.SetItem(oldEquip, invIndex);
-            }
-            else
-            {
-                InventoryManager.SetItem(null, invIndex);
-            }
+            ItemInstance oldEquip = EquipmentManager.Equip(equipIndex, equip);
+            InventoryManager.SetItem(oldEquip, invIndex);
         }
 
         //卸下后自动在背包找空格子(右键卸下)
-        public void UnequipToInv(EquipType equipType)
+        public void UnequipToInv(int index)
         {
-            ItemInstance equip = EquipmentManager.GetEquip(equipType);
-            if (equip == null) return;
             for(int i = 0; i < InventoryManager.Capacity; i++)
             {
                 if (InventoryManager.ItemList[i] != null) continue;
-                InventoryManager.SetItem(equip, i);
-                EquipmentManager.Unequip(equipType);
+                InventoryManager.SetItem(EquipmentManager.Unequip(index), i);
                 break;
             }
         }
 
         //卸下后去指定格子(拖动卸下)
-        public bool UnequipToInv(EquipType equipType, int invIndex)
+        public bool UnequipToInv(int equipIndex, int invIndex)
         {
-            ItemInstance equip = EquipmentManager.GetEquip(equipType);
-            if (equip == null) return false;
-
-            if (InventoryManager.ItemList[invIndex] != null) return false;
-            EquipmentManager.Unequip(equipType);
-            InventoryManager.SetItem(equip, invIndex);
+            ItemInstance oldEquip = EquipmentManager.Unequip(equipIndex);
+            ItemInstance newEquip = InventoryManager.GetItem(invIndex);
+            InventoryManager.SetItem(oldEquip, invIndex);
+            EquipmentManager.Equip(equipIndex, newEquip);
             return true;
         }
 

@@ -1,5 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
+using RpgGame.Scripts.Systems.InventorySystem;
 using RpgGame.Scripts.Systems.SkillSystem;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         private float speedScale;
         public int AtkFrame = 2;
         private Random random = new Random();
-        SpellData curSpellData;
+        EquippableComponent curEquip;
 
         public AtkState(Player player)
         {
@@ -23,17 +24,27 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Enter()
         {
-            curSpellData = player.SpellDataList[random.Next(0, player.SpellDataList.Count)];
-            //todo根据data
-            if (curSpellData.EnergyCost > player.CurEnergy)//判断够不够费
+            List<ItemInstance> equipList = new List<ItemInstance>();
+            for(int i = 0; i < player.ItemManager.EquipmentManager.EquipList.Count; i++)
+            {
+                if (player.ItemManager.EquipmentManager.EquipList[i] == null) continue;
+                equipList.Add(player.ItemManager.EquipmentManager.EquipList[i]);
+            }
+            if(equipList.Count == 0)
             {
                 player.Sm.ChangeState(player.Sm.IdleState);//不够费退回待机
                 return;
             }
-            player.CurEnergy -= curSpellData.EnergyCost;
+            curEquip = equipList[random.Next(0, equipList.Count)].TypeCompMap[ItemComponentType.EquippableComponent] as EquippableComponent;
+            if (curEquip.SkillData.EnergyCost > player.CurEnergy)//判断够不够费
+            {
+                player.Sm.ChangeState(player.Sm.IdleState);//不够费退回待机
+                return;
+            }
+            player.CurEnergy -= curEquip.SkillData.EnergyCost;
 
             speedScale = player.Anim.SpeedScale;
-            player.Anim.SpeedScale = curSpellData.CastSpeed * 2;
+            player.Anim.SpeedScale = curEquip.SkillData.CastSpeed * 2;
             player.Anim.Play("Atk");
             player.Anim.AnimationFinished += Anim_AnimationFinished;
             player.Anim.FrameChanged += Anim_FrameChanged;
@@ -43,7 +54,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             if(player.Anim.Frame == AtkFrame)
             {
-                player.CastSpell(curSpellData);
+                player.CastSkill(curEquip);
             }
         }
 
@@ -51,6 +62,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         {
             player.Anim.AnimationFinished -= Anim_AnimationFinished;
             player.Anim.FrameChanged -= Anim_FrameChanged;
+            player.Anim.SpeedScale = speedScale;
             player.Sm.ChangeState(player.Sm.IdleState);
         }
 
@@ -80,7 +92,7 @@ namespace RpgGame.Scripts.Characters.Players.States
 
         public override void Exit()
         {
-            player.Anim.SpeedScale = speedScale;
+            
         }
     }
 }

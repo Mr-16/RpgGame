@@ -71,5 +71,9 @@ namespace RpgGame.Scripts.Systems.InventorySystem
             ItemChanged?.Invoke(index2, ItemList[index2]);
             return true;
         }
+        public ItemInstance GetItem(int index)
+        {
+            return ItemList[index];
+        }
     }
 }

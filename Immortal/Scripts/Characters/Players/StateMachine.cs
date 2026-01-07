@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Players
         public RunState RunState;
         public RollState RollState;
         public AtkState RtkState;
-        public SkillState SkillState;
+        //public SkillState SkillState;
         public DeathState DeathState;
 
         public StateMachine(Player player)
@@ -25,7 +25,7 @@ namespace RpgGame.Scripts.Characters.Players
             RunState = new RunState(player);
             RollState = new RollState(player);
             RtkState = new AtkState(player);
-            SkillState = new SkillState(player);
+            //SkillState = new SkillState(player);
             DeathState = new DeathState(player);
             ChangeState(IdleState);
         }

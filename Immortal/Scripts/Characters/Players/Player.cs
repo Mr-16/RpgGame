@@ -9,6 +9,7 @@ using RpgGame.Scripts.Utilities;
 using RpgGame.Scripts.Utilities.Enums;
 using System;
 using System.Collections.Generic;
+using SkillData = RpgGame.Scripts.Systems.SkillSystem.SkillData;
 
 
 namespace RpgGame.Scripts.Characters.Players
@@ -39,7 +40,7 @@ namespace RpgGame.Scripts.Characters.Players
             GameManager.Instance().Player = this;
             Sm = new StateMachine(this);
             InitAttr();//属性
-            InitSkillData();//技能
+            //InitSkillData();//技能
             InitLevelSytem();//初始化等级
             AtkRangeSq = AtkRange * AtkRange;
             PerceptionArea.BodyEntered += PerceptionArea_BodyEntered;
@@ -53,17 +54,31 @@ namespace RpgGame.Scripts.Characters.Players
             //ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
             //ItemManager.EquipFromInv(15);//穿戴甲
             //ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.HealthPotion, 15));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Bow, 1));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 15));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 12));
-            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 11));
-            ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Armor, 1));
-            ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.HealthPotion, 15));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.ManaPotion, 15));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.MetalEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.MetalEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.WoodEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.WoodEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.WaterEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.WaterEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.FireEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.FireEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.FireEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.EarthEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.EarthEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.EarthEquip, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(GameConstants.EarthEquip, 1));
+
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Bow, 1));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 15));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 12));
+            //ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 11));
+            //ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            //ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
             //ItemManager.Inventory.RemoveItem(1, 100);
             //ItemManager.Inventory.RemoveItem(2, 100);
 
@@ -210,104 +225,104 @@ namespace RpgGame.Scripts.Characters.Players
         }
 
         #region 技能系统
-        public void CastSkill(SkillType skillType)
-        {
-            //TODO : 根据技能类型和技能数据释放技能
-            switch (skillType)
-            {
-                case SkillType.None:
-                    return;
-                case SkillType.FireBall:
-                    FireBall();
-                    return;
-                case SkillType.IceSpike:
-                    IceSpike();
-                    return;
-                case SkillType.Lightning:
-                    Lightning();
-                    break;
-                case SkillType.DashAtk:
-                    break;
-                case SkillType.PowerUp:
-                    break;
-                case SkillType.AddHealth:
-                    break;
-                default:
-                    break;
-            }
-        }
+        //public void CastSkill(SkillType skillType)
+        //{
+        //    //TODO : 根据技能类型和技能数据释放技能
+        //    switch (skillType)
+        //    {
+        //        case SkillType.None:
+        //            return;
+        //        case SkillType.FireBall:
+        //            FireBall();
+        //            return;
+        //        case SkillType.IceSpike:
+        //            IceSpike();
+        //            return;
+        //        case SkillType.Lightning:
+        //            Lightning();
+        //            break;
+        //        case SkillType.DashAtk:
+        //            break;
+        //        case SkillType.PowerUp:
+        //            break;
+        //        case SkillType.AddHealth:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
-        private void FireBall()
-        {
-            SkillData data = GameManager.Instance().SkillDataMap[SkillType.FireBall];
-            //范围内找到目标然后生成火球射过去
-            Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
-            FireBall fireBall = FireBallScene.Instantiate<FireBall>();
-            fireBall.GlobalPosition = GlobalPosition;
-            if (tarEnmey == null) fireBall.Dir = CurDir;
-            else
-            {
-                CurDir = (tarEnmey.GlobalPosition - GlobalPosition).Normalized();
-                fireBall.Dir = CurDir;
-            }
+        //private void FireBall()
+        //{
+        //    GameSystem.SkillData data = GameManager.Instance().SkillDataMap[SkillType.FireBall];
+        //    //范围内找到目标然后生成火球射过去
+        //    Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
+        //    FireBall fireBall = FireBallScene.Instantiate<FireBall>();
+        //    fireBall.GlobalPosition = GlobalPosition;
+        //    if (tarEnmey == null) fireBall.Dir = CurDir;
+        //    else
+        //    {
+        //        CurDir = (tarEnmey.GlobalPosition - GlobalPosition).Normalized();
+        //        fireBall.Dir = CurDir;
+        //    }
 
-            GetTree().CurrentScene.AddChild(fireBall);
-        }
+        //    GetTree().CurrentScene.AddChild(fireBall);
+        //}
 
-        private void IceSpike()
-        {
-            float radius = 50f;
+        //private void IceSpike()
+        //{
+        //    float radius = 50f;
 
-            for (int angle = 0; angle < 360; angle += 10)
-            {
-                IceSpike iceSpike = IceSpikeScene.Instantiate<IceSpike>();
+        //    for (int angle = 0; angle < 360; angle += 10)
+        //    {
+        //        IceSpike iceSpike = IceSpikeScene.Instantiate<IceSpike>();
 
-                // 角度 → 弧度
-                float rad = Mathf.DegToRad(angle);
+        //        // 角度 → 弧度
+        //        float rad = Mathf.DegToRad(angle);
 
-                // 方向向量
-                Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+        //        // 方向向量
+        //        Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 
-                // 设置位置（环形）
-                iceSpike.GlobalPosition = GlobalPosition + dir * radius;
+        //        // 设置位置（环形）
+        //        iceSpike.GlobalPosition = GlobalPosition + dir * radius;
 
-                // 设置朝向（如果冰刺有方向）
-                iceSpike.Rotation = rad;
+        //        // 设置朝向（如果冰刺有方向）
+        //        iceSpike.Rotation = rad;
 
-                // 如果冰刺需要知道移动方向
-                iceSpike.Dir = dir; // 前提：你在 IceSpike.cs 里定义了
+        //        // 如果冰刺需要知道移动方向
+        //        iceSpike.Dir = dir; // 前提：你在 IceSpike.cs 里定义了
 
-                GetTree().CurrentScene.AddChild(iceSpike);
-            }
-        }
-        private void Lightning()
-        {
-            SkillData data = GameManager.Instance().SkillDataMap[SkillType.Lightning];
-            Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
-            if (tarEnmey == null) return;
-            Lightning lightning = LightningScene.Instantiate<Lightning>();
-            lightning.GlobalPosition = GlobalPosition;
-            lightning.curTarget = tarEnmey;
+        //        GetTree().CurrentScene.AddChild(iceSpike);
+        //    }
+        //}
+        //private void Lightning()
+        //{
+        //    GameSystem.SkillData data = GameManager.Instance().SkillDataMap[SkillType.Lightning];
+        //    Enemy tarEnmey = GetClosestEnemy(data.RangeSq);
+        //    if (tarEnmey == null) return;
+        //    Lightning lightning = LightningScene.Instantiate<Lightning>();
+        //    lightning.GlobalPosition = GlobalPosition;
+        //    lightning.curTarget = tarEnmey;
 
-            GetTree().CurrentScene.AddChild(lightning);
-        }
+        //    GetTree().CurrentScene.AddChild(lightning);
+        //}
 
-        public int curSkillTypeIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
-        public List<SkillType> SkillTypeList = new List<SkillType>(3);
-        private void InitSkillData()
-        {
-            //暂时随便填值, 后期加入存档后从Json里反序列化出来
-            SkillTypeList.Add(SkillType.FireBall);
-            SkillTypeList.Add(SkillType.Lightning);
-            SkillTypeList.Add(SkillType.IceSpike);
-        }
+        //public int curSkillTypeIndex = -1;//当前技能索引, 取值 : 012, 每次进入技能状态都要根据索引在技能list里找到具体技能
+        //public List<SkillType> SkillTypeList = new List<SkillType>(3);
+        //private void InitSkillData()
+        //{
+        //    //暂时随便填值, 后期加入存档后从Json里反序列化出来
+        //    SkillTypeList.Add(SkillType.FireBall);
+        //    SkillTypeList.Add(SkillType.Lightning);
+        //    SkillTypeList.Add(SkillType.IceSpike);
+        //}
 
-        [Export]
-        public PackedScene FireBallScene;
-        [Export]
-        public PackedScene IceSpikeScene;
-        [Export]
-        public PackedScene LightningScene;
+        //[Export]
+        //public PackedScene FireBallScene;
+        //[Export]
+        //public PackedScene IceSpikeScene;
+        //[Export]
+        //public PackedScene LightningScene;
 
 
         #endregion
@@ -431,14 +446,14 @@ namespace RpgGame.Scripts.Characters.Players
 
         [Export]
         public PackedScene ProjectileScene;
-        public List<SpellData> SpellDataList = new List<SpellData>()
-        {
-            //new SpellData{AtkRadiusSq = 1000*1000, MaxFlyDisSq = 1000*1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6, WuXingType = WuXingType.Metal},
-            //new SpellData{AtkRadiusSq = 900*900, MaxFlyDisSq = 900*900, AngleRange = MathF.PI / 3, FlySpeed = 700,ProjectileCount = 3, EnergyCost = 2, CastSpeed = 5, WuXingType = WuXingType.Wood},
-            //new SpellData{AtkRadiusSq = 800*80, MaxFlyDisSq = 800*800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600,ProjectileCount = 9, EnergyCost = 3, CastSpeed = 4, WuXingType = WuXingType.Water},
-            //new SpellData{AtkRadiusSq = 200*200, MaxFlyDisSq = 200*200, AngleRange = MathF.PI, FlySpeed = 500,ProjectileCount = 15, EnergyCost = 4, CastSpeed = 3, WuXingType = WuXingType.Fire},
-            new SpellData{AtkRadiusSq = 120*120, MaxFlyDisSq = 100*100, AngleRange = MathF.PI * 2, FlySpeed = 200,ProjectileCount = 20, EnergyCost = 5, CastSpeed = 2f, WuXingType = WuXingType.Earth},
-        };
+        //public List<SkillData> SpellDataList = new List<SkillData>()
+        //{
+        //    //new SpellData{AtkRadiusSq = 1000*1000, MaxFlyDisSq = 1000*1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6, WuXingType = WuXingType.Metal},
+        //    //new SpellData{AtkRadiusSq = 900*900, MaxFlyDisSq = 900*900, AngleRange = MathF.PI / 3, FlySpeed = 700,ProjectileCount = 3, EnergyCost = 2, CastSpeed = 5, WuXingType = WuXingType.Wood},
+        //    //new SpellData{AtkRadiusSq = 800*80, MaxFlyDisSq = 800*800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600,ProjectileCount = 9, EnergyCost = 3, CastSpeed = 4, WuXingType = WuXingType.Water},
+        //    //new SpellData{AtkRadiusSq = 200*200, MaxFlyDisSq = 200*200, AngleRange = MathF.PI, FlySpeed = 500,ProjectileCount = 15, EnergyCost = 4, CastSpeed = 3, WuXingType = WuXingType.Fire},
+        //    new SkillData{ AtkRadiusSq = 120*120, MaxFlyDisSq = 100*100, AngleRange = MathF.PI * 2, FlySpeed = 200, ProjectileCount = 20, EnergyCost = 5, CastSpeed = 2f, WuXingType = WuXingType.Earth},
+        //};
 
         [Export] public Area2D PerceptionArea;
         public List<Enemy> EnemyList = new List<Enemy>();
@@ -470,9 +485,9 @@ namespace RpgGame.Scripts.Characters.Players
             }
             return tarEnemy;
         }
-        public void CastSpell(SpellData data)
+        public void CastSkill(EquippableComponent equip)
         {
-            Enemy targetEnemy = GetClosestEnemy(data.AtkRadiusSq);
+            Enemy targetEnemy = GetClosestEnemy(equip.SkillData.MaxFlyDisSq);
             Vector2 targetDir = CurDir;
             if (targetEnemy != null)
                 targetDir = (targetEnemy.GlobalPosition - GlobalPosition).Normalized();
@@ -480,22 +495,22 @@ namespace RpgGame.Scripts.Characters.Players
             if (CurDir.X < 0) Anim.FlipH = true;
             else if (CurDir.X > 0) Anim.FlipH = false;
             float targetAngle = targetDir.Angle();
-            for (int i = 0; i < data.ProjectileCount; i++)
+            for (int i = 0; i < equip.SkillData.ProjectileCount; i++)
             {
                 float angle;
-                if (data.ProjectileCount == 1)
+                if (equip.SkillData.ProjectileCount == 1)
                 {
                     angle = targetAngle;
                 }
                 else
                 {
-                    float halfAngle = data.AngleRange * 0.5f;
-                    float angleStep = data.AngleRange / (data.ProjectileCount - 1);
+                    float halfAngle = equip.SkillData.AngleRange * 0.5f;
+                    float angleStep = equip.SkillData.AngleRange / (equip.SkillData.ProjectileCount - 1);
                     angle = targetAngle - halfAngle + angleStep * i;
                 }
                 Vector2 dir = Vector2.FromAngle(angle);
                 Projectile projectile = ProjectileScene.Instantiate<Projectile>();
-                projectile.Init(this, data.WuXingType, GlobalPosition, dir, data.MaxFlyDisSq, data.FlySpeed);
+                projectile.Init(this, equip.WuXingType, GlobalPosition, dir, equip.SkillData.MaxFlyDisSq, equip.SkillData.FlySpeed);
                 GetTree().CurrentScene.AddChild(projectile);
             }
         }

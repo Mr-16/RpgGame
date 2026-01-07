@@ -14,6 +14,10 @@ namespace RpgGame.Scripts.Utilities
         public static string Sword = "Sword";
         public static string Bow = "Bow";
         public static string Armor = "Armor";
-        public static string Metal = "Armor";
+        public static string MetalEquip = "MetalEquip";
+        public static string WoodEquip = "WoodEquip";
+        public static string WaterEquip = "WaterEquip";
+        public static string FireEquip = "FireEquip";
+        public static string EarthEquip = "EarthEquip";
     }
 }

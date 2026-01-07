@@ -7,14 +7,14 @@ using System.Diagnostics.Metrics;
 public partial class EquipSlot : Control
 {
     [Export]
-    public EquipType SlotType;
+    public int SlotIndex;
 
     [Export]
     public TextureRect IconTr;
 
     public ItemInstance Equip;
 
-    public event Action<int> EquipFromInv;
+    public event Action<int, int> EquipFromInv;
 
     public override void _Ready()
     {
@@ -52,7 +52,6 @@ public partial class EquipSlot : Control
         GodotObject gdObj = data.As<GodotObject>();
         if (gdObj is not ItemSlotPanel itemSlot) return false;
         if (!itemSlot.Item.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return false;
-        if (itemSlot.Item.Data.EquipType != SlotType) return false;
         return true;
     }
     public override void _DropData(Vector2 atPosition, Variant data)
@@ -60,6 +59,6 @@ public partial class EquipSlot : Control
         ItemSlotPanel itemSlot = data.As<ItemSlotPanel>();
         if (itemSlot == null) return;
         if (!itemSlot.Item.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
-        EquipFromInv?.Invoke(itemSlot.Index);
+        EquipFromInv?.Invoke(itemSlot.Index, SlotIndex);
     }
 }

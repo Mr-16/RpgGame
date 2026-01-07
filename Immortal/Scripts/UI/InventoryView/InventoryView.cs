@@ -18,11 +18,11 @@ public partial class InventoryView : Control
 		InventoryGrid.Init(itemManager.InventoryManager);
 		EquipControl.Init(itemManager.EquipmentManager);
 
-        EquipControl.WeaponSlot.EquipFromInv += EquipFromInv;
-        EquipControl.HelmetSlot.EquipFromInv += EquipFromInv;
-        EquipControl.RingSlot.EquipFromInv += EquipFromInv;
-        EquipControl.ArmorSlot.EquipFromInv += EquipFromInv;
-        EquipControl.BootSlot.EquipFromInv += EquipFromInv;
+        EquipControl.Slot0.EquipFromInv += EquipFromInv;
+        EquipControl.Slot1.EquipFromInv += EquipFromInv;
+        EquipControl.Slot2.EquipFromInv += EquipFromInv;
+        EquipControl.Slot3.EquipFromInv += EquipFromInv;
+        EquipControl.Slot4.EquipFromInv += EquipFromInv;
 
 		for(int i = 0; i < InventoryGrid.SlotList.Count; i++)
 		{
@@ -31,14 +31,14 @@ public partial class InventoryView : Control
         }
     }
 
-    private void UnequipToInv(EquipType equipType, int invIndex)
+    private void UnequipToInv(int equipIndex, int invIndex)
     {
-        itemManager.UnequipToInv(equipType, invIndex);
+        itemManager.UnequipToInv(equipIndex, invIndex);
     }
 
-    private void EquipFromInv(int invIndex)
+    private void EquipFromInv(int invIndex, int equipIndex)
     {
-        itemManager.EquipFromInv(invIndex);
+        itemManager.EquipFromInv(invIndex, equipIndex);
     }
 
     public override void _Ready()

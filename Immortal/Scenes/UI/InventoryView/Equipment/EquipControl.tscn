@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bbb4jjxt20pt1" path="res://Scenes/UI/InventoryView/Equipment/EquipSlot.tscn" id="1_58bmc"]
 [ext_resource type="Script" uid="uid://ccu6cqrswgcfg" path="res://Scripts/UI/InventoryView/Equipment/EquipControl.cs" id="1_xng7o"]
 
-[node name="EquipContorl" type="Control" node_paths=PackedStringArray("WeaponSlot", "HelmetSlot", "RingSlot", "ArmorSlot", "BootSlot")]
+[node name="EquipContorl" type="Control" node_paths=PackedStringArray("Slot0", "Slot1", "Slot2", "Slot3", "Slot4")]
 layout_mode = 3
 anchor_left = 0.042000003
 anchor_top = 0.22200002
@@ -16,13 +16,13 @@ offset_bottom = 96.104004
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xng7o")
-WeaponSlot = NodePath("WeaponSlot")
-HelmetSlot = NodePath("HelmetSlot")
-RingSlot = NodePath("RingSlot")
-ArmorSlot = NodePath("ArmorSlot")
-BootSlot = NodePath("BootSlot")
+Slot0 = NodePath("Slot0")
+Slot1 = NodePath("Slot1")
+Slot2 = NodePath("Slot2")
+Slot3 = NodePath("Slot3")
+Slot4 = NodePath("Slot4")
 
-[node name="HelmetSlot" parent="." instance=ExtResource("1_58bmc")]
+[node name="Slot0" parent="." instance=ExtResource("1_58bmc")]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
 anchors_preset = 5
@@ -33,9 +33,8 @@ offset_left = -60.0
 offset_right = 60.0
 offset_bottom = 120.0
 grow_vertical = 1
-SlotType = 1
 
-[node name="WeaponSlot" parent="." instance=ExtResource("1_58bmc")]
+[node name="Slot1" parent="." instance=ExtResource("1_58bmc")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -45,8 +44,9 @@ offset_top = -75.0
 offset_right = 150.0
 offset_bottom = 75.0
 grow_horizontal = 1
+SlotIndex = 1
 
-[node name="ArmorSlot" parent="." instance=ExtResource("1_58bmc")]
+[node name="Slot2" parent="." instance=ExtResource("1_58bmc")]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
 anchors_preset = 8
@@ -58,9 +58,9 @@ offset_left = -60.0
 offset_top = -60.0
 offset_right = 60.0
 offset_bottom = 60.0
-SlotType = 2
+SlotIndex = 2
 
-[node name="RingSlot" parent="." instance=ExtResource("1_58bmc")]
+[node name="Slot3" parent="." instance=ExtResource("1_58bmc")]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
 anchors_preset = 6
@@ -73,9 +73,9 @@ offset_top = -60.0
 offset_right = 0.0
 offset_bottom = 60.0
 grow_horizontal = 0
-SlotType = 3
+SlotIndex = 3
 
-[node name="BootSlot" parent="." instance=ExtResource("1_58bmc")]
+[node name="Slot4" parent="." instance=ExtResource("1_58bmc")]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 1
 anchors_preset = 7
@@ -88,4 +88,4 @@ offset_top = -120.0
 offset_right = 60.0
 offset_bottom = 0.0
 grow_vertical = 0
-SlotType = 4
+SlotIndex = 4

@@ -10,7 +10,7 @@ public partial class ItemSlotPanel : PanelContainer
     public ItemInstance Item;
     public int Index;
 	public event Action<int, int> ItemSwapped;
-    public event Action<EquipType, int> UnequipToInv;
+    public event Action<int, int> UnequipToInv;
 
     public override void _Ready()
 	{
@@ -52,6 +52,7 @@ public partial class ItemSlotPanel : PanelContainer
         if (data.VariantType != Variant.Type.Object) return false;
         GodotObject gdObj = data.As<GodotObject>();
         if (gdObj is not ItemSlotPanel && gdObj is not EquipSlot) return false;
+        if (gdObj is EquipSlot && Item != null && !Item.TypeCompMap.ContainsKey(ItemComponentType.EquippableComponent)) return false;
         return true;
     }
     public override void _DropData(Vector2 atPosition, Variant data)
@@ -65,7 +66,7 @@ public partial class ItemSlotPanel : PanelContainer
         }
         if(gdObj is EquipSlot slot)//从装备槽卸到背包上
         {
-            UnequipToInv?.Invoke(slot.SlotType, Index);
+            UnequipToInv?.Invoke(slot.SlotIndex, Index);
         }
 
     }

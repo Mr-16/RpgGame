@@ -1,6 +1,8 @@
 using Godot;
+using RpgGame.Scripts.Systems.SkillSystem;
 using RpgGame.Scripts.Utilities;
 using RpgGame.Scripts.Utilities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace RpgGame.Scripts.Systems.InventorySystem
@@ -44,52 +46,57 @@ namespace RpgGame.Scripts.Systems.InventorySystem
 
             Register(new ItemData()
             {
-                Id = GameConstants.Sword,
+                Id = GameConstants.MetalEquip,
                 Name = "金法",
                 MaxStack = 1,
-                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Metal.png"),
                 Description = "这是一把金心法, 意味着质量和防御",
                 WuXingType = WuXingType.Metal,
+                SkillData = new SkillData() { AtkRadiusSq = 1000 * 1000, MaxFlyDisSq = 1000 * 1000, AngleRange = MathF.PI / 6, FlySpeed = 800, ProjectileCount = 1, EnergyCost = 1, CastSpeed = 6 },
                 CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
             });
             Register(new ItemData()
             {
-                Id = GameConstants.Sword,
-                Name = "金法",
+                Id = GameConstants.WoodEquip,
+                Name = "木法",
                 MaxStack = 1,
-                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
-                Description = "这是一把金心法, 意味着质量和防御",
-                WuXingType = WuXingType.Metal,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Wood.png"),
+                Description = "这是一把木心法, 意味着自然和恢复",
+                WuXingType = WuXingType.Wood,
+                SkillData = new SkillData() { AtkRadiusSq = 900 * 900, MaxFlyDisSq = 900 * 900, AngleRange = MathF.PI / 3, FlySpeed = 700, ProjectileCount = 3, EnergyCost = 2, CastSpeed = 5},
                 CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
             });
             Register(new ItemData()
             {
-                Id = GameConstants.Sword,
-                Name = "金法",
+                Id = GameConstants.WaterEquip,
+                Name = "水法",
                 MaxStack = 1,
-                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
-                Description = "这是一把金心法, 意味着质量和防御",
-                WuXingType = WuXingType.Metal,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Water.png"),
+                Description = "这是一把水心法, 意味着智慧和能量",
+                WuXingType = WuXingType.Water,
+                SkillData = new SkillData() { AtkRadiusSq = 800 * 80, MaxFlyDisSq = 800 * 800, AngleRange = MathF.PI * 2 / 3, FlySpeed = 600, ProjectileCount = 5, EnergyCost = 3, CastSpeed = 4},
                 CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
             });
             Register(new ItemData()
             {
-                Id = GameConstants.Sword,
-                Name = "金法",
+                Id = GameConstants.FireEquip,
+                Name = "火法",
                 MaxStack = 1,
-                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
-                Description = "这是一把金心法, 意味着质量和防御",
-                WuXingType = WuXingType.Metal,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Fire.png"),
+                Description = "这是一把火心法, 意味着进攻和燃烧",
+                WuXingType = WuXingType.Fire,
+                SkillData = new SkillData() { AtkRadiusSq = 200 * 200, MaxFlyDisSq = 200 * 200, AngleRange = MathF.PI, FlySpeed = 500, ProjectileCount = 9, EnergyCost = 4, CastSpeed = 3 },
                 CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
             });
             Register(new ItemData()
             {
-                Id = GameConstants.Sword,
-                Name = "金法",
+                Id = GameConstants.EarthEquip,
+                Name = "土法",
                 MaxStack = 1,
-                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Sword.png"),
-                Description = "这是一把金心法, 意味着质量和防御",
-                WuXingType = WuXingType.Metal,
+                Icon = GD.Load<Texture2D>("res://Assets/MyAssets/Earth.png"),
+                Description = "这是一把土心法, 意味着生命和根源",
+                WuXingType = WuXingType.Earth,
+                SkillData = new SkillData() { AtkRadiusSq = 120 * 120, MaxFlyDisSq = 100 * 100, AngleRange = MathF.PI * 2, FlySpeed = 200, ProjectileCount = 15, EnergyCost = 5, CastSpeed = 2f },
                 CompSet = new HashSet<ItemComponentType>() { ItemComponentType.EquippableComponent },
             });
             //Register(new ItemData()

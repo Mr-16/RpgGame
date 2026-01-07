@@ -8,31 +8,37 @@ namespace RpgGame.Scripts.Systems.InventorySystem
 {
     public class EquipmentManager
     {
-        public Dictionary<EquipType, ItemInstance> TypeEquipMap = new Dictionary<EquipType, ItemInstance>();
-        public event Action<EquipType> EquipChange;
-        public ItemInstance Equip(ItemInstance equip)
+        public List<ItemInstance> EquipList = new List<ItemInstance>();
+        public event Action<int, ItemInstance> EquipChange;
+
+        public EquipmentManager()
         {
-            TypeEquipMap.TryGetValue(equip.Data.EquipType, out ItemInstance oldEquip);
-            TypeEquipMap[equip.Data.EquipType] = equip;
-            EquipChange?.Invoke(equip.Data.EquipType);
+            for (int i = 0; i < 5; i++)
+            {
+                EquipList.Add(null);
+            }
+        }
+
+        public ItemInstance Equip(int index, ItemInstance equip)
+        {
+            ItemInstance oldEquip = EquipList[index];
+            EquipList[index] = equip;
+            EquipChange?.Invoke(index, equip);
             return oldEquip;
         }
 
-        public ItemInstance Unequip(EquipType type)
+        public ItemInstance Unequip(int index)
         {
-            if (TypeEquipMap.TryGetValue(type, out ItemInstance equip))
-            {
-                TypeEquipMap[type] = null;
-                EquipChange?.Invoke(type);
-                return equip;
-            }
-            return null;
+            if (EquipList[index] == null) return null;
+            ItemInstance oldEquip = EquipList[index];
+            EquipList[index] = null;
+            EquipChange?.Invoke(index, null);
+            return oldEquip;
         }
 
-        public ItemInstance GetEquip(EquipType type)
+        public ItemInstance GetEquip(int index)
         {
-            TypeEquipMap.TryGetValue(type, out ItemInstance equip);
-            return equip;
+            return EquipList[index];
         }
     }
 }
