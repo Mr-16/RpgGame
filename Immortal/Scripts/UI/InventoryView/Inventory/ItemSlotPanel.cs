@@ -1,5 +1,5 @@
 using Godot;
-using RpgGame.Scripts.Datas;
+using RpgGame.Scripts.Systems.InventorySystem;
 using System;
 
 public partial class ItemSlotPanel : PanelContainer

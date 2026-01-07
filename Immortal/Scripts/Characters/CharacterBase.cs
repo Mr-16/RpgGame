@@ -1,6 +1,6 @@
 using Godot;
-using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters;
+using RpgGame.Scripts.Systems.AttributeSystem;
 using System;
 using System.Formats.Tar;
 

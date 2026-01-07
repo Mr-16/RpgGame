@@ -1,7 +1,8 @@
 using Godot;
-using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Players;
 using RpgGame.Scripts.GameSystem;
+using RpgGame.Scripts.Systems.AttributeSystem;
+using RpgGame.Scripts.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

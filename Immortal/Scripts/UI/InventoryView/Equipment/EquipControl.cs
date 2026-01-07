@@ -1,14 +1,13 @@
 using Godot;
 using Godot.Collections;
-using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
-using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.Systems.InventorySystem;
 using System;
 using System.Net.NetworkInformation;
 
 public partial class EquipControl : Control
 {
-	private Equipment equipment;
+	private EquipmentManager equipment;
     [Export] public EquipSlot WeaponSlot;
     [Export] public EquipSlot HelmetSlot;
     [Export] public EquipSlot RingSlot;
@@ -23,7 +22,7 @@ public partial class EquipControl : Control
 	{
 	}
 
-    public void Init(Equipment equipment)
+    public void Init(EquipmentManager equipment)
     {
         this.equipment = equipment;
         equipment.EquipChange += Equipment_EquipChange;

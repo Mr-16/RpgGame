@@ -1,6 +1,5 @@
 using Godot;
-using RpgGame.Scripts.Datas;
-using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.Systems.InventorySystem;
 using System;
 
 public partial class InventoryView : Control
@@ -16,8 +15,8 @@ public partial class InventoryView : Control
 	public void Init(ItemManager itemManager)
 	{
 		this.itemManager = itemManager;
-		InventoryGrid.Init(itemManager.Inventory);
-		EquipControl.Init(itemManager.Equipment);
+		InventoryGrid.Init(itemManager.InventoryManager);
+		EquipControl.Init(itemManager.EquipmentManager);
 
         EquipControl.WeaponSlot.EquipFromInv += EquipFromInv;
         EquipControl.HelmetSlot.EquipFromInv += EquipFromInv;

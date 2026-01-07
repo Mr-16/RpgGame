@@ -1,16 +1,14 @@
 using Godot;
-using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
-using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
-using RpgGame.Scripts.Global;
-using RpgGame.Scripts.InventorySystem;
-using RpgGame.Scripts.LevelSystems;
-using RpgGame.Scripts.Skills;
+using RpgGame.Scripts.Systems.AttributeSystem;
+using RpgGame.Scripts.Systems.InventorySystem;
+using RpgGame.Scripts.Systems.LevelSystems;
+using RpgGame.Scripts.Systems.SkillSystem;
+using RpgGame.Scripts.Utilities;
+using RpgGame.Scripts.Utilities.Enums;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Xml.Linq;
 
 
 namespace RpgGame.Scripts.Characters.Players
@@ -48,24 +46,24 @@ namespace RpgGame.Scripts.Characters.Players
             PerceptionArea.BodyExited += PerceptionArea_BodyExited;
 
 
-            ItemManager = new ItemManager(new Equipment(), new Inventory(30));
+            ItemManager = new ItemManager(new EquipmentManager(), new InventoryManager(30));
             InventoryView.Init(ItemManager);
             //ItemManager.EquipFromInv(5);//穿戴剑
             //ItemManager.EquipFromInv(10);//弓->剑
             //ItemManager.UnequipToInv(EquipType.Weapon);//卸下弓, 自动放在1
             //ItemManager.EquipFromInv(15);//穿戴甲
             //ItemManager.UnequipToInv(EquipType.Armor, 16);//卸甲, 指定16
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.HealthPotion, 15));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Bow, 1));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 15));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 12));
-            ItemManager.Inventory.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 11));
-            ItemManager.Equipment.Equip(ItemFactory.Instance().Create(ItemId.Armor, 1));
-            ItemManager.Equipment.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.HealthPotion, 15));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.ManaPotion, 15));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Bow, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Sword, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 15));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 12));
+            ItemManager.InventoryManager.AddItem(ItemFactory.Instance().Create(ItemId.Wd40, 11));
+            ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Armor, 1));
+            ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
             //ItemManager.Inventory.RemoveItem(1, 100);
             //ItemManager.Inventory.RemoveItem(2, 100);
 

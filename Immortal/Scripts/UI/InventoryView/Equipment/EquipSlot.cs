@@ -1,6 +1,6 @@
 using Godot;
-using RpgGame.Scripts.Datas;
 using RpgGame.Scripts.GameSystem;
+using RpgGame.Scripts.Systems.InventorySystem;
 using System;
 using System.Diagnostics.Metrics;
 

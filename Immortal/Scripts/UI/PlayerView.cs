@@ -1,6 +1,5 @@
 using Godot;
 using RpgGame.Scripts.GameSystem;
-using RpgGame.Scripts.InventorySystem;
 using System;
 
 public partial class PlayerView : Control

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://vqs22r8bomfg"]
 
-[ext_resource type="Script" uid="uid://cqnabcqcreuwx" path="res://Scripts/Interactions/ExpBall.cs" id="1_x0wca"]
+[ext_resource type="Script" uid="uid://b1gx5y3ygrsta" path="res://Scripts/Systems/LevelSystems/ExpBall.cs" id="1_x0wca"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0wca"]
 border_width_left = 2

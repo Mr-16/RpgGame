@@ -1,5 +1,4 @@
 using Godot;
-using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;

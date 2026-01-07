@@ -1,14 +1,14 @@
 using Godot;
-using RpgGame.Scripts.InventorySystem;
+using RpgGame.Scripts.Systems.InventorySystem;
 using System;
 using System.Collections.Generic;
 
 public partial class InventoryGrid : GridContainer
 {
-	public Inventory Inventory;
+	public InventoryManager Inventory;
 	[Export] public PackedScene ItemSlotScene;
 	public List<ItemSlotPanel> SlotList = new List<ItemSlotPanel>();
-	public void Init(Inventory inventory)
+	public void Init(InventoryManager inventory)
 	{
 		Inventory = inventory;
 		for (int i = 0; i < Inventory.Capacity; i++)

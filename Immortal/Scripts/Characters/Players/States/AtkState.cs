@@ -1,7 +1,6 @@
 using Godot;
-using RpgGame.Scripts.AttributeSystem;
 using RpgGame.Scripts.Characters.Enemies;
-using RpgGame.Scripts.Skills;
+using RpgGame.Scripts.Systems.SkillSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
