@@ -1,7 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://xw7oifeelmi8"]
+[gd_scene load_steps=6 format=3 uid="uid://xw7oifeelmi8"]
 
 [ext_resource type="Script" uid="uid://c1lukw62v4tul" path="res://Scripts/UI/DialogueSystem/DialogueControl.cs" id="1_0stbl"]
 [ext_resource type="Texture2D" uid="uid://ckrqbxq8taklf" path="res://Assets/NinjaAssets/Actor/Characters/Boy/Faceset.png" id="2_cjgmv"]
+[ext_resource type="PackedScene" uid="uid://cmvx7gyt8yi1r" path="res://Scenes/UI/DialogueSystem/OptionControl.tscn" id="3_t0na4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lumjo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehdxt"]
 bg_color = Color(0, 0, 0, 0.25882354)
@@ -11,7 +20,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
 
-[node name="DialogueControl" type="Control" node_paths=PackedStringArray("HeadTr", "NameLb", "DialogueLineLb", "OptVbc")]
+[node name="DialogueControl" type="Control" node_paths=PackedStringArray("HeadTr", "NameLb", "LineTextLb", "OptVbc")]
 z_index = 200
 layout_mode = 3
 anchors_preset = 12
@@ -22,28 +31,23 @@ offset_top = -264.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_0stbl")
-HeadTr = NodePath("HeadCr/TextureRect")
+HeadTr = NodePath("PanelContainer2/TextureRect")
 NameLb = NodePath("PanelContainer/ColorRect/NameLb")
-DialogueLineLb = NodePath("PanelContainer/ColorRect/LineTextLb")
+LineTextLb = NodePath("PanelContainer/ColorRect/LineTextLb")
 OptVbc = NodePath("PanelContainer/ColorRect/OptVbc")
 
-[node name="HeadCr" type="ColorRect" parent="."]
-layout_mode = 0
-offset_top = -232.0
-offset_right = 240.0
-color = Color(0, 0, 0, 1)
-
-[node name="TextureRect" type="TextureRect" parent="HeadCr"]
+[node name="PanelContainer2" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+anchor_top = -0.21200001
+anchor_bottom = -0.21200001
+offset_top = -168.032
+offset_right = 168.0
+offset_bottom = -0.03199768
+theme_override_styles/panel = SubResource("StyleBoxFlat_lumjo")
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer2"]
+layout_mode = 2
 texture = ExtResource("2_cjgmv")
 stretch_mode = 4
 
@@ -52,6 +56,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -56.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ehdxt")
@@ -61,8 +66,8 @@ layout_mode = 2
 
 [node name="NameLb" type="Label" parent="PanelContainer/ColorRect"]
 layout_mode = 1
-offset_right = 232.0
-offset_bottom = 80.0
+offset_right = 227.0
+offset_bottom = 91.0
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 50
 text = "Name :"
@@ -74,46 +79,36 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 211.0
-offset_right = -235.0
+offset_left = 147.0
+offset_top = 35.0
+offset_right = -43.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 30
-text = "this is a dialogue line test.....
-this is a dialogue line test.....
-this is a dialogue line test.....
-this is a dialogue line test....."
+text = "this is a dialogue line test.....this is a dialogue line test.....this is a dialogue line test.....this is a dialogue line test....."
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="OptVbc" type="VBoxContainer" parent="PanelContainer/ColorRect"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -232.0
-offset_top = -168.0
-grow_horizontal = 0
+offset_left = 491.0
+offset_top = -131.0
+offset_bottom = -3.0
+grow_horizontal = 2
 grow_vertical = 0
-alignment = 2
 
-[node name="Button" type="Button" parent="PanelContainer/ColorRect/OptVbc"]
+[node name="OptionControl" parent="PanelContainer/ColorRect/OptVbc" instance=ExtResource("3_t0na4")]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "Option1"
 
-[node name="Button2" type="Button" parent="PanelContainer/ColorRect/OptVbc"]
+[node name="OptionControl2" parent="PanelContainer/ColorRect/OptVbc" instance=ExtResource("3_t0na4")]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "Option1"
 
-[node name="Button3" type="Button" parent="PanelContainer/ColorRect/OptVbc"]
+[node name="OptionControl3" parent="PanelContainer/ColorRect/OptVbc" instance=ExtResource("3_t0na4")]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 30
-text = "Option1"

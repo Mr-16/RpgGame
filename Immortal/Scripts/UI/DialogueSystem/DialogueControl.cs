@@ -8,7 +8,7 @@ public partial class DialogueControl : Control
 {
 	[Export] public TextureRect HeadTr;
 	[Export] public Label NameLb;
-	[Export] public Label DialogueLineLb;
+	[Export] public Label LineTextLb;
 	[Export] public VBoxContainer OptVbc;
 
     private DialogueNode curNode;
@@ -17,7 +17,8 @@ public partial class DialogueControl : Control
 	{
 		Hide();
         DialogueManager.Instance().OnEnterNode += DialogueControl_OnEnterNode;
-	}
+        DialogueManager.Instance().OnLineChanged += DialogueControl_OnLineChanged; ;
+    }
 
     private void DialogueControl_OnEnterNode(string nodeId)
     {
@@ -25,8 +26,12 @@ public partial class DialogueControl : Control
 		HeadTr.Texture = TextureCache.Instance().GetTexture(curNode.SpeakerHeadPath);
 		NameLb.Text = curNode.SpeakerName;
         //清空optVbc, 重新添加当前选项
-        
+        CreateBtn();
         Show();
+    }
+    private void DialogueControl_OnLineChanged(int lineIndex)
+    {
+        LineTextLb.Text = curNode.LineList[lineIndex];
     }
 
     public override void _Process(double delta)
@@ -49,7 +54,7 @@ public partial class DialogueControl : Control
 
             StyleBoxFlat hover = normal.Duplicate() as StyleBoxFlat;
             hover.BgColor = new Color(0.25f, 0.25f, 0.25f);
-            Button btn = new Button() { Text = opt.OptionText };
+            Button btn = new Button() { Text = opt.OptionText};
             btn.AddThemeStyleboxOverride("normal", normal);
             btn.AddThemeStyleboxOverride("hover", hover);
 
