@@ -15,7 +15,7 @@ namespace RpgGame.Scripts.Characters.Players.States
         private float speedScale;
         public int AtkFrame = 2;
         private Random random = new Random();
-        EquippableComponent curEquip;
+        EquipComp curEquip;
 
         public AtkState(Player player)
         {
@@ -35,7 +35,7 @@ namespace RpgGame.Scripts.Characters.Players.States
                 player.Sm.ChangeState(player.Sm.IdleState);//不够费退回待机
                 return;
             }
-            curEquip = equipList[random.Next(0, equipList.Count)].TypeCompMap[ItemComponentType.EquippableComponent] as EquippableComponent;
+            curEquip = equipList[random.Next(0, equipList.Count)].TypeCompMap[ItemCompType.Equipment] as EquipComp;
             if (curEquip.SkillData.EnergyCost > player.CurEnergy)//判断够不够费
             {
                 player.Sm.ChangeState(player.Sm.IdleState);//不够费退回待机

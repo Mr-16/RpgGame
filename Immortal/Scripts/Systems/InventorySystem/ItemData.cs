@@ -12,12 +12,12 @@ namespace RpgGame.Scripts.Systems.InventorySystem
 {
     public interface IItemComponent {}
 
-    public class EquippableComponent : IItemComponent
+    public class EquipComp : IItemComponent
     {
         public SkillData SkillData;
         public WuXingType WuXingType;
         public int Level = 1;
-        public EquippableComponent(WuXingType wuXingType, SkillData skillData)
+        public EquipComp(WuXingType wuXingType, SkillData skillData)
         {
             WuXingType = wuXingType;
             SkillData = skillData;
@@ -39,7 +39,7 @@ namespace RpgGame.Scripts.Systems.InventorySystem
         }
     }
 
-    public class ConsumableComponent : IItemComponent
+    public class ConsumableComp : IItemComponent
     {
         public void Use()
         {
@@ -47,10 +47,10 @@ namespace RpgGame.Scripts.Systems.InventorySystem
         }
     }
 
-    public enum ItemComponentType
+    public enum ItemCompType
     {
-        EquippableComponent,
-        ConsumableComponent,
+        Equipment,
+        Consumable,
     }
 
     public class ItemData
@@ -66,6 +66,6 @@ namespace RpgGame.Scripts.Systems.InventorySystem
         public SkillData SkillData;
 
         //组件映射表, 用于创建实例时找到对应的Component
-        public HashSet<ItemComponentType> CompSet;
+        public HashSet<ItemCompType> CompSet;
     }
 }

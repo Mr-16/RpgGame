@@ -52,10 +52,12 @@ public partial class ItemSlotPanel : PanelContainer
         if (data.VariantType != Variant.Type.Object) return false;
         GodotObject gdObj = data.As<GodotObject>();
         if (gdObj is not ItemSlotPanel && gdObj is not EquipSlot) return false;
-        if (gdObj is EquipSlot && Item != null && !Item.TypeCompMap.ContainsKey(ItemComponentType.EquippableComponent)) return false;
+        if (gdObj is EquipSlot && Item != null && !Item.TypeCompMap.ContainsKey(ItemCompType.Equipment)) return false;
         return true;
     }
     public override void _DropData(Vector2 atPosition, Variant data)
+
+
     {
         if (data.VariantType != Variant.Type.Object) return;
         GodotObject gdObj = data.As<GodotObject>();

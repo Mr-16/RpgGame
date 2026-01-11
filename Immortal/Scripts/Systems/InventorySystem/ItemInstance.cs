@@ -16,7 +16,7 @@ namespace RpgGame.Scripts.Systems.InventorySystem
             Data = data;
             Count = count;
         }
-        public Dictionary<ItemComponentType, IItemComponent> TypeCompMap = new Dictionary<ItemComponentType, IItemComponent>();
+        public Dictionary<ItemCompType, IItemComponent> TypeCompMap = new Dictionary<ItemCompType, IItemComponent>();
 
     }
 
@@ -35,16 +35,16 @@ namespace RpgGame.Scripts.Systems.InventorySystem
 
             ItemInstance instance = new ItemInstance(data, count);
 
-            foreach (ItemComponentType type in data.CompSet)
+            foreach (ItemCompType type in data.CompSet)
             {
                 switch(type)
                 {
-                    case ItemComponentType.EquippableComponent:
-                        IItemComponent equipmentComp = new EquippableComponent(data.WuXingType, data.SkillData);
+                    case ItemCompType.Equipment:
+                        IItemComponent equipmentComp = new EquipComp(data.WuXingType, data.SkillData);
                         instance.TypeCompMap.Add(type, equipmentComp);
                         break;
-                    case ItemComponentType.ConsumableComponent:
-                        IItemComponent ConsumableComp = new ConsumableComponent();
+                    case ItemCompType.Consumable:
+                        IItemComponent ConsumableComp = new ConsumableComp();
                         instance.TypeCompMap.Add(type,ConsumableComp);
                         break;
                 }

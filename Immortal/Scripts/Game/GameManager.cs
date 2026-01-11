@@ -3,6 +3,7 @@ using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.Characters.Players;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +107,16 @@ namespace RpgGame.Scripts.GameSystem
             EnterState(state);
         }
 
+        private static string DataFolderPath = null;
+        public string GetDataFolderPath()
+        {
+            if(DataFolderPath == null)
+            {
+                DataFolderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "_RpgGameData");
+            }
+            return DataFolderPath;
+        }
+
         ////技能系统
         ////暂时初始化时填值, 后期序列化到Json配置文件里
         //public Dictionary<SkillType, SkillData> SkillDataMap = new Dictionary<SkillType, SkillData>()
@@ -115,6 +126,8 @@ namespace RpgGame.Scripts.GameSystem
         //    { SkillType.Lightning, new SkillData("闪电术", 10, 15, "Lightning", 2, 2f, 800 * 800, true)},
         //};
     }
+
+
 
     public enum SkillType
     {

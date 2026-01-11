@@ -20,7 +20,7 @@ namespace RpgGame.Scripts.Systems.InventorySystem
         {
             ItemInstance equip = InventoryManager.ItemList[invIndex];
             if (equip == null) return;
-            if (!equip.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
+            if (!equip.Data.CompSet.Contains(ItemCompType.Equipment)) return;
             ItemInstance oldEquip = EquipmentManager.Equip(equipIndex, equip);
             InventoryManager.SetItem(oldEquip, invIndex);
         }

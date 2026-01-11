@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgobx7gvm47xi"]
+
+[ext_resource type="Script" uid="uid://dyatg6nhg6i47" path="res://Scripts/UI/HUD/HUD.cs" id="1_r8yvt"]
+[ext_resource type="PackedScene" uid="uid://xw7oifeelmi8" path="res://Scenes/UI/DialogueSystem/DialogueControl.tscn" id="1_x7teo"]
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("DialogueCtrl")]
+script = ExtResource("1_r8yvt")
+DialogueCtrl = NodePath("DialogueControl")
+
+[node name="DialogueControl" parent="." instance=ExtResource("1_x7teo")]
+z_index = 100

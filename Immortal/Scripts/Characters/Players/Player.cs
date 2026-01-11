@@ -2,6 +2,7 @@ using Godot;
 using RpgGame.Scripts.Characters.Enemies;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.Systems.AttributeSystem;
+using RpgGame.Scripts.Systems.DialogueSystem;
 using RpgGame.Scripts.Systems.InventorySystem;
 using RpgGame.Scripts.Systems.LevelSystems;
 using RpgGame.Scripts.Systems.SkillSystem;
@@ -21,6 +22,8 @@ namespace RpgGame.Scripts.Characters.Players
         [Export]
         public AnimatedSprite2D Anim;
 
+        [Export] public Area2D InteractArea;
+
         [Export] float AtkRange = 50;
         public float AtkRangeSq;
         [Export] float AtkAngle = 160;
@@ -30,7 +33,7 @@ namespace RpgGame.Scripts.Characters.Players
 
         [Export] public PlayerView PlayerView;
         [Export] public InventoryView InventoryView;
-
+        
         public ItemManager ItemManager;
 
 
@@ -46,6 +49,8 @@ namespace RpgGame.Scripts.Characters.Players
             PerceptionArea.BodyEntered += PerceptionArea_BodyEntered;
             PerceptionArea.BodyExited += PerceptionArea_BodyExited;
 
+            InteractArea.BodyEntered += InteractArea_BodyEntered;
+            InteractArea.BodyExited += InteractArea_BodyExited;
 
             ItemManager = new ItemManager(new EquipmentManager(), new InventoryManager(30));
             InventoryView.Init(ItemManager);
@@ -81,9 +86,9 @@ namespace RpgGame.Scripts.Characters.Players
             //ItemManager.EquipmentManager.Equip(ItemFactory.Instance().Create(ItemId.Sword, 1));
             //ItemManager.Inventory.RemoveItem(1, 100);
             //ItemManager.Inventory.RemoveItem(2, 100);
+            DialogueManager.Instance();
 
         }
-
 
 
         public override void _Process(double delta)
@@ -95,7 +100,7 @@ namespace RpgGame.Scripts.Characters.Players
             {
                 InventoryView.Visible = !InventoryView.Visible;
             }
-            
+            Interact();
         }
 
         public override void _PhysicsProcess(double delta)
@@ -485,7 +490,7 @@ namespace RpgGame.Scripts.Characters.Players
             }
             return tarEnemy;
         }
-        public void CastSkill(EquippableComponent equip)
+        public void CastSkill(EquipComp equip)
         {
             Enemy targetEnemy = GetClosestEnemy(equip.SkillData.MaxFlyDisSq);
             Vector2 targetDir = CurDir;
@@ -512,6 +517,37 @@ namespace RpgGame.Scripts.Characters.Players
                 Projectile projectile = ProjectileScene.Instantiate<Projectile>();
                 projectile.Init(this, equip.WuXingType, GlobalPosition, dir, equip.SkillData.MaxFlyDisSq, equip.SkillData.FlySpeed);
                 GetTree().CurrentScene.AddChild(projectile);
+            }
+        }
+
+        private Npc nearNpc;
+        private void InteractArea_BodyEntered(Node2D body)
+        {
+            if (body is Npc npc)
+            {
+                //todo显示lb, 标记为
+                nearNpc = npc;
+                nearNpc.ShowTipVis(true);
+            }
+
+        }
+        private void InteractArea_BodyExited(Node2D body)
+        {
+            if (body is Npc npc)
+            {
+                nearNpc.ShowTipVis(false);
+                nearNpc = null;
+            }
+        }
+
+
+
+        private void Interact()
+        {
+            if(Input.IsActionJustPressed("Interact") && nearNpc != null)
+            {
+                GD.Print("Interacting with npc~~~");
+                nearNpc.StartTalk();
             }
         }
 

@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://dps5h01x7wfho"]
+
+[ext_resource type="Script" uid="uid://cu13crc3853q8" path="res://Scripts/Characters/Npcs/Npc.cs" id="1_6xyy4"]
+[ext_resource type="Texture2D" uid="uid://bp8ggesqw6k3p" path="res://Assets/Tiny Swords (Free Pack)/Tiny Swords (Free Pack)/Units/Blue Units/Monk/Idle.png" id="1_bjqsy"]
+[ext_resource type="PackedScene" uid="uid://bsatw746ujrmq" path="res://Scenes/UI/InteractTipControl.tscn" id="3_h8478"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6mnn"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scyn7"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlm0p"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jipy"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3m4a3"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2sck"]
+atlas = ExtResource("1_bjqsy")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dlfqy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6mnn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scyn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlm0p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jipy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3m4a3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2sck")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6fws"]
+size = Vector2(43, 53)
+
+[node name="Npc" type="StaticBody2D" node_paths=PackedStringArray("InteractTipCtrl")]
+script = ExtResource("1_6xyy4")
+InteractTipCtrl = NodePath("InteractTipControl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dlfqy")
+animation = &"Idle"
+frame_progress = 0.90308785
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_m6fws")
+
+[node name="InteractTipControl" parent="." instance=ExtResource("3_h8478")]
+offset_left = -102.0
+offset_top = -114.0
+offset_right = -102.0
+offset_bottom = -114.0

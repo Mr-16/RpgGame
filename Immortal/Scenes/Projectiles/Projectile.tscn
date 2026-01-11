@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dluw3ewu68edx"]
 
 [ext_resource type="Shader" uid="uid://d2pk7nyyhsmiu" path="res://Scenes/Projectiles/Projectile.gdshader" id="1_dqbtj"]
-[ext_resource type="Script" uid="uid://cbpi6igh1yoed" path="res://Scripts/Projectiles/Projectile.cs" id="1_qupxw"]
+[ext_resource type="Script" uid="uid://cbpi6igh1yoed" path="res://Scripts/Systems/SkillSystem/Projectiles/Projectile.cs" id="1_qupxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qupxw"]
 shader = ExtResource("1_dqbtj")

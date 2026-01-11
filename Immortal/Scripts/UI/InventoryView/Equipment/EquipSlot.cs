@@ -51,14 +51,14 @@ public partial class EquipSlot : Control
         if (data.VariantType != Variant.Type.Object) return false;
         GodotObject gdObj = data.As<GodotObject>();
         if (gdObj is not ItemSlotPanel itemSlot) return false;
-        if (!itemSlot.Item.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return false;
+        if (!itemSlot.Item.Data.CompSet.Contains(ItemCompType.Equipment)) return false;
         return true;
     }
     public override void _DropData(Vector2 atPosition, Variant data)
     {
         ItemSlotPanel itemSlot = data.As<ItemSlotPanel>();
         if (itemSlot == null) return;
-        if (!itemSlot.Item.Data.CompSet.Contains(ItemComponentType.EquippableComponent)) return;
+        if (!itemSlot.Item.Data.CompSet.Contains(ItemCompType.Equipment)) return;
         EquipFromInv?.Invoke(itemSlot.Index, SlotIndex);
     }
 }

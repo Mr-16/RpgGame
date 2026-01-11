@@ -307,9 +307,7 @@ shape = SubResource("CapsuleShape2D_r2bah")
 self_modulate = Color(0.8666667, 0.8666667, 0.8666667, 1)
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_xrivq")
-animation = &"Death"
-frame = 7
-frame_progress = 1.0
+animation = &"Idle"
 
 [node name="HealthPb" type="ProgressBar" parent="."]
 z_index = 10
