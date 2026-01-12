@@ -1,5 +1,6 @@
 using Godot;
 using RpgGame.Scripts.Characters.Enemies;
+using RpgGame.Scripts.Common;
 using RpgGame.Scripts.GameSystem;
 using RpgGame.Scripts.Systems.AttributeSystem;
 using RpgGame.Scripts.Systems.DialogueSystem;
@@ -51,6 +52,8 @@ namespace RpgGame.Scripts.Characters.Players
 
             InteractArea.BodyEntered += InteractArea_BodyEntered;
             InteractArea.BodyExited += InteractArea_BodyExited;
+            InteractArea.AreaEntered += InteractArea_AreaEntered;
+
 
             ItemManager = new ItemManager(new EquipmentManager(), new InventoryManager(30));
             InventoryView.Init(ItemManager);
@@ -90,6 +93,10 @@ namespace RpgGame.Scripts.Characters.Players
 
         }
 
+        private void InteractArea_AreaEntered(Area2D area)
+        {
+            GD.Print("InteractArea_AreaEntered");
+        }
 
         public override void _Process(double delta)
         {
@@ -520,23 +527,32 @@ namespace RpgGame.Scripts.Characters.Players
             }
         }
 
-        private Npc nearNpc;
+        private List<Npc> nearNpcList = new List<Npc>();
+        private List<DropItem> interactEquipList = new List<DropItem>();
         private void InteractArea_BodyEntered(Node2D body)
         {
             if (body is Npc npc)
             {
-                //todo显示lb, 标记为
-                nearNpc = npc;
-                nearNpc.ShowTipVis(true);
+                npc.ShowTip(true);
+                nearNpcList.Add(npc);
             }
-
+            if(body is DropItem interactEquip)
+            {
+                interactEquip.ShowTip(true);
+                interactEquipList.Add(interactEquip);
+            }
         }
         private void InteractArea_BodyExited(Node2D body)
         {
             if (body is Npc npc)
             {
-                nearNpc.ShowTipVis(false);
-                nearNpc = null;
+                npc.ShowTip(false);
+                nearNpcList.Remove(npc);
+            }
+            if (body is DropItem interactEquip)
+            {
+                interactEquip.ShowTip(false);
+                interactEquipList.Remove(interactEquip);
             }
         }
 
@@ -544,10 +560,29 @@ namespace RpgGame.Scripts.Characters.Players
 
         private void Interact()
         {
-            if(Input.IsActionJustPressed("Interact") && nearNpc != null)
+            if (Input.IsActionJustPressed("Interact") == false) return;
+            //优先Npc对话
+            if(nearNpcList.Count != 0)
             {
-                GD.Print("Interacting with npc~~~");
-                nearNpc.StartTalk();
+                Npc closestNpc = GameHelper.GetClosestNode<Npc>(this.GlobalPosition, nearNpcList);
+                if (closestNpc != null)
+                {
+                    GD.Print("Interacting with npc~~~");
+                    closestNpc.StartTalk();
+                    return;
+                }
+                
+            }
+            //装备拾取
+            if(interactEquipList.Count != 0)
+            {
+                DropItem interactEquip = GameHelper.GetClosestNode<DropItem>(this.GlobalPosition, interactEquipList);
+                if(interactEquip != null)
+                {
+                    GD.Print("Interacting with interactEquip~~~");
+                    ItemManager.InventoryManager.AddItem(interactEquip.TakeItem());
+                    interactEquip.QueueFree();
+                }
             }
         }
 

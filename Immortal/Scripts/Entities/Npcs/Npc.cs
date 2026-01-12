@@ -20,7 +20,7 @@ public partial class Npc : StaticBody2D
     public override void _Process(double delta)
 	{
 	}
-    public void ShowTipVis(bool isShow)
+    public void ShowTip(bool isShow)
     {
         if (isShow) InteractTipCtrl.Show();
         else InteractTipCtrl.Hide();

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvlch2cmth7ji"]
+
+[ext_resource type="Script" uid="uid://bvgmoejcnhhqy" path="res://Scripts/Systems/InventorySystem/DropItem.cs" id="1_cs45v"]
+[ext_resource type="Texture2D" uid="uid://6pdbo5i00a0l" path="res://Assets/MyAssets/Sword.png" id="2_c13gf"]
+[ext_resource type="PackedScene" uid="uid://bsatw746ujrmq" path="res://Scenes/UI/InteractTipControl.tscn" id="3_6abra"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wa3ba"]
+radius = 48.0
+
+[node name="DropItem" type="StaticBody2D" node_paths=PackedStringArray("InteractTipCtrl", "EquipSprite")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_cs45v")
+InteractTipCtrl = NodePath("InteractTipControl")
+EquipSprite = NodePath("EquipSprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 2
+shape = SubResource("CircleShape2D_wa3ba")
+
+[node name="InteractTipControl" parent="." instance=ExtResource("3_6abra")]
+offset_left = -112.0
+offset_top = -104.0
+offset_right = -112.0
+offset_bottom = -104.0
+metadata/_edit_use_anchors_ = true
+
+[node name="EquipSprite" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_c13gf")

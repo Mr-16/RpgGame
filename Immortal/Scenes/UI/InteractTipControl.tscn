@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsatw746ujrmq"]
+[gd_scene load_steps=3 format=3 uid="uid://bsatw746ujrmq"]
+
+[ext_resource type="Script" uid="uid://hewivy05ubhy" path="res://Scripts/UI/HUD/InteractTipControl.cs" id="1_ug1vu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iw1bv"]
 content_margin_left = 20.0
@@ -10,9 +12,11 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[node name="InteractTipControl" type="Control"]
+[node name="InteractTipControl" type="Control" node_paths=PackedStringArray("TipLabel")]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_ug1vu")
+TipLabel = NodePath("PanelContainer/TipLb")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -20,7 +24,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_iw1bv")
 
-[node name="TextLb" type="Label" parent="PanelContainer"]
+[node name="TipLb" type="Label" parent="PanelContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 50

@@ -25,17 +25,14 @@ namespace RpgGame.Scripts.Systems.InventorySystem
 
         public void Equip()
         {
-            Debug.WriteLine("[EquipmentComponent] Equip");
         }
 
         public void Unequip()
         {
-            Debug.WriteLine("[EquipmentComponent] Unequip");
         }
 
         public void GetExp(float exp)
         {
-            Debug.WriteLine("[EquipmentComponent] GetExp + " + exp);
         }
     }
 

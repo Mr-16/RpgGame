@@ -138,6 +138,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies
         protected override void Die()
         {
             Sm.ChangeState(Sm.DeathState);
+
         }
 
         public override void _Draw()

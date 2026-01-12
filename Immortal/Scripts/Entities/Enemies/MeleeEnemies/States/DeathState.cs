@@ -27,6 +27,7 @@ namespace RpgGame.Scripts.Characters.Enemies.MeleeEnemies.States
             enemy.Anim.AnimationFinished -= Anim_AnimationFinished;
             //生成经验
             enemy.SpawnExpBall();
+            enemy.SpawnItem();
             enemy.QueueFree();
         }
 

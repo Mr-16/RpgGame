@@ -5,7 +5,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Scripts\Characters\Enemies\RangeEnemies\States\" />
+    <Folder Include="Scripts\Entities\Enemies\RangeEnemies\States\" />
     <Folder Include="Scripts\UI\InventoryView\Equipment\" />
   </ItemGroup>
 </Project>

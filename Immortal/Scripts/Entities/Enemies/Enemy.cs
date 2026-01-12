@@ -18,6 +18,8 @@ namespace RpgGame.Scripts.Characters.Enemies
         public GpuParticles2D DmgParticles;
         [Export]
         public PackedScene ExpBall;
+        [Export]
+        public PackedScene DropEquipScene;
 
         private Random rd = new Random();
 
@@ -84,6 +86,12 @@ namespace RpgGame.Scripts.Characters.Enemies
                 expBall.Init(pair.Key, exp, GlobalPosition);
                 GetTree().CurrentScene.AddChild(expBall);
             }
+        }
+        public void SpawnItem()
+        {
+            DropItem dropEquip = DropEquipScene.Instantiate<DropItem>();
+            dropEquip.Init(GlobalPosition);
+            GetTree().CurrentScene.AddChild(dropEquip);
         }
         private int LevelToExp(int level) => 10 * level;
         public Dictionary<WuXingType, int> LevelMap = new Dictionary<WuXingType, int>();

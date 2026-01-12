@@ -16,8 +16,8 @@ public partial class DialogueControl : Control
     public override void _Ready()
 	{
 		Hide();
-        DialogueManager.Instance().OnEnterNode += DialogueControl_OnEnterNode;
-        DialogueManager.Instance().OnLineChanged += DialogueControl_OnLineChanged; ;
+        //DialogueManager.Instance().OnEnterNode += DialogueControl_OnEnterNode;
+        //DialogueManager.Instance().OnLineChanged += DialogueControl_OnLineChanged; ;
     }
 
     private void DialogueControl_OnEnterNode(string nodeId)
